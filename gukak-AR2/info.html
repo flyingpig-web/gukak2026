@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>더 알아보기 — 만파식적</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 방 + 가람(bg_info.png) -->
+          <div class="scene-bg" style="background-image: url(img/05_info/bg_info.png)"></div>
+
+          <img class="info-daegeum" src="img/05_info/daegeum.png" alt="만파식적" />
+          <img class="info-bubble" src="img/05_info/speech_bubble.png" alt="각 부분을 눌러 대금을 알아보자!" />
+
+          <!-- 부위 라벨 버튼 -->
+          <button class="part-btn part-chilseonggong" data-part="chilseonggong">
+            <img src="img/05_info/btn_chilseonggong.png" alt="칠성공" />
+          </button>
+          <button class="part-btn part-jigong" data-part="jigong">
+            <img src="img/05_info/btn_jigong.png" alt="지공" />
+          </button>
+          <button class="part-btn part-cheonggong" data-part="cheonggong">
+            <img src="img/05_info/btn_cheonggong.png" alt="청공" />
+          </button>
+          <button class="part-btn part-chwigu" data-part="chwigu">
+            <img src="img/05_info/btn_chwigu.png" alt="취구" />
+          </button>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/05_info/title_info.png" alt="더 알아보기" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 정보 팝업 (청공만 청공→갈대청→청가리개 3장 순환) -->
+          <div class="dimmed info-dim" id="infoDim">
+            <img class="pop-img" id="popImg" src="" alt="" />
+            <button class="btn-nav btn-prev" id="btnPrev"><img src="img/05_info/btn_next.png" alt="이전" /></button>
+            <button class="btn-nav btn-next" id="btnNext"><img src="img/05_info/btn_next.png" alt="다음" /></button>
+            <button class="btn-close" id="btnClose"><img src="img/05_info/btn_close.png" alt="닫기" /></button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/info.js"></script>
+  </body>
+</html>

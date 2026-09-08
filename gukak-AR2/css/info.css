@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   정보(더 알아보기) — info.html
+   기획서 p27~29. 좌표는 목업(1920×1080) 실측값.
+   bg_info.png 에 방 배경과 가람이 이미 들어 있다.
+   ========================================================================= */
+
+.info-daegeum {
+  position: absolute;
+  left: 7.76%;
+  top: 16.94%;
+  width: 86.56%;
+  height: 85.93%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.info-bubble {
+  position: absolute;
+  left: 32.34%;
+  top: 71.67%;
+  width: 25.83%;
+  height: 23.52%;
+  z-index: 14;
+  pointer-events: none;
+}
+
+/* 부위 라벨 버튼 4종 — 세로 위치는 동일 */
+.part-btn {
+  position: absolute;
+  top: 32.96%;
+  width: 17.4%;
+  height: 15.09%;
+  z-index: 20;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+.part-chilseonggong {
+  left: 6.88%;
+}
+.part-jigong {
+  left: 28.8%;
+}
+.part-cheonggong {
+  left: 60.21%;
+}
+.part-chwigu {
+  left: 77.4%;
+}

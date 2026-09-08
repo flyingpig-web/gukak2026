@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동1 — 대금을 만들어요</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 작업대와 나무 그릇(bg_exp1.png) -->
+          <div class="scene-bg" style="background-image: url(img/03_exp1/bg_exp1.png)"></div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/03_exp1/title_exp1.png" alt="대금을 만들어요" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 플레이 요소 (준비/안내 화면에서는 숨긴다) -->
+          <div class="exp-stage" id="stage">
+            <!-- 대금(쌍골죽) + 구멍 9개(취구·청공·지공6·칠성공) — 구멍은 exp1.js 가 생성 -->
+            <img class="daegeum" src="img/03_exp1/daegeum.png" alt="대금" />
+            <div id="holes"></div>
+
+            <!-- 나무 그릇 클릭영역(그릇 그림은 배경에 포함) -->
+            <button class="bowl-hit" id="bowlHit" aria-label="나무 그릇"></button>
+
+            <!-- 갈대청 -->
+            <img class="reed" id="reed" src="img/03_exp1/reed_membrane.png" alt="갈대청" />
+
+            <!-- 송곳 -->
+            <img class="drill" id="drill" src="img/03_exp1/drill.png" alt="송곳" />
+
+            <!-- 하이라이트(터치 이펙트, screen 블렌드) · 안내 화살표 -->
+            <img class="hole-fx exp1-fx" id="fx" src="img/03_exp1/hole_effect.png" alt="" />
+            <span class="arrow-hint exp1-arrow" id="arrow"><img src="img/03_exp1/arrow.png" alt="" /></span>
+
+            <!-- 부위 명칭(전용 에셋 없음 → 텍스트) -->
+            <p class="part-name" id="partName"></p>
+          </div>
+
+          <!-- 준비: 화면을 눌러 시작 -->
+          <div class="dimmed ready-dim flex" id="readyDim">
+            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="" />
+            <p>체험을 시작하려면 화면을 눌러주세요</p>
+          </div>
+
+          <!-- 안내: 체험 방법 -->
+          <div class="dimmed guide-dim" id="guideDim">
+            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="체험 방법" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 종료 -->
+          <!-- ※ .dialog 래퍼를 두지 않는다 — 내부 좌표를 .container 기준 %로 잡기 위해 -->
+          <div class="dimmed finish-dim exp1-finish" id="finishDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="finish-title" src="img/03_exp1/end_text.png" alt="나라를 지킨 대금, 만파식적 완성!" />
+            <img class="finish-main" src="img/03_exp1/end_image.png" alt="만파식적" />
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp1.js"></script>
+  </body>
+</html>

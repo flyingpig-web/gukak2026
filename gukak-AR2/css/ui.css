@@ -1,0 +1,394 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   gukak 시리즈 공통 UI  (다음 편은 이 프로젝트 폴더를 통째로 복사해 쓴다)
+   - 국악 편에서 화면마다 되풀이되는 요소(상단바 / 준비 딤드 / 안내 / 종료 팝업 /
+     정보 팝업 / 안내 화살표 / 하이라이트)의 배치·동작을 한 곳에 모았다.
+   - 좌표는 디자인 1920×1080 기준 % (레터박스 .container 기준). px 고정 금지.
+   - 이미지 경로는 여기에 두지 않는다 — 프로젝트 HTML 의 <img src> 로만 지정.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   화면 배경 (컨테이너 전체를 채우는 1920×1080 배경)
+   ------------------------------------------------------------------------- */
+.scene-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 여러 장을 겹쳐 두고 opacity 로 디졸브 하는 배경(활동2 단계 전환) */
+.scene-bg.layer {
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+.scene-bg.layer.on {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   버튼 공통 — 기획 p4 "모든 상호작용 버튼은 마우스 호버 시 스케일 10%"
+   ★ 위치 지정용 transform 과 충돌하지 않도록 스케일은 "안쪽 img" 에 건다.
+   ------------------------------------------------------------------------- */
+button > img,
+[role="button"] > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover > img,
+  [role="button"]:hover > img {
+    transform: scale(1.1);
+  }
+}
+
+button:not(:disabled):active > img,
+[role="button"]:active > img {
+  filter: var(--btn-active-effect);
+}
+
+button:disabled {
+  cursor: default;
+}
+button:disabled > img {
+  opacity: 0.45;
+}
+
+/* -------------------------------------------------------------------------
+   상단바 — [뒤로가기] · 구름 타이틀 · [홈]  (전 화면 공통 위치)
+   ------------------------------------------------------------------------- */
+.btn-top {
+  position: absolute;
+  z-index: 30;
+}
+
+.btn-back {
+  left: 3.54%;
+  top: 2.87%;
+  width: 8.44%;
+  height: 14.81%;
+}
+
+.btn-home {
+  left: 89.06%;
+  top: 2.78%;
+  width: 8.49%;
+  height: 14.91%;
+}
+
+.top-title {
+  position: absolute;
+  left: 20.42%;
+  top: 4.44%;
+  width: 59.17%;
+  height: 12.59%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   플레이 스테이지 — 준비/안내 화면에서는 감춘다.
+   준비·안내 화면은 "체험 방법 예시" 이미지를 띄우는데, 그 이미지 안에 대금·송곳·
+   게이지 같은 요소가 이미 그려져 있어서 실제 플레이 요소와 겹쳐 보이기 때문.
+   (배경은 그대로 두어 "플레이 화면 배경으로 딤드" 규격을 지킨다)
+   ------------------------------------------------------------------------- */
+.exp-stage {
+  display: none;
+}
+.exp-stage.on {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------
+   준비 화면 — 플레이 화면을 딤드하고 "화면을 눌러주세요"
+   ------------------------------------------------------------------------- */
+.ready-dim {
+  z-index: 200;
+  cursor: pointer;
+}
+
+/* 준비 화면에도 체험 방법 이미지가 보이되, 안내 화면보다 더 어둡게 깔린다
+   (기획 p8/p20 목업 — 같은 그림이 딤드된 상태 + "화면을 눌러주세요") */
+.ready-dim .guide-img {
+  opacity: 0.5;
+}
+
+.ready-dim p {
+  font-family: var(--font);
+  font-size: 4.4rem;
+  font-weight: 700;
+  color: #fff;
+  text-align: center;
+  text-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.8);
+  animation: readyPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes readyPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   안내(체험 방법) — 딤드 위에 전체화면 튜토리얼 이미지 1장 + [▶]
+   ------------------------------------------------------------------------- */
+.guide-dim {
+  z-index: 210;
+}
+
+.guide-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.btn-guide-play {
+  position: absolute;
+  left: 87.2%;
+  top: 80.2%;
+  width: 8.44%;
+  height: 14.81%;
+  z-index: 220;
+}
+
+/* -------------------------------------------------------------------------
+   종료 팝업 — 딤드 이미지 + 타이틀 + 중앙 이미지 + [다시하기][더 알아보기][나가기]
+   ------------------------------------------------------------------------- */
+.finish-dim {
+  z-index: 300;
+  background-color: transparent; /* 딤드는 end_bg 이미지가 담당 */
+}
+
+.finish-bg,
+.finish-title,
+.finish-main {
+  position: absolute;
+  pointer-events: none;
+}
+
+.finish-bg {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.finish-btns button {
+  position: absolute;
+  top: 77.31%;
+  z-index: 310;
+}
+
+.btn-retry {
+  left: 15.47%;
+  width: 18.8%;
+  height: 14.54%;
+}
+
+.btn-more {
+  left: 40.94%;
+  width: 18.7%;
+  height: 14.35%;
+}
+
+.btn-exit {
+  left: 66.3%;
+  width: 18.23%;
+  height: 14.44%;
+}
+
+/* -------------------------------------------------------------------------
+   정보 팝업 — 딤드 + 설명 이미지 + [X] + 좌우 화살표(여러 장일 때만)
+   ------------------------------------------------------------------------- */
+.info-dim {
+  z-index: 300;
+}
+
+.info-dim .pop-img {
+  position: absolute;
+  left: 16.82%;
+  top: 27.31%;
+  width: 66.41%;
+  height: 47.59%;
+  /* 팝업 위 클릭도 닫기로 전달된다(기획 p27/p28 문구 그대로).
+     화살표·[X] 는 팝업 바깥에 있어 영향받지 않는다. */
+}
+
+.info-dim .btn-close {
+  position: absolute;
+  left: 76.77%;
+  top: 22.69%;
+  width: 8.44%;
+  height: 14.81%;
+  z-index: 310;
+}
+
+.info-dim .btn-nav {
+  position: absolute;
+  top: 43.52%;
+  width: 5.73%;
+  height: 13.8%;
+  z-index: 310;
+}
+
+.info-dim .btn-next {
+  left: 87.92%;
+}
+
+/* 이전 화살표 = 다음 화살표를 좌우 반전해서 사용(에셋 1종) */
+.info-dim .btn-prev {
+  left: 6.35%;
+}
+.info-dim .btn-prev > img {
+  transform: scaleX(-1);
+}
+@media (hover: hover) {
+  .info-dim .btn-prev:hover > img {
+    transform: scaleX(-1) scale(1.1);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   안내 화살표 — 가리키는 방향으로 조금씩 왕복(기획 "위아래로 움직이는 액팅")
+   ------------------------------------------------------------------------- */
+.arrow-hint {
+  position: absolute;
+  pointer-events: none;
+  z-index: 18;
+  display: none;
+}
+.arrow-hint.on {
+  display: block;
+}
+
+/* 기본: 위를 가리키는 화살표가 위아래로 */
+.arrow-hint img {
+  width: 100%;
+  height: 100%;
+  animation: arrowBob 1s ease-in-out infinite;
+}
+
+@keyframes arrowBob {
+  0%,
+  100% {
+    transform: translateY(-9%);
+  }
+  50% {
+    transform: translateY(9%);
+  }
+}
+
+/* 왼쪽을 가리키는 변형(나무 그릇 안내) — 목업 p16 은 그릇 오른쪽의 좌향 화살표.
+   왕복은 기획 문구대로 "위아래". ★ transform 은 왼쪽이 바깥이라
+   translateY 를 먼저 적으면 회전과 무관하게 화면 세로축으로 움직인다. */
+.arrow-hint.point-left img {
+  animation-name: arrowBobLeft;
+}
+
+@keyframes arrowBobLeft {
+  0%,
+  100% {
+    transform: translateY(-9%) rotate(-90deg);
+  }
+  50% {
+    transform: translateY(9%) rotate(-90deg);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   터치 하이라이트 이펙트 — 기획 p10 "Blend mode : screen"
+   ------------------------------------------------------------------------- */
+.hole-fx {
+  position: absolute;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 16;
+  display: none;
+  /* left 를 "가로 중심"으로 쓰기 때문에 키프레임에도 같은 translate 를 넣어야 한다
+     (transform 은 통째로 교체되므로 빠뜨리면 애니메이션 중 위치가 튄다) */
+  transform: translateX(-50%);
+  animation: fxPulse 1.1s ease-in-out infinite;
+}
+.hole-fx.on {
+  display: block;
+}
+
+@keyframes fxPulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: translateX(-50%) scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: translateX(-50%) scale(1.08);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   화면 중단 명칭 텍스트(취구 / 청공 / 지공 / 칠성공 / 갈대청)
+   ※ 전용 에셋이 없어 텍스트로 처리한다.
+   ------------------------------------------------------------------------- */
+.part-name {
+  position: absolute;
+  left: 0;
+  top: 26%;
+  width: 100%;
+  text-align: center;
+  z-index: 40;
+  font-family: var(--font);
+  font-size: 9rem;
+  font-weight: 800;
+  color: #fff8e1;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.65), 0 0.5rem 1rem rgba(0, 0, 0, 0.55);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.part-name.show {
+  animation: partName 1.8s ease forwards;
+}
+
+@keyframes partName {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  18% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  30% {
+    transform: scale(1);
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   개발자 좌표 확인용 오버레이 (Ctrl + ; 로 켠 뒤 클릭 영역 확인)
+   ------------------------------------------------------------------------- */
+.dev-on .hit-dev {
+  outline: 0.2rem dashed rgba(255, 60, 60, 0.9);
+  background: rgba(255, 60, 60, 0.14);
+}

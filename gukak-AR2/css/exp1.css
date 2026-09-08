@@ -1,0 +1,212 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동1 — 나라를 지킬 만파식적을 만들자! (exp1.html)
+   기획서 p8~18. 좌표는 목업(1920×1080) 실측값.
+     · 대금      left 5.73% / top 54.44% / 89.11% × 14.07%
+     · 구멍 9개  세로 중심 59.03% 고정, 가로 중심은 아래 .hole 인라인 left
+     · 송곳      폭 2.60% / 높이 28.70% / top 24.07%
+   ========================================================================= */
+
+.daegeum {
+  position: absolute;
+  left: 5.73%;
+  top: 54.44%;
+  width: 89.11%;
+  height: 14.07%;
+  z-index: 12;
+  pointer-events: none;
+}
+
+/* ----- 구멍(뚫기 전 = line_hole, 뚫은 뒤 = hole) -----------------------
+   left(가로 중심)는 JS 가 인라인으로 넣는다. top 은 전부 동일. */
+.hole {
+  position: absolute;
+  top: 59.03%;
+  transform: translate(-50%, -50%);
+  z-index: 14;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: default;
+  pointer-events: none; /* 현재 차례의 구멍만 JS 가 .active 로 열어준다 */
+}
+
+.hole.active {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hole > img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+}
+
+@media (hover: hover) {
+  .hole.active:hover > img {
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+.hole .hole-open {
+  display: none;
+}
+.hole.open .hole-line {
+  display: none;
+}
+.hole.open .hole-open {
+  display: block;
+}
+
+/* 타입별 크기 — 바깥 박스는 line_hole 원본, 안쪽 hole 은 원본 비율대로 */
+.hole-t1 {
+  width: 2.656%;
+  height: 2.5%;
+} /* line_hole1 51×27 (지공·칠성공) */
+.hole-t1 .hole-line {
+  width: 100%;
+  height: 100%;
+}
+.hole-t1 .hole-open {
+  width: 90.2%;
+  height: 85.2%;
+} /* hole1 46×23 */
+
+.hole-t2 {
+  width: 4.635%;
+  height: 2.5%;
+} /* line_hole2 89×27 (청공) */
+.hole-t2 .hole-line {
+  width: 100%;
+  height: 100%;
+}
+.hole-t2 .hole-open {
+  width: 95.5%;
+  height: 85.2%;
+} /* hole2 85×23 */
+
+.hole-t3 {
+  width: 5.26%;
+  height: 3.24%;
+} /* line_hole3 101×35 (취구) */
+.hole-t3 .hole-line {
+  width: 100%;
+  height: 100%;
+}
+.hole-t3 .hole-open {
+  width: 97%;
+  height: 88.6%;
+} /* hole3 98×31 */
+
+/* ----- 송곳 ------------------------------------------------------------ */
+.drill {
+  position: absolute;
+  top: 24.07%;
+  width: 2.604%;
+  height: 28.7%;
+  transform: translateX(-50%);
+  z-index: 20;
+  pointer-events: none;
+  transition: left 0.35s ease, opacity 0.5s ease;
+}
+
+.drill.hide {
+  opacity: 0;
+}
+
+/* 구멍을 뚫을 때 위→아래→위 (기획 p11 "송곳 에셋이 위 아래로 움직이게 액팅") */
+.drill.drilling {
+  animation: drillPunch 0.5s ease-in-out;
+}
+
+@keyframes drillPunch {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  45%,
+  60% {
+    transform: translateX(-50%) translateY(20%);
+  }
+}
+
+/* ----- 안내 화살표 / 하이라이트 ---------------------------------------- */
+.exp1-arrow {
+  width: 7.76%;
+  height: 14.44%;
+  top: 65.65%;
+  transform: translateX(-50%);
+}
+
+/* 나무 그릇을 가리킬 때는 왼쪽을 향해 그릇 옆에 선다 */
+.exp1-arrow.point-left {
+  left: 35.7%;
+  top: 29.5%;
+}
+
+.exp1-fx {
+  width: 7.08%;
+  height: 7.69%;
+  top: 52.04%;
+}
+
+/* ----- 나무 그릇(배경에 그려져 있어 클릭영역만 얹는다) ------------------ */
+.bowl-hit {
+  position: absolute;
+  left: 6.5%;
+  top: 26%;
+  width: 24%;
+  height: 21%;
+  z-index: 15;
+  background: none;
+  border: 0;
+  padding: 0;
+  display: none;
+}
+.bowl-hit.active {
+  display: block;
+  cursor: pointer;
+}
+
+/* ----- 갈대청 ---------------------------------------------------------- */
+.reed {
+  position: absolute;
+  width: 6.5%;
+  height: 24%;
+  z-index: 22;
+  pointer-events: none;
+  display: none;
+  transform: translate(-50%, -50%);
+}
+
+.reed.on {
+  display: block;
+}
+
+/* 청공에 붙은 상태 — 청공(폭 4.4%)을 덮는 가로로 넓은 조각.
+   ※ reset.css 의 object-fit:contain 을 fill 로 되돌리지 않으면 원본 비율(세로로 긴
+     막대) 때문에 폭이 줄어 구멍이 양옆으로 삐져나온다. */
+.reed.attached {
+  width: 5.6%;
+  height: 6.5%;
+  object-fit: fill;
+  transition: left 0.25s ease, top 0.25s ease, width 0.25s ease, height 0.25s ease;
+}
+
+/* ----- 종료 팝업 ------------------------------------------------------- */
+.exp1-finish .finish-title {
+  left: 21.2%;
+  top: -7.31%;
+  width: 57.55%;
+  height: 57.69%;
+}
+
+.exp1-finish .finish-main {
+  left: 18.39%;
+  top: 16.94%;
+  width: 63.23%;
+  height: 73.7%;
+}

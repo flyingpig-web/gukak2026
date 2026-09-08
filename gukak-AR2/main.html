@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>만파식적 — 무엇을 해볼까?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 동해 + 가람 얼굴 + 말풍선(bg_main.png) -->
+          <div class="scene-bg" style="background-image: url(img/02_main/bg_main.png)"></div>
+
+          <!-- 말풍선 문구(배경에 구워진 문구 위를 덮어 교체) -->
+          <p class="main-text" id="mainText">바다의 용이 나타나 신비한 대나무를 주었어!</p>
+
+          <!-- 선택① 용이 대나무를 감싼 섬 → 활동1 -->
+          <img class="choice-img img-exp1" id="imgExp1" src="img/02_main/btn_exp1.png" alt="" />
+          <button class="choice-hit hit-exp1" id="hitExp1" aria-label="대금을 만들어요"></button>
+
+          <!-- 선택② 어선과 어부 부자, 이견대 절벽 → 활동2 -->
+          <img class="choice-img img-exp2" id="imgExp2" src="img/02_main/btn_exp2.png" alt="" />
+          <button class="choice-hit hit-exp2" id="hitExp2" aria-label="한 음씩 대금을 불어봐요"></button>
+
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>

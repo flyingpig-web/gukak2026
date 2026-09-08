@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동2 — 한 음씩 대금을 불어봐요</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경 3단계 — 겹쳐 두고 opacity 로 디졸브(기획 p22 "BG 전환(디졸브)") -->
+          <div class="scene-bg layer on" data-level="1" style="background-image: url(img/04_exp2/bg_level1.png)"></div>
+          <div class="scene-bg layer" data-level="2" style="background-image: url(img/04_exp2/bg_level2.png)"></div>
+          <div class="scene-bg layer" data-level="3" style="background-image: url(img/04_exp2/bg_level3.png)"></div>
+
+          <!-- 어부 부자(단계별 1컷) -->
+          <img class="boat boat-1 on" data-level="1" src="img/04_exp2/boat_level1.png" alt="" />
+          <img class="boat boat-2" data-level="2" src="img/04_exp2/boat_level2.png" alt="" />
+          <img class="boat boat-3" data-level="3" src="img/04_exp2/boat_level3.png" alt="" />
+
+          <!-- 플레이 요소 (준비/안내 화면에서는 숨긴다) -->
+          <div class="exp-stage" id="stage">
+            <!-- 절벽 위에서 대금을 부는 가람 — 7음(rendition1~7)을 겹쳐 두고 교체 -->
+            <img class="garam on" data-note="0" src="img/04_exp2/rendition1.png" alt="대금을 부는 가람" />
+            <img class="garam" data-note="1" src="img/04_exp2/rendition2.png" alt="" />
+            <img class="garam" data-note="2" src="img/04_exp2/rendition3.png" alt="" />
+            <img class="garam" data-note="3" src="img/04_exp2/rendition4.png" alt="" />
+            <img class="garam" data-note="4" src="img/04_exp2/rendition5.png" alt="" />
+            <img class="garam" data-note="5" src="img/04_exp2/rendition6.png" alt="" />
+            <img class="garam" data-note="6" src="img/04_exp2/rendition7.png" alt="" />
+
+            <!-- 연주 게이지 7칸(중간음역 7음) — exp2.js 가 생성 -->
+            <div id="gages"></div>
+
+            <!-- [불기] — 길게 누르는 버튼 -->
+            <button class="btn-blow" id="btnBlow" aria-label="불기">
+              <img src="img/04_exp2/btn_blowing.png" alt="불기" />
+            </button>
+          </div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/04_exp2/exp2_title.png" alt="한 음씩 대금을 불어봐요" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 준비: 화면을 눌러 시작 -->
+          <div class="dimmed ready-dim flex" id="readyDim">
+            <img class="guide-img" src="img/04_exp2/exp2_tutorial.png" alt="" />
+            <p>체험을 시작하려면 화면을 눌러주세요</p>
+          </div>
+
+          <!-- 안내: 체험 방법 -->
+          <div class="dimmed guide-dim" id="guideDim">
+            <img class="guide-img" src="img/04_exp2/exp2_tutorial.png" alt="체험 방법" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 종료 (end_bg 는 활동1 과 공용 에셋) -->
+          <div class="dimmed finish-dim exp2-finish" id="finishDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="finish-title" src="img/04_exp2/end_text.png" alt="만파식적을 불어 파도를 잠재웠어요!" />
+            <img class="finish-main" src="img/04_exp2/end_main.png" alt="만파식적을 든 가람과 신문왕" />
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp2.js"></script>
+  </body>
+</html>

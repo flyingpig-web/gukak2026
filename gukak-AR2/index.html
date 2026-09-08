@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>만파식적 — 나라를 지킨 악기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 타이틀·안내문구 포함(bg_title.png) -->
+          <div class="scene-bg" style="background-image: url(img/01_title/bg_title.png)"></div>
+
+          <!-- 버튼 외 배경 클릭 → 가람N_01 (1회) -->
+          <div class="home-hit" id="homeHit"></div>
+
+          <button class="btn-start" id="btnStart">
+            <img src="img/01_title/btn_start.png" alt="시작" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="js/home.js"></script>
+  </body>
+</html>

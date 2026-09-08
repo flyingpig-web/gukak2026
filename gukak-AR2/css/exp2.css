@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동2 — 만파식적을 불어 음을 내보자! (exp2.html)
+   기획서 p19~26. 좌표는 목업(1920×1080) 실측값.
+     · 가람(rendition1~7)  left 10.68% / top 20.37% / 39.06% × 117.50%
+       (세로가 화면보다 커서 아래쪽이 잘린다 — 목업과 동일)
+     · 어부 배            단계별로 위치가 다름(잔잔해질수록 왼쪽·위로)
+     · 연주 게이지 7칸    left 6.406% + 7.8125%×i / top 80.46% / 12.083% × 14.907%
+     · [불기] 버튼        left 76.15% / top 67.78% / 18.49% × 32.87%
+   ========================================================================= */
+
+.garam {
+  position: absolute;
+  left: 10.68%;
+  top: 20.37%;
+  width: 39.06%;
+  height: 117.5%;
+  z-index: 12;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.garam.on {
+  opacity: 1;
+}
+
+.boat {
+  position: absolute;
+  width: 22.81%;
+  height: 27.13%;
+  z-index: 11;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.boat.on {
+  opacity: 1;
+}
+
+/* 0~1단계(폭풍) → 2단계(비) → 3단계(잔잔) 로 갈수록 배가 왼쪽·위로 */
+.boat-1 {
+  left: 65.16%;
+  top: 40.74%;
+}
+.boat-2 {
+  left: 60.99%;
+  top: 40.74%;
+}
+.boat-3 {
+  left: 58.59%;
+  top: 36.48%;
+  width: 22.86%;
+}
+
+/* ----- 연주 게이지 (중간음역 7음) --------------------------------------- */
+.gage {
+  position: absolute;
+  top: 80.46%;
+  width: 12.083%;
+  height: 14.907%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.gage img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 채워지는 칸 — 좌→우로 clip 해서 진행률 표현(JS 가 --k 를 갱신) */
+.gage .gage-on {
+  clip-path: inset(0 calc(100% - var(--k, 0) * 100%) 0 0);
+}
+
+/* ----- [불기] 버튼 ------------------------------------------------------ */
+.btn-blow {
+  position: absolute;
+  left: 76.15%;
+  top: 67.78%;
+  width: 18.49%;
+  height: 32.87%;
+  z-index: 25;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  /* 길게 누르는 버튼 — 롱프레스 메뉴/선택/드래그 방지 */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  touch-action: none;
+}
+
+.btn-blow.blowing > img,
+.btn-blow.blowing:hover > img {
+  transform: scale(0.95);
+  filter: brightness(115%);
+}
+
+/* ----- 종료 팝업 ------------------------------------------------------- */
+.exp2-finish .finish-title {
+  left: 21.25%;
+  top: -7.31%;
+  width: 57.5%;
+  height: 57.59%;
+}
+
+.exp2-finish .finish-main {
+  left: 32.81%;
+  top: 30.46%;
+  width: 34.38%;
+  height: 48.89%;
+}
