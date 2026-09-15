@@ -25,7 +25,7 @@
 /* 여러 장을 겹쳐 두고 opacity 로 디졸브 하는 배경(활동2 단계 전환) */
 .scene-bg.layer {
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 1.5s ease; /* 단계 전환 디졸브를 1.5배로(수정요청) */
 }
 .scene-bg.layer.on {
   opacity: 1;
@@ -108,40 +108,6 @@ button:disabled > img {
 }
 
 /* -------------------------------------------------------------------------
-   준비 화면 — 플레이 화면을 딤드하고 "화면을 눌러주세요"
-   ------------------------------------------------------------------------- */
-.ready-dim {
-  z-index: 200;
-  cursor: pointer;
-}
-
-/* 준비 화면에도 체험 방법 이미지가 보이되, 안내 화면보다 더 어둡게 깔린다
-   (기획 p8/p20 목업 — 같은 그림이 딤드된 상태 + "화면을 눌러주세요") */
-.ready-dim .guide-img {
-  opacity: 0.5;
-}
-
-.ready-dim p {
-  font-family: var(--font);
-  font-size: 4.4rem;
-  font-weight: 700;
-  color: #fff;
-  text-align: center;
-  text-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.8);
-  animation: readyPulse 1.6s ease-in-out infinite;
-}
-
-@keyframes readyPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.55;
-  }
-}
-
-/* -------------------------------------------------------------------------
    안내(체험 방법) — 딤드 위에 전체화면 튜토리얼 이미지 1장 + [▶]
    ------------------------------------------------------------------------- */
 .guide-dim {
@@ -172,6 +138,12 @@ button:disabled > img {
 .finish-dim {
   z-index: 300;
   background-color: transparent; /* 딤드는 end_bg 이미지가 담당 */
+}
+
+/* 종료 팝업 중에는 상단바를 숨긴다(common.js openPopup/closePopup 이 토글) */
+body.finish-on .top-title,
+body.finish-on .btn-top {
+  display: none;
 }
 
 .finish-bg,
@@ -294,8 +266,8 @@ button:disabled > img {
 }
 
 /* 왼쪽을 가리키는 변형(나무 그릇 안내) — 목업 p16 은 그릇 오른쪽의 좌향 화살표.
-   왕복은 기획 문구대로 "위아래". ★ transform 은 왼쪽이 바깥이라
-   translateY 를 먼저 적으면 회전과 무관하게 화면 세로축으로 움직인다. */
+   가리키는 방향대로 좌-우 왕복(수정요청). ★ transform 은 왼쪽이 바깥이라
+   translateX 를 먼저 적으면 회전과 무관하게 화면 가로축으로 움직인다. */
 .arrow-hint.point-left img {
   animation-name: arrowBobLeft;
 }
@@ -303,10 +275,10 @@ button:disabled > img {
 @keyframes arrowBobLeft {
   0%,
   100% {
-    transform: translateY(-9%) rotate(-90deg);
+    transform: translateX(9%) rotate(-90deg);
   }
   50% {
-    transform: translateY(9%) rotate(-90deg);
+    transform: translateX(-9%) rotate(-90deg);
   }
 }
 
@@ -341,47 +313,44 @@ button:disabled > img {
 }
 
 /* -------------------------------------------------------------------------
-   화면 중단 명칭 텍스트(취구 / 청공 / 지공 / 칠성공 / 갈대청)
-   ※ 전용 에셋이 없어 텍스트로 처리한다.
+   화면 중단 부위 명칭 타이포 (label-취구/청공/지공/칠성공/갈대청, 489×245)
    ------------------------------------------------------------------------- */
 .part-name {
   position: absolute;
-  left: 0;
-  top: 26%;
-  width: 100%;
-  text-align: center;
+  left: 50%;
+  top: 20%;
+  width: 25.47%;
+  height: 22.69%;
   z-index: 40;
-  font-family: var(--font);
-  font-size: 9rem;
-  font-weight: 800;
-  color: #fff8e1;
-  letter-spacing: 0.05em;
-  text-shadow: 0 0 1.2rem rgba(0, 0, 0, 0.65), 0 0.5rem 1rem rgba(0, 0, 0, 0.55);
   pointer-events: none;
   opacity: 0;
+  transform: translateX(-50%);
 }
 
 .part-name.show {
   animation: partName 1.8s ease forwards;
 }
 
+/* ★ 가로 중앙정렬용 translateX 를 키프레임마다 다시 써야 한다
+   (transform 은 통째로 교체되므로 빠뜨리면 애니메이션 중 위치가 튄다) */
 @keyframes partName {
   0% {
     opacity: 0;
-    transform: scale(0.6);
+    transform: translateX(-50%) scale(0.6);
   }
   18% {
     opacity: 1;
-    transform: scale(1.08);
+    transform: translateX(-50%) scale(1.08);
   }
   30% {
-    transform: scale(1);
+    transform: translateX(-50%) scale(1);
   }
   75% {
     opacity: 1;
   }
   100% {
     opacity: 0;
+    transform: translateX(-50%) scale(1);
   }
 }
 

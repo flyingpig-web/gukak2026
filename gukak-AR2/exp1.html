@@ -29,8 +29,10 @@
 
           <!-- 플레이 요소 (준비/안내 화면에서는 숨긴다) -->
           <div class="exp-stage" id="stage">
-            <!-- 대금(쌍골죽) + 구멍 9개(취구·청공·지공6·칠성공) — 구멍은 exp1.js 가 생성 -->
+            <!-- 대금(쌍골죽) + 구멍 9개(취구·청공·지공6·칠성공) — 구멍은 exp1.js 가 생성.
+                 갈대청을 붙이면 daegeum2(완성본)로 디졸브된다. 구멍·갈대청은 위에 그대로 남는다. -->
             <img class="daegeum" src="img/03_exp1/daegeum.png" alt="대금" />
+            <img class="daegeum daegeum-done" id="daegeum2" src="img/03_exp1/daegeum2.png" alt="" />
             <div id="holes"></div>
 
             <!-- 나무 그릇 클릭영역(그릇 그림은 배경에 포함) -->
@@ -46,18 +48,12 @@
             <img class="hole-fx exp1-fx" id="fx" src="img/03_exp1/hole_effect.png" alt="" />
             <span class="arrow-hint exp1-arrow" id="arrow"><img src="img/03_exp1/arrow.png" alt="" /></span>
 
-            <!-- 부위 명칭(전용 에셋 없음 → 텍스트) -->
-            <p class="part-name" id="partName"></p>
-          </div>
-
-          <!-- 준비: 화면을 눌러 시작 -->
-          <div class="dimmed ready-dim flex" id="readyDim">
-            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="" />
-            <p>체험을 시작하려면 화면을 눌러주세요</p>
+            <!-- 부위 명칭 타이포(label-*.png) -->
+            <img class="part-name" id="partName" alt="" />
           </div>
 
           <!-- 안내: 체험 방법 -->
-          <div class="dimmed guide-dim" id="guideDim">
+          <div class="dimmed guide-dim flex" id="guideDim">
             <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="체험 방법" />
             <button class="btn-guide-play" id="btnGuidePlay">
               <img src="img/00_common/btn_play.png" alt="시작하기" />

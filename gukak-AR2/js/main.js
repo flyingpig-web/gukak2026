@@ -16,7 +16,7 @@ $(function () {
       off: "img/02_main/btn_exp1.png",
       on: "img/02_main/btn_exp1_on.png",
       vo: S.n03,
-      text: "신비한 대나무로 대금을 만들어볼까?",
+      text: "img/02_main/text_exp1.png",
       href: "exp1.html",
     },
     exp2: {
@@ -25,17 +25,25 @@ $(function () {
       off: "img/02_main/btn_exp2.png",
       on: "img/02_main/btn_exp2_on.png",
       vo: S.n04,
-      text: "나라를 지키기 위해 대금을 불어볼까?",
+      text: "img/02_main/text_exp2.png",
       href: "exp2.html",
     },
   };
 
-  // 첫 문구(가람N_02)도 우리가 그린다 — 배경에 구워진 문구는 text_bar 로 덮인다.
-  AR.showText("#mainText", "바다의 용이 나타나 신비한 대나무를 주었어!", { ms: 0 });
+  // 말풍선은 문구가 구워진 소스 3종(text_main / text_exp1 / text_exp2)을 페이드 교체한다.
+  function showBubble(src) {
+    const $b = $("#mainText");
+    if ($b.attr("src") === src) return;
+    $b.stop(true).animate({ opacity: 0 }, 180, function () {
+      $b.attr("src", src).animate({ opacity: 1 }, 180);
+    });
+  }
 
   AR.preload([
     "img/02_main/bg_main.png",
-    "img/02_main/text_bar.png",
+    "img/02_main/text_main.png",
+    CHOICES.exp1.text,
+    CHOICES.exp2.text,
     CHOICES.exp1.off,
     CHOICES.exp1.on,
     CHOICES.exp2.off,
@@ -63,7 +71,7 @@ $(function () {
           return;
         }
         selected = key;
-        AR.showText("#mainText", c.text);
+        showBubble(c.text);
         AR.Sound.narrate(c.vo);
       });
   });

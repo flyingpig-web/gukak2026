@@ -32,7 +32,7 @@
   z-index: 11;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 1s ease;
+  transition: opacity 1.5s ease; /* 단계 전환 디졸브를 1.5배로(수정요청) */
 }
 
 .boat.on {
@@ -52,6 +52,67 @@
   left: 58.59%;
   top: 36.48%;
   width: 22.86%;
+}
+
+/* ----- 돛단배 흔들림 (수정요청 — 단계가 올라갈수록 잔잔해진다) -----------
+   ※ reset.css 기준 1rem = 디자인 1920 기준 10px → 요청 수치 20px = 2rem.
+   ※ 키프레임 간격을 일부러 불균등하게 둬서 "불규칙하게" 흔들리게 한다. */
+.boat-1 {
+  animation: boatRock1 1.4s ease-in-out infinite;
+}
+.boat-2 {
+  animation: boatRock2 2s ease-in-out infinite;
+}
+.boat-3 {
+  animation: boatRock3 3.2s ease-in-out infinite;
+}
+
+/* 1단계 — 상하 ±2~3rem, 좌우 ±1~1.5rem, 회전 ±5~7도 (거센 파도에 휩쓸리는 느낌) */
+@keyframes boatRock1 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  17% {
+    transform: translate(-1.5rem, 2.8rem) rotate(6.5deg);
+  }
+  38% {
+    transform: translate(1.2rem, -2.2rem) rotate(-5deg);
+  }
+  59% {
+    transform: translate(-1rem, 3rem) rotate(7deg);
+  }
+  81% {
+    transform: translate(1.4rem, -2rem) rotate(-6deg);
+  }
+}
+
+/* 2단계 — 상하 ±1.2~1.8rem, 좌우 ±0.6~1rem, 회전 ±3~4도 (아직 불안정) */
+@keyframes boatRock2 {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  28% {
+    transform: translate(-0.9rem, 1.7rem) rotate(3.8deg);
+  }
+  55% {
+    transform: translate(0.7rem, -1.3rem) rotate(-3deg);
+  }
+  78% {
+    transform: translate(-0.6rem, 1.4rem) rotate(3.2deg);
+  }
+}
+
+/* 3단계 — 좌우 ±1.5~2.5rem 중심, 상하 ±0.3~0.5rem, 회전 ±0.5~1도 (잠잠해진 상태) */
+@keyframes boatRock3 {
+  0%,
+  100% {
+    transform: translate(-2.2rem, 0) rotate(-0.8deg);
+  }
+  50% {
+    transform: translate(2.2rem, 0.5rem) rotate(0.8deg);
+  }
 }
 
 /* ----- 연주 게이지 (중간음역 7음) --------------------------------------- */

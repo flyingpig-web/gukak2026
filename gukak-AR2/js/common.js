@@ -372,13 +372,18 @@
      3. 팝업(딤드 + 다이얼로그) — common.css 의 .dimmed / .dialog 사용
      ★ 딤드와 안쪽 .dialog 둘 다 .flex 를 토글해야 보인다(안 하면 다이얼로그가 안 뜸).
      --------------------------------------------------------------------- */
+  // 종료 팝업(.finish-dim)이 열려 있는 동안은 상단바를 감춘다 — end_bg 가 반투명이라
+  // 뒤쪽 타이틀/[뒤로가기]/[홈] 이 비쳐 보인다(수정요청 체험1·2 마무리 화면).
   function openPopup(sel) {
     const $d = $(sel).addClass("flex");
     $d.find(".dialog").addClass("flex");
+    if ($d.hasClass("finish-dim")) $("body").addClass("finish-on");
     return $d;
   }
   function closePopup(sel) {
-    return $(sel).removeClass("flex").find(".dialog").removeClass("flex").end();
+    const $d = $(sel);
+    if ($d.hasClass("finish-dim")) $("body").removeClass("finish-on");
+    return $d.removeClass("flex").find(".dialog").removeClass("flex").end();
   }
 
   /* ---------------------------------------------------------------------
@@ -545,7 +550,7 @@
   function showText($box, text, { ms = 180, fit = true, fitOpts } = {}) {
     const $t = $($box);
     if (!$t.length) return;
-    // 박스가 아니라 글자만 페이드한다 — 박스를 페이드하면 말풍선 배경(text_bar)까지
+    // 박스가 아니라 글자만 페이드한다 — 박스를 페이드하면 텍스트바 배경까지
     // 투명해져서 배경 이미지에 구워진 이전 문구가 잠깐 비친다.
     let $inner = $t.children(".text-fade");
     if (!$inner.length) $inner = $("<span class='text-fade'></span>").appendTo($t.empty());

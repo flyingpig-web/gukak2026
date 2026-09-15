@@ -79,28 +79,15 @@
   height: 63.15%;
 }
 
-/* 말풍선 문구 — bg_main.png 에 가람N_02 문구가 구워져 있어서, 글자를 지운
-   말풍선 안쪽 텍스처(text_bar.png)를 그 위에 덮고 문구를 직접 그린다.
-   ※ text_bar.png 는 bg_main.png 에서 생성한 파생 에셋이다. 빈 말풍선 에셋을
-     받으면 background-image 만 교체하면 된다.
-   ※ 문구 길이는 AR.showText → AR.fitText 가 자동으로 줄여 맞춘다. */
+/* 말풍선 — 문구가 구워진 소스(text_main / text_exp1 / text_exp2, 729×131)를
+   src 교체로 바꾼다. bg_main.png 에서 말풍선이 분리되어 좌표는 원본 위치 그대로.
+   (구 bg 와의 diff bbox = 295,85 → 1023,214) */
 .main-text {
   position: absolute;
-  left: 18.125%;
-  top: 9.444%;
-  width: 32.812%;
-  height: 7.963%;
+  left: 15.365%;
+  top: 7.87%;
+  width: 37.969%;
+  height: 12.13%;
   z-index: 20;
-  padding: 0 1.2%;
-  background: url(../img/02_main/text_bar.png) center / 100% 100% no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font);
-  font-size: 3.4rem;
-  font-weight: 700;
-  color: #2c4a7c;
-  white-space: nowrap;
-  overflow: hidden;
   pointer-events: none;
 }

@@ -18,6 +18,19 @@
   pointer-events: none;
 }
 
+/* 완성본(daegeum2) — 갈대청을 붙이면 원본 위로 디졸브된다.
+   z-index 는 구멍(14)·갈대청(22)보다 아래 → "구멍은 그대로 유지"(수정요청). */
+.daegeum-done {
+  z-index: 13;
+  opacity: 0;
+}
+/* transition 은 .on 쪽에만 둔다 — 여기 두면 [다시하기] 로 .on 을 뗄 때도 0.8초 동안
+   페이드아웃되어, 이미 초기화된 구멍과 완성본이 겹쳐 보인다. 복귀는 즉시. */
+.daegeum-done.on {
+  opacity: 1;
+  transition: opacity 0.8s ease;
+}
+
 /* ----- 구멍(뚫기 전 = line_hole, 뚫은 뒤 = hole) -----------------------
    left(가로 중심)는 JS 가 인라인으로 넣는다. top 은 전부 동일. */
 .hole {
@@ -35,6 +48,19 @@
 .hole.active {
   pointer-events: auto;
   cursor: pointer;
+}
+
+/* 구멍 에셋은 세로가 22~35px 밖에 안 돼(1920 기준 27~35) 그대로 히트 영역으로 쓰면
+   특히 갈대청을 든 채 청공을 찍을 때 자주 빗나간다. 현재 차례의 구멍에만 투명한
+   히트 영역을 얹어 터치 권장 크기(≈90×110 디자인 px)까지 넓힌다. 그림은 그대로. */
+.hole.active::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 11rem;
+  height: 9rem;
 }
 
 .hole > img {
@@ -110,7 +136,9 @@
   transform: translateX(-50%);
   z-index: 20;
   pointer-events: none;
-  transition: left 0.35s ease, opacity 0.5s ease;
+  transition:
+    left 0.35s ease,
+    opacity 0.5s ease;
 }
 
 .drill.hide {
@@ -179,6 +207,9 @@
   z-index: 22;
   pointer-events: none;
   display: none;
+  /* ※ reset.css 의 object-fit:contain 을 fill 로 되돌린다 — 안 그러면 원본 비율
+     때문에 상자 안에서 여백이 생겨 붙었을 때 청공이 양옆으로 삐져나온다. */
+  object-fit: fill;
   transform: translate(-50%, -50%);
 }
 
@@ -186,14 +217,27 @@
   display: block;
 }
 
-/* 청공에 붙은 상태 — 청공(폭 4.4%)을 덮는 가로로 넓은 조각.
-   ※ reset.css 의 object-fit:contain 을 fill 로 되돌리지 않으면 원본 비율(세로로 긴
-     막대) 때문에 폭이 줄어 구멍이 양옆으로 삐져나온다. */
+/* 청공에 붙은 상태 — 세로로 들고 있던 조각이 90° 돌아 누우면서 청공 크기로 줄어든다
+   (수정요청 레퍼런스: 세로 → 비스듬 → 가로 → 축소).
+   ★ width/height 대신 rotate+scale 로 처리한다. %로 준 width/height 는 각각
+     컨테이너의 가로/세로를 기준으로 삼아서, 회전하면 두 축이 뒤섞이기 때문.
+     상자 125×259px → 회전 후 화면상 259×125 → 청공 크기(107×70)에 맞춘 배율:
+     세로 70/125 = 0.562(로컬 x), 가로 107/259 = 0.415(로컬 y). */
 .reed.attached {
-  width: 5.6%;
-  height: 6.5%;
-  object-fit: fill;
-  transition: left 0.25s ease, top 0.25s ease, width 0.25s ease, height 0.25s ease;
+  /* transition 은 여기에만 둔다 — .reed 에 두면 커서 추종(left/top)이 끌린다. */
+  transition:
+    left 0.45s ease,
+    top 0.45s ease,
+    transform 0.45s ease;
+  transform: translate(-50%, -50%) rotate(90deg) scale(0.562, 0.415);
+}
+
+/* 완성 — daegeum2 가 디졸브되는 동안 같은 속도로 사라진다.
+   갈대청과 청공은 완성본에서 청가리개 장식에 덮이는 자리다. */
+.reed.gone,
+.hole.gone {
+  opacity: 0;
+  transition: opacity 0.8s ease;
 }
 
 /* ----- 종료 팝업 ------------------------------------------------------- */

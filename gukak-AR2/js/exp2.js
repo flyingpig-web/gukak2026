@@ -1,7 +1,7 @@
 /* =========================================================================
    활동2 — 만파식적을 불어 음을 내보자! (exp2.html)  기획서 p19~26
 
-   준비(화면 터치) → 안내(체험 방법) → 플레이 → 종료
+   안내(체험 방법) → 플레이 → 종료
 
    플레이 규칙(기획 p23~25)
      · [불기] 버튼을 "누르고 있는 동안" 중간음역 7음을 순서대로 연주
@@ -127,7 +127,7 @@ $(function () {
     }, 700);
   }
 
-  /* ----- 준비 → 안내 → 플레이 ------------------------------------------- */
+  /* ----- 안내 → 플레이 --------------------------------------------------- */
   function startPlay() {
     $("#stage").addClass("on");
     $("#gages, #btnBlow").show();
@@ -136,15 +136,18 @@ $(function () {
     resetAll();
   }
 
-  $("#readyDim").on("click", function () {
-    AR.closePopup("#readyDim");
-    AR.openPopup("#guideDim");
-    AR.Sound.narrate(S.n12);
-  });
+  // 안내 화면은 진입 즉시 떠 있다(HTML 에 .flex). 내레이션만 여기서 건다.
+  // 자동재생이 막히면 첫 터치에서 한 번 더 시도한다.
+  const vo = AR.Sound.narrate(S.n12);
+  if (vo) {
+    $(document).one("pointerdown", function () {
+      if (vo.paused) AR.Sound.narrate(S.n12);
+    });
+  }
 
-  // ?success=1 — 준비/안내를 건너뛰고 완료 화면 바로 보기([더 알아보기] 뒤로가기 복귀)
+  // ?success=1 — 안내를 건너뛰고 완료 화면 바로 보기([더 알아보기] 뒤로가기 복귀)
   if (new URLSearchParams(location.search).get("success") === "1") {
-    AR.closePopup("#readyDim");
+    AR.closePopup("#guideDim");
     $("#gages, #btnBlow").hide();
     AR.openPopup("#finishDim");
   }

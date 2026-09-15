@@ -26,7 +26,9 @@ window.AR_MANIFEST = {
         "img/02_main/btn_exp1_on.png",
         "img/02_main/btn_exp2.png",
         "img/02_main/btn_exp2_on.png",
-        "img/02_main/text_bar.png"
+        "img/02_main/text_exp1.png",
+        "img/02_main/text_exp2.png",
+        "img/02_main/text_main.png"
       ]
     },
     {
@@ -35,6 +37,7 @@ window.AR_MANIFEST = {
         "img/03_exp1/arrow.png",
         "img/03_exp1/bg_exp1.png",
         "img/03_exp1/daegeum.png",
+        "img/03_exp1/daegeum2.png",
         "img/03_exp1/drill.png",
         "img/03_exp1/end_bg.png",
         "img/03_exp1/end_image.png",
@@ -44,6 +47,11 @@ window.AR_MANIFEST = {
         "img/03_exp1/hole2.png",
         "img/03_exp1/hole3.png",
         "img/03_exp1/hole_effect.png",
+        "img/03_exp1/label-cheonggong.png",
+        "img/03_exp1/label-chilseonggong.png",
+        "img/03_exp1/label-chwigu.png",
+        "img/03_exp1/label-galdaecheong.png",
+        "img/03_exp1/label-jigong.png",
         "img/03_exp1/line_hole1.png",
         "img/03_exp1/line_hole2.png",
         "img/03_exp1/line_hole3.png",
