@@ -9,18 +9,24 @@ $(function () {
   const S = window.AR2_SFX;
   const DIR = "img/05_info/";
 
+  // 팝업 1장 = 이미지 + 내레이션 1개(260921 수정요청). 청공은 3장이라 넘길 때마다 바뀐다.
   const PARTS = {
-    chwigu: ["popup_chwigu.png"],
-    cheonggong: ["popup_cheonggong.png", "popup_galdaecheong.png", "popup_cheong-galigae.png"],
-    jigong: ["popup_jigong.png"],
-    chilseonggong: ["popup_chilseonggong.png"],
+    chwigu: [["popup_chwigu.png", "info01"]],
+    cheonggong: [
+      ["popup_cheonggong.png", "info02"],
+      ["popup_galdaecheong.png", "info03"],
+      ["popup_cheong-galigae.png", "info04"],
+    ],
+    jigong: [["popup_jigong.png", "info05"]],
+    chilseonggong: [["popup_chilseonggong.png", "info06"]],
   };
 
   let list = [];
   let idx = 0;
 
   function render() {
-    $("#popImg").attr("src", DIR + list[idx]);
+    $("#popImg").attr("src", DIR + list[idx][0]);
+    AR.Sound.narrate(S[list[idx][1]]);
     const many = list.length > 1;
     $("#btnPrev").toggle(many && idx > 0);
     $("#btnNext").toggle(many && idx < list.length - 1);
@@ -54,16 +60,19 @@ $(function () {
     }
   });
 
+  function closePopup() {
+    AR.Sound.stopNarration();
+    AR.closePopup("#infoDim");
+  }
+
   $("#btnClose").on("click", function (e) {
     e.stopPropagation();
-    AR.closePopup("#infoDim");
+    closePopup();
   });
 
   // 기획 p27/p28 "화면 클릭 시 팝업창이 닫히며 화면 복귀" — 팝업 이미지 위도 포함.
   // 좌우 화살표(6.35% / 87.92%)와 [X] 는 팝업 바깥이라 위에서 stopPropagation 으로 살린다.
-  $("#infoDim").on("click", function () {
-    AR.closePopup("#infoDim");
-  });
+  $("#infoDim").on("click", closePopup);
 
   /* ----- 상단바 — [뒤로가기] 는 들어온 활동으로 돌아간다 ------------------ */
   const from = new URLSearchParams(location.search).get("from");
@@ -89,12 +98,14 @@ $(function () {
       "img/05_info/btn_next.png",
     ].concat(
       Object.keys(PARTS).reduce(function (acc, k) {
-        return acc.concat(PARTS[k].map(function (f) {
-          return DIR + f;
+        return acc.concat(PARTS[k].map(function (p) {
+          return DIR + p[0];
         }));
       }, [])
     )
   ).then(function () {
     AR.Sound.narrate(S.n11);
   });
+
+  AR.Sound.prime([S.n11, S.info01, S.info02, S.info03, S.info04, S.info05, S.info06]);
 });

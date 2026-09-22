@@ -115,7 +115,8 @@ $(function () {
     // 종료 팝업에서는 연주 UI 를 감춘다(기획 p26 목업 — 게이지·[불기] 가 보이지 않는다)
     $("#gages, #btnBlow").hide();
 
-    setTimeout(function () {
+    // 세레모니 효과음이 끝날 때까지 마지막 연주 화면에서 정지(260921 수정요청).
+    AR.Sound.sfxThen(S.result, function () {
       AR.openPopup("#finishDim");
       // 기획 p26: 신문왕N_01 이 끝난 뒤에 버튼이 활성화된다.
       const $btns = $("#finishDim .finish-btns button").prop("disabled", true);
@@ -124,7 +125,7 @@ $(function () {
           $btns.prop("disabled", false);
         },
       });
-    }, 700);
+    });
   }
 
   /* ----- 안내 → 플레이 --------------------------------------------------- */
@@ -199,5 +200,5 @@ $(function () {
     "img/04_exp2/exp2_tutorial.png",
     "img/04_exp2/exp2_title.png",
   ]);
-  AR.Sound.prime(S.notes.concat([S.n12, S.king01]));
+  AR.Sound.prime(S.notes.concat([S.n12, S.king01, S.result]));
 });

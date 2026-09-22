@@ -26,6 +26,7 @@ window.AR2_SFX = {
   n10: "audio/narration/garam_10.mp3", // 갈대청
   n11: "audio/narration/garam_11.mp3", // 각 부분을 눌러 대금을 더 알아보자       (정보)
   n12: "audio/narration/garam_12.mp3", // 한 음씩 대금을 불어, 파도를 잠재우자!    (활동2 안내)
+  n13: "audio/narration/garam_13.mp3", // 만파식적 완성 (활동1 종료화면)
   king01: "audio/narration/king_01.mp3", // 신문왕: 세상을 편안하게 하는 대금, 역시 '만파식적'이로구나!
 
   // 대금 중간음역 7음 (활동2에서 홀드하는 동안 순서대로)
@@ -39,8 +40,17 @@ window.AR2_SFX = {
     "audio/daegeum/note7.mp3", // 임종
   ],
 
+  // 더 알아보기 팝업 내레이션 (부위별)
+  info01: "audio/narration/info_01.mp3", // 취구
+  info02: "audio/narration/info_02.mp3", // 청공
+  info03: "audio/narration/info_03.mp3", // 갈대청
+  info04: "audio/narration/info_04.mp3", // 청가리개
+  info05: "audio/narration/info_05.mp3", // 지공
+  info06: "audio/narration/info_06.mp3", // 칠성공
+
   drill: "audio/effects/drill.mp3", // 대나무 가공음(구멍 뚫을 때 짧게)
   sixNotes: "audio/daegeum/six_notes.mp3", // 지공 6개 완성 시 대금 음 6개
   cheong: "audio/daegeum/cheong.mp3", // 갈대청을 붙였을 때 청이 울리는 소리
   melody: "audio/daegeum/melody_exp1.mp3", // 만파식적 완성 가락
+  result: "audio/effects/result.mp3", // 활동2 세레모니 효과음(이게 끝나야 종료화면)
 };

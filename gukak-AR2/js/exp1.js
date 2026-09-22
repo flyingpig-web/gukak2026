@@ -6,8 +6,8 @@
    플레이 순서(기획 p12~17, Mission 5종 / 클릭 11회)
      ① 취구      → 송곳 액팅 → 구멍 → [취구] 텍스트 + 내레이션
      ② 청공      → 〃 [청공]
-     ③ 지공 6개  → 오른쪽부터 차례로. 첫 번째에 [지공] 타이포, 여섯 번째에 대금 음 6개
-     ④ 칠성공    → [칠성공] + 송곳 사라짐
+     ③ 지공 6개  → 오른쪽부터 차례로. 여섯 번째(마지막)에 [지공] 타이포 + 대금 음 6개
+     ④ 칠성공 2개 → 오른쪽부터. 마지막(왼쪽 끝)에 [칠성공] + 송곳 사라짐
      ⑤ 나무 그릇 → 갈대청이 커서를 따라옴 + [갈대청]
         청공     → 세로였던 갈대청이 90° 회전하며 청공에 붙고 청이 울리는 소리
                  → 대금이 daegeum2(완성본)로 디졸브, 1초 뒤 종료 화면
@@ -23,26 +23,27 @@ $(function () {
     chwigu: { id: "chwigu", type: 3, cx: 85.312, label: "취구", vo: "n06" },
     cheonggong: { id: "cheonggong", type: 2, cx: 70.495, label: "청공", vo: "n07" },
     // 지공 6개 — 취구에 가까운(오른쪽) 것부터.
-    // [지공] 타이포는 첫 번째 구멍에서 띄운다(수정요청). 대금 음 6개는 여섯 번째 그대로.
-    ji1: { id: "ji1", type: 1, cx: 55.677, label: "지공", vo: "n08" },
+    // [지공] 타이포와 대금 음 6개는 마지막(왼쪽 끝) 지공에서 나온다(260921 수정요청).
+    ji1: { id: "ji1", type: 1, cx: 55.677 },
     ji2: { id: "ji2", type: 1, cx: 49.323 },
     ji3: { id: "ji3", type: 1, cx: 43.021 },
     ji4: { id: "ji4", type: 1, cx: 35.365 },
     ji5: { id: "ji5", type: 1, cx: 29.74 },
-    ji6: { id: "ji6", type: 1, cx: 22.135, extraSfx: "sixNotes" },
-    // 칠성공 — 목업의 대금에는 작은 구멍이 7개(지공 6 + 칠성공 1)뿐이라 1개로 구현한다.
-    //   (기획서 본문에는 "칠성공 1개"와 "두번째 칠성"이 함께 적혀 있어 목업을 따랐다)
-    chilseonggong: { id: "chilseonggong", type: 1, cx: 12.604, label: "칠성공", vo: "n09", lastDrill: true },
+    ji6: { id: "ji6", type: 1, cx: 22.135, label: "지공", vo: "n08", extraSfx: "sixNotes" },
+    // 칠성공 2개 — hole1/line_hole1 을 75% 로 줄여 배치(260921 수정요청).
+    // 뚫는 순서는 오른쪽→왼쪽이라 chil2 가 먼저, [칠성공] 타이포와 송곳 사라짐은 마지막 구멍에서.
+    chil2: { id: "chil2", type: 1, small: true, cx: 15.7 },
+    chil1: { id: "chil1", type: 1, small: true, cx: 12.3, label: "칠성공", vo: "n09", lastDrill: true },
   };
   // 부위 명칭 타이포 — 구멍 id 와 파일명이 다른 것들(지공 6개는 모두 label-jigong)
   const LABEL_IMG = {
     chwigu: "chwigu",
     cheonggong: "cheonggong",
-    ji1: "jigong",
-    chilseonggong: "chilseonggong",
+    ji6: "jigong",
+    chil1: "chilseonggong",
     bowl: "galdaecheong",
   };
-  const ORDER = ["chwigu", "cheonggong", "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "chilseonggong"];
+  const ORDER = ["chwigu", "cheonggong", "ji1", "ji2", "ji3", "ji4", "ji5", "ji6", "chil2", "chil1"];
 
   const BOWL = { cx: 18.5, cy: 36.5 }; // 나무 그릇 중심(배경 그림 기준)
   const DRILL_DOWN_MS = 260; // 송곳이 구멍에 닿는 시점(전체 액팅 0.5s)
@@ -52,7 +53,7 @@ $(function () {
   ORDER.forEach(function (key) {
     const h = H[key];
     $holes.append(
-      '<button class="hole hole-t' + h.type + '" id="hole-' + h.id + '" style="left:' + h.cx + '%"' +
+      '<button class="hole hole-t' + h.type + (h.small ? " hole-sm" : "") + '" id="hole-' + h.id + '" style="left:' + h.cx + '%"' +
         ' aria-label="' + (h.label || "지공") + '">' +
         '<img class="hole-line" src="img/03_exp1/line_hole' + h.type + '.png" alt="" />' +
         '<img class="hole-open" src="img/03_exp1/hole' + h.type + '.png" alt="" />' +
@@ -77,6 +78,12 @@ $(function () {
   const $container = $(".container");
 
   let reedFollow = false;
+
+  // 종료 화면 — 진입 시 내레이션(260921 수정요청). 완료 직후 / ?success=1 복귀 모두 여기로.
+  function openFinish() {
+    AR.openPopup("#finishDim");
+    AR.Sound.narrate(S.n13);
+  }
 
   function clearHints() {
     $fx.removeClass("on");
@@ -165,9 +172,7 @@ $(function () {
       // 나머지 구멍은 그대로 둔다(수정요청 "구멍은 그대로 유지").
       $reed.add("#hole-cheonggong").addClass("gone");
       AR.Sound.sfx(S.melody);
-      setTimeout(function () {
-        AR.openPopup("#finishDim");
-      }, 1000);
+      setTimeout(openFinish, 1000);
     },
   });
 
@@ -205,7 +210,7 @@ $(function () {
   // ?success=1 — 안내를 건너뛰고 완료 화면 바로 보기([더 알아보기] 뒤로가기 복귀)
   if (new URLSearchParams(location.search).get("success") === "1") {
     AR.closePopup("#guideDim");
-    AR.openPopup("#finishDim");
+    openFinish();
   }
 
   $("#btnGuidePlay").on("click", function () {
@@ -256,5 +261,5 @@ $(function () {
     "img/03_exp1/label-chilseonggong.png",
     "img/03_exp1/label-galdaecheong.png",
   ]);
-  AR.Sound.prime([S.drill, S.n05, S.n06, S.n07, S.n08, S.n09, S.n10, S.cheong, S.melody, S.sixNotes]);
+  AR.Sound.prime([S.drill, S.n05, S.n06, S.n07, S.n08, S.n09, S.n10, S.n13, S.cheong, S.melody, S.sixNotes]);
 });
