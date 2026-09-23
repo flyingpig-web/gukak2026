@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동1 — 지역마다 달라지는 아리랑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 남한 지도(bg_exp1.png) + 지명 표지판(한양·정선·밀양·진도) -->
+          <div class="scene-bg" style="background-image: url(img/03_exp1/bg_exp1.png)"></div>
+          <img class="map-sign" src="img/03_exp1/sign.png" alt="한양, 정선, 밀양, 진도" />
+          <!-- 진도 표지판만 캐릭터 위로 — 같은 소스를 겹치고 진도 부분만 잘라 보인다 -->
+          <img class="map-sign sign-jindo" src="img/03_exp1/sign.png" alt="" />
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/03_exp1/title_exp1.png" alt="지역마다 달라지는 아리랑을 들어보자!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 플레이 요소 (안내 화면에서는 숨긴다) — 캐릭터 3명은 exp1.js 가 생성 -->
+          <div class="exp-stage" id="stage">
+            <span class="arrow-hint map-arrow" id="arrow"><img src="img/03_exp1/arrow.png" alt="" /></span>
+          </div>
+
+          <!-- 안내: 체험 방법 -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="우리와 함께 아리랑이 산 넘고 바다를 건너게 도와줘!" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 세 지역 완료 팝업(기획 p17) — 2초 뒤 종료 화면으로 -->
+          <div class="dimmed success-dim" id="successDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="success-img" src="img/03_exp1/end_success.png" alt="세 지역의 아리랑을 모두 들었어!" />
+          </div>
+
+          <!-- 종료 -->
+          <!-- ※ .dialog 래퍼를 두지 않는다 — 내부 좌표를 .container 기준 %로 잡기 위해 -->
+          <div class="dimmed finish-dim exp1-finish" id="finishDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="finish-title" src="img/03_exp1/end_text.png" alt="정선, 밀양, 진도의 아리랑을 모두 들어봤어!" />
+            <img class="finish-main" src="img/03_exp1/end_image.png" alt="기뻐하는 도람, 찬돌, 다온" />
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <!-- 정보1(더 알아보기)은 기획·에셋 미납품 — 버튼만 두고 클릭 이벤트 없음. 들어오면 exp1.js 에 연결 -->
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp1.js"></script>
+  </body>
+</html>

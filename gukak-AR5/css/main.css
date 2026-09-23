@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   HOME(index.html) · MAIN(main.html)
+   좌표는 기획서 목업(1920×1080) 실측값.
+   ========================================================================= */
+
+/* ===== HOME ===================================================== */
+.btn-start {
+  position: absolute;
+  left: 39.17%;
+  top: 74.81%;
+  width: 19.48%;
+  height: 13.38%;
+  z-index: 20;
+}
+
+/* 달 주변 빛 — 은은하게 일렁이며 반짝임(기획 p4-3). 소스 899×829, 알파 최대 35% */
+.title-glow {
+  position: absolute;
+  left: 25.42%;
+  top: 1.48%;
+  width: 46.82%;
+  height: 76.76%;
+  z-index: 5;
+  pointer-events: none;
+  animation: moonGlow 4s ease-in-out infinite;
+}
+
+@keyframes moonGlow {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(0.98) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.03) rotate(4deg);
+  }
+}
+
+/* ===== MAIN =====================================================
+   ★ 납품된 bg_main.png 는 1920 캔버스 안에 1672×941 로만 그려져 있고 가장자리가
+     투명이었다(목업 p5 이미지와 같은 크기). 그림 영역을 잘라 1920×1080 으로 늘린
+     파생본을 쓰고, 나머지 MAIN 소스(버튼·말풍선)도 같은 배율(×1.148)로 배치한다.
+   선택 버튼은 이미지와 클릭영역을 분리 — hover(on) 이미지가 off 보다 1.1배 크고
+   중심이 같아서, 이미지를 교체하는 대신 두 장을 겹쳐 두고 on 만 켠다.
+   ================================================================ */
+.choice-img {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.choice-on {
+  opacity: 0;
+  z-index: 11;
+}
+.choice-on.on {
+  opacity: 1;
+}
+
+.choice-hit {
+  position: absolute;
+  z-index: 12;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* 선택① 표지판 "활동1 지역에 따라 아리랑이 달라져요!" */
+.img-exp1,
+.hit-exp1 {
+  left: 18.66%;
+  top: 41.25%;
+  width: 26.32%;
+  height: 31.03%;
+}
+.img-exp1-on {
+  left: 16.72%;
+  top: 38.75%;
+  width: 30.2%;
+  height: 36.03%;
+}
+
+/* 선택② 표지판 "활동2 각 지역의 아리랑에 다양한 풍경이 담겨있어요!" */
+.img-exp2,
+.hit-exp2 {
+  left: 54.67%;
+  top: 56.99%;
+  width: 29.13%;
+  height: 38.15%;
+}
+.img-exp2-on {
+  left: 52.85%;
+  top: 54.44%;
+  width: 32.78%;
+  height: 43.25%;
+}
+
+/* 도람 말풍선 (577×145 소스) */
+.main-text {
+  position: absolute;
+  left: 13.88%;
+  top: 6.17%;
+  width: 34.51%;
+  height: 15.41%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* MAIN 의 [홈] 은 목업에서 활동 화면보다 작고 위에 있다 */
+.btn-home.main-home {
+  left: 90.91%;
+  top: 4.47%;
+  width: 6.62%;
+  height: 11.71%;
+}

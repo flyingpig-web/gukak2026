@@ -1,0 +1,279 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   gukak 시리즈 공통 UI  (다음 편은 이 프로젝트 폴더를 통째로 복사해 쓴다)
+   - 국악 편에서 화면마다 되풀이되는 요소(상단바 / 준비 딤드 / 안내 / 종료 팝업 /
+     정보 팝업 / 안내 화살표 / 하이라이트)의 배치·동작을 한 곳에 모았다.
+   - 좌표는 디자인 1920×1080 기준 % (레터박스 .container 기준). px 고정 금지.
+   - 이미지 경로는 여기에 두지 않는다 — 프로젝트 HTML 의 <img src> 로만 지정.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   화면 배경 (컨테이너 전체를 채우는 1920×1080 배경)
+   ------------------------------------------------------------------------- */
+.scene-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 여러 장을 겹쳐 두고 opacity 로 디졸브 하는 배경(활동2 단계 전환) */
+.scene-bg.layer {
+  opacity: 0;
+  transition: opacity 1.5s ease; /* 단계 전환 디졸브를 1.5배로(수정요청) */
+}
+.scene-bg.layer.on {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   버튼 공통 — 기획 p4 "모든 상호작용 버튼은 마우스 호버 시 스케일 10%"
+   ★ 위치 지정용 transform 과 충돌하지 않도록 스케일은 "안쪽 img" 에 건다.
+   ------------------------------------------------------------------------- */
+button > img,
+[role="button"] > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover > img,
+  [role="button"]:hover > img {
+    transform: scale(1.1);
+  }
+}
+
+button:not(:disabled):active > img,
+[role="button"]:active > img {
+  filter: var(--btn-active-effect);
+}
+
+button:disabled {
+  cursor: default;
+}
+button:disabled > img {
+  opacity: 0.45;
+}
+
+/* -------------------------------------------------------------------------
+   상단바 — [뒤로가기] · 구름 타이틀 · [홈]  (전 화면 공통 위치)
+   ------------------------------------------------------------------------- */
+.btn-top {
+  position: absolute;
+  z-index: 30;
+}
+
+.btn-back {
+  left: 3.23%;
+  top: 8.52%;
+  width: 7.59%;
+  height: 13.7%;
+}
+
+.btn-home {
+  left: 89.17%;
+  top: 8.7%;
+  width: 7.75%;
+  height: 13.71%;
+}
+
+.top-title {
+  position: absolute;
+  left: 24.06%;
+  top: 0.93%;
+  width: 52.29%;
+  height: 27.04%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   플레이 스테이지 — 준비/안내 화면에서는 감춘다.
+   준비·안내 화면은 "체험 방법 예시" 이미지를 띄우는데, 그 이미지 안에 대금·송곳·
+   게이지 같은 요소가 이미 그려져 있어서 실제 플레이 요소와 겹쳐 보이기 때문.
+   (배경은 그대로 두어 "플레이 화면 배경으로 딤드" 규격을 지킨다)
+   ------------------------------------------------------------------------- */
+.exp-stage {
+  display: none;
+}
+.exp-stage.on {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------
+   안내(체험 방법) — 딤드 위에 전체화면 튜토리얼 이미지 1장 + [▶]
+   ------------------------------------------------------------------------- */
+.guide-dim {
+  z-index: 210;
+}
+
+.guide-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.btn-guide-play {
+  position: absolute;
+  left: 89.17%;
+  top: 79.07%;
+  width: 7.49%;
+  height: 13.13%;
+  z-index: 220;
+}
+
+/* -------------------------------------------------------------------------
+   종료 팝업 — 딤드 이미지 + 타이틀 + 중앙 이미지 + [다시하기][더 알아보기][나가기]
+   ------------------------------------------------------------------------- */
+.finish-dim {
+  z-index: 300;
+  background-color: transparent; /* 딤드는 end_bg 이미지가 담당 */
+}
+
+/* 종료 팝업 중에는 구름 타이틀만 숨긴다(common.js openPopup/closePopup 이 토글).
+   [뒤로가기]/[홈] 은 종료 화면 구성요소라(아리랑 p18) 딤드 위로 올려 계속 쓴다. */
+body.finish-on .top-title {
+  display: none;
+}
+body.finish-on .btn-top {
+  z-index: 320;
+}
+
+.finish-bg,
+.finish-title,
+.finish-main {
+  position: absolute;
+  pointer-events: none;
+}
+
+.finish-bg {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.finish-btns button {
+  position: absolute;
+  z-index: 310;
+}
+
+.btn-retry {
+  left: 14.9%;
+  top: 73.89%;
+  width: 19.8%;
+  height: 10.76%;
+}
+
+.btn-more {
+  left: 41.46%;
+  top: 74.44%;
+  width: 19.96%;
+  height: 10.83%;
+}
+
+.btn-exit {
+  left: 66.88%;
+  top: 73.15%;
+  width: 18.63%;
+  height: 12.06%;
+}
+
+/* -------------------------------------------------------------------------
+   정보 팝업 — 딤드 + 설명 이미지 + [X] + 좌우 화살표(여러 장일 때만)
+   ------------------------------------------------------------------------- */
+.info-dim {
+  z-index: 300;
+}
+
+.info-dim .pop-img {
+  position: absolute;
+  left: 16.82%;
+  top: 27.31%;
+  width: 66.41%;
+  height: 47.59%;
+  /* 팝업 위 클릭도 닫기로 전달된다(기획 p27/p28 문구 그대로).
+     화살표·[X] 는 팝업 바깥에 있어 영향받지 않는다. */
+}
+
+.info-dim .btn-close {
+  position: absolute;
+  left: 76.77%;
+  top: 22.69%;
+  width: 8.44%;
+  height: 14.81%;
+  z-index: 310;
+}
+
+.info-dim .btn-nav {
+  position: absolute;
+  top: 43.52%;
+  width: 5.73%;
+  height: 13.8%;
+  z-index: 310;
+}
+
+.info-dim .btn-next {
+  left: 87.92%;
+}
+
+/* 이전 화살표 = 다음 화살표를 좌우 반전해서 사용(에셋 1종) */
+.info-dim .btn-prev {
+  left: 6.35%;
+}
+.info-dim .btn-prev > img {
+  transform: scaleX(-1);
+}
+@media (hover: hover) {
+  .info-dim .btn-prev:hover > img {
+    transform: scaleX(-1) scale(1.1);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   안내 화살표 — 가리키는 방향으로 조금씩 왕복(기획 "위아래로 움직이는 액팅")
+   ------------------------------------------------------------------------- */
+.arrow-hint {
+  position: absolute;
+  pointer-events: none;
+  z-index: 18;
+  display: none;
+}
+.arrow-hint.on {
+  display: block;
+}
+
+/* 기본: 위를 가리키는 화살표가 위아래로 */
+.arrow-hint img {
+  width: 100%;
+  height: 100%;
+  animation: arrowBob 1s ease-in-out infinite;
+}
+
+@keyframes arrowBob {
+  0%,
+  100% {
+    transform: translateY(-9%);
+  }
+  50% {
+    transform: translateY(9%);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   개발자 좌표 확인용 오버레이 (Ctrl + ; 로 켠 뒤 클릭 영역 확인)
+   ------------------------------------------------------------------------- */
+.dev-on .hit-dev {
+  outline: 0.2rem dashed rgba(255, 60, 60, 0.9);
+  background: rgba(255, 60, 60, 0.14);
+}

@@ -1,0 +1,150 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동1 — 지역마다 달라지는 아리랑을 들어보자! (exp1.html)  기획서 p6~18
+   좌표는 목업(1920×1080) 실측값. 캐릭터 좌표는 exp1.js 의 표(디자인 px)에서 넣는다.
+   ========================================================================= */
+
+/* 지명 표지판 4개가 한 장에 들어 있는 소스(625×526) */
+.map-sign {
+  position: absolute;
+  left: 43.96%;
+  top: 32.41%;
+  width: 32.55%;
+  height: 48.7%;
+  z-index: 8;
+  pointer-events: none;
+}
+
+/* 진도 표지판(소스 안 0,431 ~ 117,526)만 캐릭터(15) 위로 — 다온이 도착하면 표지판을 가려서.
+   드래그 중인 캐릭터(40)와 안내 딤드(20)보다는 아래. */
+.sign-jindo {
+  z-index: 16;
+  clip-path: inset(81.5% 81% 0 0);
+}
+
+/* 안내 딤드는 지도·표지판만 덮고 타이틀·[뒤로가기]·[홈] 은 위에 밝게 둔다(목업 p6) */
+.guide-dim {
+  z-index: 20;
+}
+
+/* 목적지 안내 화살표(72×108) — left/top 은 JS */
+.map-arrow {
+  width: 3.75%;
+  height: 10%;
+  z-index: 18;
+}
+
+/* ----- 캐릭터 -------------------------------------------------------
+   .char 는 left/top/width/height 를 JS 가 %로 넣는다(포즈마다 크기가 다르다).
+   포즈 이미지 4장(wait/move1/move2/sing)을 겹쳐 두고 data-pose 로 하나만 보인다. */
+.container {
+  touch-action: none; /* 드래그 중 스크롤·확대 방지 */
+}
+
+.char {
+  position: absolute;
+  z-index: 15;
+  display: none;
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.char.on {
+  display: block;
+}
+/* 지금 옮길 차례 + 내레이션이 끝난 뒤에만 잡을 수 있다 */
+.char.grab {
+  pointer-events: auto;
+  cursor: grab;
+}
+.char.dragging {
+  z-index: 40;
+  cursor: grabbing;
+}
+/* 목적지를 벗어나 놓으면 한양으로 미끄러져 돌아간다 */
+.char.returning {
+  transition: left 0.35s ease, top 0.35s ease;
+}
+
+.char > img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+  -webkit-user-drag: none;
+}
+.char[data-pose="wait"] .p-wait,
+.char[data-pose="move1"] .p-move1,
+.char[data-pose="move2"] .p-move2,
+.char[data-pose="sing"] .p-sing {
+  display: block;
+}
+
+@media (hover: hover) {
+  .char.grab:not(.dragging):hover > img {
+    transform: scale(1.1);
+    transition: transform 0.15s ease;
+  }
+}
+
+/* 노래하는 동안 음표처럼 살짝 들썩 */
+.char[data-pose="sing"] .p-sing {
+  animation: singBob 0.8s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+@keyframes singBob {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+  50% {
+    transform: translateY(-3%) rotate(2deg);
+  }
+}
+
+/* ----- 세 지역 완료 팝업 / 종료 ---------------------------------------- */
+.success-dim {
+  z-index: 290;
+  background-color: transparent;
+}
+.success-img {
+  position: absolute;
+  left: 17.71%;
+  top: 20.37%;
+  width: 68.39%;
+  height: 57.59%;
+  pointer-events: none;
+}
+.success-dim.flex .success-img {
+  animation: successPop 0.5s ease-out both;
+}
+@keyframes successPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.exp1-finish .finish-title {
+  left: 33.33%;
+  top: 2.41%;
+  width: 36.67%;
+  height: 32.5%;
+}
+.exp1-finish .finish-main {
+  left: 24.06%;
+  top: 18.33%;
+  width: 52.45%;
+  height: 63.33%;
+}
