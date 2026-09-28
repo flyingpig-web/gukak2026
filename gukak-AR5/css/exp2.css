@@ -1,0 +1,305 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동2 — 각 아리랑에 담긴 고향 풍경을 완성해보자! (exp2.html)  기획서 p21~39
+   좌표는 목업(1920×1080) 실측값. 띠 배경·캐릭터는 exp2.js 가 만들고 left 만 넣는다.
+   ※ exp1.css 도 같이 로드된다 — .char / .guide-dim 등 겹치는 이름은 피하거나 여기서 되돌린다.
+   ========================================================================= */
+
+.title-exp2 {
+  left: 24.79%;
+  top: 0;
+  width: 50.52%;
+  height: 27.87%;
+}
+
+/* 튜토리얼 이미지에 딤드가 구워져 있고 상단바까지 덮는다(목업 p21) */
+.exp2-guide {
+  z-index: 210;
+  background-color: transparent;
+}
+
+/* ----- 세 고장 띠 배경 (다온-진도 / 도람-정선 / 찬돌-밀양) ----------------- */
+.exp2-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.strip {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+.strip.on-img {
+  opacity: 0;
+}
+.region.done .strip.on-img {
+  opacity: 1;
+}
+
+/* 캐릭터를 고르면 나머지 고장·캐릭터는 -70%(기획 p23) */
+.exp2-scene.playing .region:not(.active) .strip,
+.exp2-scene.playing .region:not(.active) .e2-char {
+  opacity: 0.3;
+}
+/* 완료한 고장은 흑백 띠를 감춘다 — 밀양 흑백 띠(left 1304)가 컬러 띠(1306)보다 2px 왼쪽으로 나와
+   DOM 순서상 정선 컬러 띠 위에 회색 세로줄로 비친다 */
+.exp2-scene .region.done .strip:not(.on-img) {
+  opacity: 0;
+  transition: opacity 0s linear 0.6s; /* 컬러 띠가 다 나타난 뒤에 — 같이 흐려지면 어둡게 깜빡인다 */
+}
+
+/* ----- 선택한 고장의 전체화면 배경 — 띠 폭(--l, --r)에서 화면 전체로 펼쳐진다 ------ */
+.full {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  visibility: hidden;
+  clip-path: inset(0 var(--r) 0 var(--l));
+  transition: clip-path 0.8s ease;
+}
+/* 접힘은 exp2.js 가 .open 을 뗀 뒤 0.8s 기다렸다 .active 를 뗀다 — 그때 바로 숨겨야
+   캐릭터(z 10→3)가 아직 남은 배경(z 5)에 가려 깜빡이지 않는다 */
+.region.active .full {
+  visibility: visible;
+}
+.full.open {
+  clip-path: inset(0 0 0 0);
+}
+.full img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+/* 컬러 배경 — 가운데부터 원으로 번진다(가장자리는 부드럽게). 반지름 --rv 는 exp2.js 가 넣는다.
+   @property 가 없는 구형 브라우저는 애니메이션 없이 바로 바뀐다. */
+@property --rv {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 0%;
+}
+.full .full-on {
+  --rv: 0%;
+  -webkit-mask-image: radial-gradient(circle closest-corner at 50% 50%, #000 calc(var(--rv) - 12%), transparent var(--rv));
+  mask-image: radial-gradient(circle closest-corner at 50% 50%, #000 calc(var(--rv) - 12%), transparent var(--rv));
+  transition: --rv 1.2s ease-out;
+}
+
+/* ----- 캐릭터 버튼 — 원 테두리 부분(320×320)만 누를 수 있게 하고 그림(599×606)은 밖으로 -- */
+.e2-char {
+  position: absolute;
+  top: 27.5%;
+  width: 16.67%;
+  height: 29.63%;
+  z-index: 3;
+  border-radius: 50%;
+  transition: left 0.6s ease, opacity 0.6s ease;
+}
+.e2-char > img {
+  position: absolute;
+  left: -43.59%;
+  top: -44.69%;
+  width: 187.19%;
+  height: 189.38%;
+  max-width: none; /* reset.css img{max-width:100%} 해제 */
+  pointer-events: none;
+}
+.e2-char .pose-sing,
+.e2-char.singing .pose-btn {
+  display: none;
+}
+.e2-char.singing .pose-sing {
+  display: block;
+}
+.region.active .e2-char {
+  z-index: 10;
+}
+/* 내레이션 중·노래 중·완료한 캐릭터는 누를 수 없다 */
+.e2-char:disabled > img {
+  opacity: 1;
+}
+
+/* ----- 보름달 / 달무리 / 효과 ------------------------------------------------
+   달 중심 (1557.5, 395), 달 원판 지름 약 192. 버튼은 원판 둘레 260×260 만 받는다. */
+.btn-moon {
+  position: absolute;
+  left: 74.35%;
+  top: 24.54%;
+  width: 13.54%;
+  height: 24.07%;
+  z-index: 9;
+  border-radius: 50%;
+  display: none;
+}
+.btn-moon.on {
+  display: block;
+  animation: moonIn 0.5s ease-out both;
+}
+.btn-moon > img {
+  position: absolute;
+  left: -56.92%;
+  top: -57.12%;
+  width: 213.85%;
+  height: 214.23%;
+  max-width: none;
+}
+@keyframes moonIn {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
+.moon-effect {
+  position: absolute;
+  left: 68.02%;
+  top: 13.89%;
+  width: 26.09%;
+  height: 45.46%;
+  z-index: 8;
+  pointer-events: none;
+  opacity: 0;
+}
+.moon-effect.pop {
+  animation: moonPop 0.6s ease-out;
+}
+@keyframes moonPop {
+  0% {
+    opacity: 1;
+    transform: scale(0.85);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.15);
+  }
+}
+
+/* 달무리(타이밍 선) — BG 바로 위, 다른 요소보다 아래(기획 p27). 목표 시각에 달 원판 크기(200)가 된다 */
+.rings {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.ring {
+  position: absolute;
+  left: 75.91%;
+  top: 27.31%;
+  width: 10.42%;
+  height: 18.52%;
+  border: 0.6rem solid #ffff00;
+  border-radius: 50%;
+  box-shadow: 0 0 1.2rem #ffff00, inset 0 0 1.2rem #ffff00;
+  animation: ringIn var(--lead) linear forwards;
+}
+.ring.out {
+  transition: opacity 0.25s ease;
+  opacity: 0;
+}
+@keyframes ringIn {
+  from {
+    transform: scale(3);
+    opacity: 0.3;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* ----- 메기는 소리 말풍선 / 가사판 --------------------------------------------- */
+.call-text,
+.lyric-board {
+  position: absolute;
+  z-index: 10;
+  display: none;
+  pointer-events: none;
+}
+.call-text.on,
+.lyric-board.on {
+  display: flex;
+}
+.call-text {
+  left: 28.65%;
+  top: 32.22%;
+  width: 33.96%;
+  height: 17.41%;
+}
+.lyric-board {
+  left: 11.56%;
+  top: 58.7%;
+  width: 76.82%;
+  height: 36.3%;
+  background: url(../img/04_exp2/bord.png) 0 0 / 100% 100% no-repeat;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 가사 색 — 기획 p26 */
+.lyrics {
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: 7.7rem;
+  font-weight: 600;
+  line-height: 12.5rem;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #9d7d6b; /* 재생 전 */
+  white-space: pre-line;
+}
+.lyrics span {
+  position: relative;
+  transition: color 0.2s ease, text-shadow 0.2s ease;
+}
+.lyrics .sung {
+  color: #401e0b; /* 재생 후 */
+}
+/* 터치 글자 위 점 — 재생 전 회색, 타이밍 유도부터 주황 */
+.lyrics .tgt::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -0.3em;
+  width: 0.36em;
+  height: 0.36em;
+  margin-left: -0.18em;
+  border-radius: 50%;
+  background: #9d7d6b;
+}
+.lyrics .tgt.cue,
+.lyrics .tgt.cue.sung {
+  color: #ff9916; /* 타이밍 유도 구간 */
+}
+.lyrics .tgt.cue::before {
+  background: #ff9916;
+}
+.lyrics .tgt.hit {
+  color: #fff; /* 타이밍에 맞춰 터치 */
+  text-shadow: 0 0 0.12em #ff9916, 0 0 0.25em #ff9916, 0 0 0.4em #ff9916;
+}
+
+/* ----- 완료 팝업 / 종료 ------------------------------------------------------ */
+.exp2-success {
+  left: 21.56%;
+  top: 32.04%;
+  width: 60.47%;
+  height: 37.5%;
+}
+.exp2-finish .finish-title {
+  left: 25.83%;
+  top: 8.7%;
+  width: 49.79%;
+  height: 18.7%;
+}
+.exp2-finish .finish-main {
+  left: 24.38%;
+  top: 19.26%;
+  width: 52.45%;
+  height: 63.33%;
+}

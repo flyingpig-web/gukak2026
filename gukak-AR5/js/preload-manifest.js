@@ -57,6 +57,62 @@ window.AR_MANIFEST = {
         "img/03_exp1/sign.png",
         "img/03_exp1/title_exp1.png"
       ]
+    },
+    {
+      "page": "exp2.html",
+      "images": [
+        "img/04_exp2/bg_jeongseon_off.png",
+        "img/04_exp2/bg_jeongseon_on.png",
+        "img/04_exp2/bg_jindo_off.png",
+        "img/04_exp2/bg_jindo_on.png",
+        "img/04_exp2/bg_miryang_off.png",
+        "img/04_exp2/bg_miryang_on.png",
+        "img/04_exp2/bord.png",
+        "img/04_exp2/btn_moon.png",
+        "img/04_exp2/chandol_btn.png",
+        "img/04_exp2/chandol_sing.png",
+        "img/04_exp2/chandol_text.png",
+        "img/04_exp2/daon_btn.png",
+        "img/04_exp2/daon_sing.png",
+        "img/04_exp2/daon_text.png",
+        "img/04_exp2/doram_btn.png",
+        "img/04_exp2/doram_sing.png",
+        "img/04_exp2/doram_text.png",
+        "img/04_exp2/end_main.png",
+        "img/04_exp2/end_success.png",
+        "img/04_exp2/end_text.png",
+        "img/04_exp2/exp2_tutorial.png",
+        "img/04_exp2/f_jeongseon_off.png",
+        "img/04_exp2/f_jeongseon_on.png",
+        "img/04_exp2/f_jindo_off.png",
+        "img/04_exp2/f_jindo_on.png",
+        "img/04_exp2/f_miryang_off.png",
+        "img/04_exp2/f_miryang_on.png",
+        "img/04_exp2/moon_effect.png",
+        "img/04_exp2/title_exp2.png"
+      ]
+    },
+    {
+      "page": "info2.html",
+      "images": [
+        "img/06_info2/bg_info.png",
+        "img/06_info2/btn_close_megigo.png",
+        "img/06_info2/btn_close_semachi.png",
+        "img/06_info2/btn_close_story.png",
+        "img/06_info2/btn_left.png",
+        "img/06_info2/btn_megigo_book_off.png",
+        "img/06_info2/btn_megigo_book_on.png",
+        "img/06_info2/btn_right.png",
+        "img/06_info2/btn_semachi_book_off.png",
+        "img/06_info2/btn_semachi_book_on.png",
+        "img/06_info2/btn_story_book_off.png",
+        "img/06_info2/btn_story_book_on.png",
+        "img/06_info2/popup_megigo.png",
+        "img/06_info2/popup_semachi.png",
+        "img/06_info2/popup_story.png",
+        "img/06_info2/speech_bubble.png",
+        "img/06_info2/title_info.png"
+      ]
     }
   ]
 };

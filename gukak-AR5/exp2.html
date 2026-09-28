@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동2 — 각 아리랑에 담긴 고향 풍경</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 세 고장 띠 배경·캐릭터·전체화면 배경(흑백/컬러)은 exp2.js 가 생성 -->
+          <div class="exp2-scene" id="scene"></div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title title-exp2" src="img/04_exp2/title_exp2.png" alt="각 아리랑에 담긴 고향 풍경을 완성해보자!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 노래 중 요소 — 보름달 / 달무리(타이밍 선) / 메기는 소리 말풍선 / 가사판 -->
+          <div class="rings" id="rings"></div>
+          <img class="moon-effect" id="moonEffect" src="img/04_exp2/moon_effect.png" alt="" />
+          <button class="btn-moon" id="btnMoon"><img src="img/04_exp2/btn_moon.png" alt="보름달" /></button>
+          <img class="call-text" id="callText" src="" alt="" />
+          <div class="lyric-board" id="board"><p class="lyrics" id="lyrics"></p></div>
+
+          <!-- 안내: 체험 방법 (딤드는 튜토리얼 이미지에 들어 있다) -->
+          <div class="dimmed guide-dim exp2-guide flex" id="guideDim">
+            <img class="guide-img" src="img/04_exp2/exp2_tutorial.png" alt="달무리의 선이 보름달과 겹쳐질 때 달을 눌러 고향 풍경이 펼쳐지게 해줘!" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 풍경 완성 팝업(기획 p38) — 1초 뒤 종료 화면으로 -->
+          <div class="dimmed success-dim" id="successDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="success-img exp2-success" src="img/04_exp2/end_success.png" alt="아리랑에 담긴 고향의 풍경 완성!" />
+          </div>
+
+          <!-- 종료 -->
+          <div class="dimmed finish-dim exp2-finish" id="finishDim">
+            <img class="finish-bg" src="img/03_exp1/end_bg.png" alt="" />
+            <img class="finish-title" src="img/04_exp2/end_text.png" alt="세 아리랑에 담긴 정선, 밀양, 진도의 풍경을 모두 봤어!" />
+            <img class="finish-main" src="img/04_exp2/end_main.png" alt="기뻐하는 도람, 찬돌, 다온" />
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp2.js"></script>
+  </body>
+</html>

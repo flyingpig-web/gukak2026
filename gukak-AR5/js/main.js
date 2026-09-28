@@ -4,14 +4,13 @@
    2. 선택 버튼 hover → 활성(on) 이미지
       한 번 누르면 해당 내레이션 + 말풍선 교체, (연속) 두 번 누르면 해당 활동으로 이동
    3. [홈] → HOME
-   ※ 활동2 는 기획·에셋 미납품 — 한 번 누르기(내레이션·말풍선)까지만 동작하고 이동은 없다.
    ========================================================================= */
 $(function () {
   const S = window.AR5_SFX;
 
   const CHOICES = {
     exp1: { hit: "#hitExp1", on: ".img-exp1-on", vo: S.doram02, text: "img/02_main/text_exp1.png", href: "exp1.html" },
-    exp2: { hit: "#hitExp2", on: ".img-exp2-on", vo: S.doram03, text: "img/02_main/text_exp2.png", href: null },
+    exp2: { hit: "#hitExp2", on: ".img-exp2-on", vo: S.doram03, text: "img/02_main/text_exp2.png", href: "exp2.html" },
   };
 
   function showBubble(src) {
