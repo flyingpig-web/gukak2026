@@ -22,6 +22,10 @@ window.AR5_SFX = {
   chandol03: "audio/narration/chandol_03.mp3", // 이번에는 나를 고향 밀양으로 데려가줘!
   chandol04: "audio/narration/chandol_04.mp3", // 다온이를 진도로 옮겨주세요!
   chandol05: "audio/narration/chandol_05.mp3", // 정선, 밀양, 진도의 아리랑을 모두 들어봤어! (활동1 종료)
+  chandol06: "audio/narration/chandol_06.mp3", // 궁금한 기록을 눌러 하나씩 살펴보자! (활동1 정보)
+  exp1Info1: "audio/narration/exp1_info1.mp3", // 정보1 책 — 정선아리랑
+  exp1Info2: "audio/narration/exp1_info2.mp3", // 정보1 책 — 밀양아리랑
+  exp1Info3: "audio/narration/exp1_info3.mp3", // 정보1 책 — 진도아리랑
 
   // 활동1 음악 — 한양 대기 중 반복 / 도착 시 지역 후렴(크로스페이드)
   jajin: "audio/bgm/jajin_arari.mp3", // 자진아라리 후렴 (모심는소리-자진아라리 0:15~0:29), 반복
@@ -35,6 +39,9 @@ window.AR5_SFX = {
   daon02: "audio/narration/daon_02.mp3", // 한 명씩 골라 아리랑을 부르게 하자!                                  (활동2 선택)
   daon03: "audio/narration/daon_03.mp3", // 세 아리랑에 담긴 정선, 밀양, 진도의 풍경을 모두 봤어!               (활동2 종료)
   daon04: "audio/narration/daon_04.mp3", // 궁금한 기록을 눌러 하나씩 살펴봐요.                                 (활동2 정보)
+  exp2Info1: "audio/narration/exp2_info1.mp3", // 정보2 책 — 메기고 받는 아리랑
+  exp2Info2: "audio/narration/exp2_info2.mp3", // 정보2 책 — 세마치장단으로 불러요
+  exp2Info3: "audio/narration/exp2_info3.mp3", // 정보2 책 — 아리랑 이야기
 
   // 활동2 노래 — 메기는 소리 + 받는 소리(터치 구간) 한 곡. 터치 타이밍은 exp2.js 의 hits
   exp2Jindo: "audio/bgm/exp2_jindo.mp3", // 남도민요 중 진도아리랑 (2:28~3:05)

@@ -16,6 +16,7 @@ FLOW = [
     ("index.html", "01_title"),
     ("main.html", "02_main"),
     ("exp1.html", "03_exp1"),
+    ("info1.html", "05_info1"),
     ("exp2.html", "04_exp2"),
     ("info2.html", "06_info2"),
 ]

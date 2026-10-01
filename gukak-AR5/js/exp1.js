@@ -292,6 +292,9 @@ $(function () {
     AR.closePopup("#finishDim");
     startPlay();
   });
+  $("#btnMore").on("click", function () {
+    AR.go("info1.html");
+  });
   $("#btnExit").on("click", function () {
     AR.go("main.html");
   });

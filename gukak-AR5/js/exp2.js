@@ -28,7 +28,7 @@ $(function () {
   const DONE_WAIT_MS = 1200; // 컬러가 다 번진 뒤 세 고장 화면으로
   const OPEN_MS = 900; // 배경 펼침(0.8s) 뒤 보름달 등장
   const ALL_DONE_WAIT_MS = 1000; // 세 고장 모두 컬러가 된 화면(기획 p37)을 보여주는 시간
-  const SUCCESS_MS = 1000; // 풍경 완성 팝업 → 종료(기획 p38)
+  const SUCCESS_MS = 2000; // 풍경 완성 팝업 → 종료(기획 p38) — 활동1 과 같게
   const MUSIC_VOL = 0.8;
   const SLOT_PLAY = 177.5; // 노래할 때 캐릭터 자리 = 다온 자리
 
@@ -51,7 +51,7 @@ $(function () {
       strip: { off: [620, 687], on: [620, 690] },
       slot: 803.5,
       song: S.exp2Jeongseon,
-      lyrics: "*아리랑 *고개로 *나를 *넘겨*주오",
+      lyrics: "*아리랑 *고개로 *나를 *넘겨*주게",
       hits: [4500, 6100, 7700, 9300, 10900],
     },
     {
@@ -219,12 +219,26 @@ $(function () {
         tgts[i].addClass("cue");
         $ring = $('<div class="ring">').css("--lead", LEAD_MS + "ms").appendTo($rings);
       });
-      later(t, () => $spans.slice(0, $spans.index(tgts[i]) + 1).addClass("sung"));
       later(t + HIT_MS, () => {
         me.judged[i] = true;
         $ring.addClass("out");
         setTimeout(() => $ring.remove(), 300);
       });
+    });
+
+    // 노래방처럼 한 글자씩 — 터치 글자는 목표 시각에, 사이 글자는 두 목표 시각 사이를 고르게 나눠 채운다.
+    // 마지막 터치 글자 뒤는 앞 구간의 글자당 평균 속도로(TAIL_MS 안에 끝나게).
+    const idx = tgts.map(($t) => $spans.index($t));
+    const perChar = (r.hits.at(-1) - r.hits[0]) / Math.max(1, idx.at(-1) - idx[0]);
+    const tailStep = Math.min(perChar, (TAIL_MS - 200) / Math.max(1, $spans.length - 1 - idx.at(-1)));
+    $spans.each(function (k) {
+      let a = idx.findLastIndex((x) => x <= k);
+      if (a < 0) a = 0; // 첫 터치 글자 앞 글자(현재 가사엔 없음)
+      const t =
+        a + 1 < idx.length
+          ? r.hits[a] + ((k - idx[a]) / (idx[a + 1] - idx[a])) * (r.hits[a + 1] - r.hits[a])
+          : r.hits[a] + Math.max(0, k - idx[a]) * tailStep;
+      later(t, () => $(this).addClass("sung"));
     });
 
     later(r.hits.at(-1) + TAIL_MS, () => {
@@ -279,6 +293,7 @@ $(function () {
 
   function success() {
     AR.openPopup("#successDim");
+    AR.Sound.sfx(S.ceremony);
     later(SUCCESS_MS, () => {
       AR.closePopup("#successDim");
       AR.openPopup("#finishDim");
@@ -339,5 +354,5 @@ $(function () {
       .map((f) => IMG + f)
       .concat("img/03_exp1/end_bg.png")
   );
-  AR.Sound.prime([S.daon01, S.daon02, S.daon03]);
+  AR.Sound.prime([S.daon01, S.daon02, S.daon03, S.ceremony]);
 });

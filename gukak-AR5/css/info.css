@@ -1,8 +1,8 @@
 @charset "UTF-8";
 
 /* =========================================================================
-   정보(더 알아보기) — info2.html  기획서 p40~41
-   좌표는 목업(1920×1080) 실측값. 책 위치는 info2.js 가 넣는다(자리마다 중심점).
+   정보(더 알아보기) — info1.html 기획서 p18~19 / info2.html p40~41
+   좌표는 목업(1920×1080) 실측값. 책 위치·팝업 크기는 info.js 가 넣는다.
    ========================================================================= */
 
 .title-info {
@@ -62,10 +62,16 @@
   height: 17.59%;
   pointer-events: none;
 }
+.info1 .info-bubble {
+  left: 30.26%;
+}
 
 .book-dim {
   z-index: 300; /* 상단바까지 덮는다(목업 p41) */
   cursor: pointer;
+}
+.info1 .book-dim {
+  cursor: default; /* 정보1 은 [X] 로만 닫는다 */
 }
 .book-pop {
   position: absolute;
@@ -81,7 +87,13 @@
   width: 3.54%;
   height: 6.3%;
 }
-.book-dim.flex .book-pop {
+/* 팝업과 [X] 를 한 덩어리로 키운다 — 팝업 중심(956, 540) 기준 */
+.book-card {
+  position: absolute;
+  inset: 0;
+  transform-origin: 49.8% 50%;
+}
+.book-dim.flex .book-card {
   animation: bookPop 0.3s ease-out both;
 }
 @keyframes bookPop {

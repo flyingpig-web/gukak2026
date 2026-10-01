@@ -59,6 +59,28 @@ window.AR_MANIFEST = {
       ]
     },
     {
+      "page": "info1.html",
+      "images": [
+        "img/05_info1/bg_info.png",
+        "img/05_info1/btn_close_jeongseon.png",
+        "img/05_info1/btn_close_jindo.png",
+        "img/05_info1/btn_close_miryang.png",
+        "img/05_info1/btn_jeongseon_book_off.png",
+        "img/05_info1/btn_jeongseon_book_on.png",
+        "img/05_info1/btn_jindo_book_off.png",
+        "img/05_info1/btn_jindo_book_on.png",
+        "img/05_info1/btn_left.png",
+        "img/05_info1/btn_miryang_book_off.png",
+        "img/05_info1/btn_miryang_book_on.png",
+        "img/05_info1/btn_right.png",
+        "img/05_info1/popup_jeongseon.png",
+        "img/05_info1/popup_jindo.png",
+        "img/05_info1/popup_miryang.png",
+        "img/05_info1/speech_bubble.png",
+        "img/05_info1/title_info.png"
+      ]
+    },
+    {
       "page": "exp2.html",
       "images": [
         "img/04_exp2/bg_jeongseon_off.png",
