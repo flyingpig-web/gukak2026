@@ -273,8 +273,18 @@ $(function () {
   });
 
   /* ----- 안내 → 플레이 ------------------------------------------------------ */
+  // 정보1 에서 [뒤로] 로 돌아오면(?done) 완료 화면 그대로 — [다시하기] 로 다시 할 수 있게
+  const DONE = new URLSearchParams(location.search).has("done");
+  if (DONE) {
+    history.replaceState(null, "", location.pathname); // 새로고침하면 처음부터
+    AR.closePopup("#guideDim");
+    $stage.addClass("on");
+    CHARS.forEach((c) => (stand(c, "wait", c.dest), c.$el.addClass("on")));
+    AR.openPopup("#finishDim");
+  }
+
   // 안내 화면은 진입 즉시 떠 있다(HTML 에 .flex). 자동재생이 막히면 첫 터치에서 다시 시도.
-  const vo = AR.Sound.narrate(S.chandol01);
+  const vo = DONE ? null : AR.Sound.narrate(S.chandol01);
   if (vo) {
     $(document).one("pointerdown", function () {
       if (vo.paused && vo.currentTime === 0 && $("#guideDim").hasClass("flex")) AR.Sound.narrate(S.chandol01);

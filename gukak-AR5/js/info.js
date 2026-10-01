@@ -90,8 +90,8 @@ $(function () {
     AR.Sound.stopNarration();
   });
 
-  // 활동 종료 화면에서만 들어온다 → 뒤로가기는 그 활동으로
-  $("#btnBack").on("click", () => AR.go(P.back));
+  // 활동 종료 화면에서만 들어온다 → 뒤로가기는 그 활동의 종료 화면으로(?done)
+  $("#btnBack").on("click", () => AR.go(P.back + "?done"));
   $("#btnHome").on("click", () => AR.go("main.html"));
 
   AR.Sound.prime([P.intro, ...BOOKS.map((b) => b.vo)]);

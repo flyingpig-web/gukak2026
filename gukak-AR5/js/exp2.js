@@ -13,15 +13,16 @@
         성공(터치 글자를 모두 맞힘) → 그 고장 띠는 컬러, 그 캐릭터는 다시 못 고른다
         실패 → 흑백으로 남고 그 캐릭터를 다시 고를 수 있다. 세 고장 모두 성공해야 종료
 
-   ★ 음원 미납품 — 아래 hits(터치 글자별 목표 시각)는 가짜 값이다. 음원이 오면 URL 에
-     ?tap 을 붙여 노래에 맞춰 달을 두드리면 콘솔에 시각(ms)이 찍힌다 → 그 값으로 교체.
+   sy(가사 글자별 시각)·end(가사 끝)는 음원 실측값(2026-10-02, 보컬 분리 → 강제 정렬(MMS) + 음높이·장단 박 대조).
+   터치 시각(hits)은 sy 중 터치 글자 것. 다시 맞출 땐 URL 에 ?tap 을 붙여 노래에 맞춰 달을 두드리면
+   콘솔에 시각(ms)이 찍힌다.
    ========================================================================= */
 $(function () {
   const S = window.AR5_SFX;
 
   const LEAD_MS = 1200; // 달무리가 나타나서 달 크기로 줄어들기까지
   const HIT_MS = 300; // 목표 시각 앞뒤로 이만큼 안에 누르면 성공
-  const TAIL_MS = 1500; // 마지막 터치 뒤 노래 마무리
+  const CUE_MS = 300; // 터치 글자가 주황으로 켜지는 시각 = 목표 이만큼 전(달무리가 달과 겹치기 직전)
   const SONG_MAX_MS = 90000; // 음원 ended 가 안 올 때 대비
   const PASS_RATIO = 1; // 터치 글자 중 이 비율 이상 맞히면 성공(1 = 전부). 너무 어려우면 낮춘다
   const REVEAL_MAX = 112; // 번짐 반지름 %(closest-corner 기준) — 가장자리 흐림(12%)까지 모서리를 넘긴다
@@ -34,7 +35,8 @@ $(function () {
 
   // 가사: '*' 다음 글자가 터치 글자(기획 p25 빨간 원). '\n' 은 줄바꿈(목업 p24/31/34).
   // strip = [left, width] 디자인 px (off / on 폭이 조금 다르다), slot = 캐릭터 버튼 left.
-  // ponytail: hits 는 음원 없이 1.6초 간격으로 넣은 가짜 타이밍 — 음원 받으면 실측값으로.
+  // sy = 가사 글자(공백·줄바꿈·'*' 제외)마다 그 글자를 부르기 시작하는 시각(음원 시작 기준 초), end = 가사 끝(ms).
+  // 앞부분(메기는 소리) 동안은 말풍선만 보인다.
   const REGIONS = [
     {
       id: "daon",
@@ -43,7 +45,13 @@ $(function () {
       slot: 177.5,
       song: S.exp2Jindo,
       lyrics: "*아리아리랑 *쓰리쓰리랑\n*아라리가 났네 *아리랑 음- *아라리가 났네",
-      hits: [4500, 6100, 7700, 9300, 10900],
+      // 메기는 소리 0~15.1초. 둘째 줄 '아리랑'은 작게 시작해 '랑'(24.0)에서 커진다. '음-' = 응 응
+      sy: [
+        [15.13, 15.35, 15.65, 15.95, 16.35], [17.1, 17.32, 17.62, 17.95, 18.26], // 아리아리랑 쓰리쓰리랑
+        [18.96, 19.18, 19.55, 19.8, 20.22, 20.9], [22.85, 23.45, 24.0], [24.69, 25.21], // 아라리가 났네 아리랑 음-
+        [26.5, 26.9, 27.2, 27.45, 28.35, 28.95], // 아라리가 났네
+      ],
+      end: 30000,
     },
     {
       id: "doram",
@@ -52,7 +60,9 @@ $(function () {
       slot: 803.5,
       song: S.exp2Jeongseon,
       lyrics: "*아리랑 *고개로 *나를 *넘겨*주게",
-      hits: [4500, 6100, 7700, 9300, 10900],
+      // 앞 "아리랑 아리랑 아라리요" 0~11.4초
+      sy: [[11.5, 12.36, 12.95], [14.2, 15.35, 16.08], [17.0, 17.41], [18.01, 18.6, 19.15, 19.93]], // 아리랑 고개로 나를 넘겨주게
+      end: 22200,
     },
     {
       id: "chandol",
@@ -61,9 +71,31 @@ $(function () {
       slot: 1451.5,
       song: S.exp2Miryang,
       lyrics: "*아리 아리랑 *쓰리 쓰리랑 *아라리가 났네\n*아리랑 *고개로 *넘어간다",
-      hits: [4500, 6100, 7700, 9300, 10900, 12500],
+      // 메기는 소리 "날 좀 보소" 0~15.9초
+      sy: [
+        [16.14, 16.52], [16.82, 17.18, 17.42], [18.06, 18.52], [18.66, 19.2, 19.42], // 아리 아리랑 쓰리 쓰리랑
+        [20.13, 20.31, 20.79, 21.21], [21.45, 21.93], // 아라리가 났네
+        [24.17, 24.77, 25.21], [26.11, 26.75, 27.41], [28.06, 28.84, 29.44, 30.1], // 아리랑 고개로 넘어간다
+      ],
+      end: 31400,
     },
   ];
+
+  // 가사 → 글자 목록 [{ ch, tgt, t(ms) }]. 공백은 바로 앞 글자 시각(보이지 않으니 무관)
+  REGIONS.forEach(function (r) {
+    const sy = r.sy.flat().map((v) => Math.round(v * 1000));
+    let k = 0;
+    let mark = false;
+    r.chars = [];
+    for (const ch of r.lyrics) {
+      if (ch === "*") mark = true;
+      else if (ch === "\n") r.chars.push({ br: true });
+      else if (ch === " ") r.chars.push({ ch, t: sy[k - 1] ?? sy[0] });
+      else r.chars.push({ ch, tgt: mark, t: sy[k++] }), (mark = false);
+    }
+    if (k !== sy.length) console.warn(`[exp2] ${r.id} 가사 글자 ${k}개 ≠ 시각 ${sy.length}개`);
+    r.hits = r.chars.filter((c) => c.tgt).map((c) => c.t);
+  });
 
   const IMG = "img/04_exp2/";
   const pct = (px, of = 1920) => (px / of) * 100 + "%";
@@ -91,7 +123,7 @@ $(function () {
         `<img class="pose-btn" src="${IMG}${r.id}_btn.png" alt="" />` +
         `<img class="pose-sing" src="${IMG}${r.id}_sing.png" alt="" />` +
         "</button>" +
-        "</div>"
+        "</div>",
     ).appendTo($scene);
     r.$char = r.$el.find(".e2-char");
     r.$full = r.$el.find(".full");
@@ -147,7 +179,9 @@ $(function () {
     reset();
     setChoosable(false);
     const my = token;
-    AR.Sound.narrate(S.daon02, { onEnd: () => my === token && setChoosable(true) });
+    AR.Sound.narrate(S.daon02, {
+      onEnd: () => my === token && setChoosable(true),
+    });
   }
 
   function select(r) {
@@ -165,40 +199,32 @@ $(function () {
     });
   }
 
-  // 가사 글자마다 span, 터치 글자는 .tgt — 반환: 터치 글자 span 배열
-  function buildLyrics(text) {
+  // 가사 글자마다 span(시각은 data), 터치 글자는 .tgt — 반환: 터치 글자 span 배열
+  function buildLyrics(r) {
     $lyrics.empty();
     const tgts = [];
-    let mark = false;
-    for (const ch of text) {
-      if (ch === "*") {
-        mark = true;
-        continue;
-      }
-      if (ch === "\n") {
-        $lyrics.append("<br>");
-        continue;
-      }
-      const $s = $("<span>").text(ch).appendTo($lyrics);
-      if (mark) tgts.push($s.addClass("tgt"));
-      mark = false;
-    }
+    r.chars.forEach(function (c) {
+      if (c.br) return void $lyrics.append("<br>");
+      const $s = $("<span>").text(c.ch).data("t", c.t).appendTo($lyrics);
+      if (c.tgt) tgts.push($s.addClass("tgt"));
+    });
     return tgts;
   }
 
   function sing(r) {
-    const tgts = buildLyrics(r.lyrics);
+    const tgts = buildLyrics(r);
     const $spans = $lyrics.children("span");
     r.$char.addClass("singing");
     $callText.attr("src", `${IMG}${r.id}_text.png`).addClass("on");
     $board.addClass("on");
 
-    // 음원 — 없거나(404) 막혀도 가짜 타이밍으로 끝까지 진행한다
     const audio = new Audio(r.song);
     audio.volume = MUSIC_VOL;
-    // ponytail: 판정·연출 모두 벽시계(performance.now) 기준. 음원 시작 지연이 문제되면 audio.currentTime 으로 동기화.
+    // 판정·연출 시계 = 음원 재생 위치(audio.currentTime). 벽시계로 재면 실제 소리가 나오기까지의 지연(약 0.2초)만큼
+    // 화면이 앞서고 버퍼링에도 밀린다. 음원이 없거나 막히면 벽시계(t0 부터)로 대신한다.
     // me — 이 회차의 노래. 이전 회차의 지연 콜백(SONG_MAX_MS 안전 타이머 등)이 같은 캐릭터의 새 회차를 끝내지 않도록 비교용
-    const me = (song = { r, t0: performance.now(), audio, tgts, hits: 0, judged: r.hits.map(() => false) });
+    const me = (song = { r, t0: null, audio, noAudio: false, tgts, hits: 0, judged: r.hits.map(() => false) });
+    me.now = () => (me.noAudio ? performance.now() - me.t0 : audio.currentTime * 1000);
     let audioDone = false;
     let timeDone = false;
     const maybeEnd = () => audioDone && timeDone && finishRegion(me);
@@ -206,55 +232,71 @@ $(function () {
       audioDone = true;
       maybeEnd();
     };
+    // 음원이 없거나(404) 막혀도 타임라인은 시작해 끝까지 진행한다
+    const start = () => {
+      if (me.t0 !== null || song !== me) return;
+      me.t0 = performance.now();
+      timeline();
+      run();
+    };
+    const fail = () => {
+      me.noAudio = true;
+      endAudio();
+      start();
+    };
+    audio.addEventListener("playing", start);
     audio.addEventListener("ended", endAudio);
-    audio.addEventListener("error", endAudio);
-    audio.play()?.catch(endAudio);
-
-    const first = r.hits[0] - LEAD_MS;
-    later(first, () => $callText.removeClass("on")); // 메기는 소리 끝 → 받는 소리
-
-    r.hits.forEach(function (t, i) {
-      let $ring;
-      later(t - LEAD_MS, () => {
-        tgts[i].addClass("cue");
-        $ring = $('<div class="ring">').css("--lead", LEAD_MS + "ms").appendTo($rings);
-      });
-      later(t + HIT_MS, () => {
-        me.judged[i] = true;
-        $ring.addClass("out");
-        setTimeout(() => $ring.remove(), 300);
-      });
-    });
-
-    // 노래방처럼 한 글자씩 — 터치 글자는 목표 시각에, 사이 글자는 두 목표 시각 사이를 고르게 나눠 채운다.
-    // 마지막 터치 글자 뒤는 앞 구간의 글자당 평균 속도로(TAIL_MS 안에 끝나게).
-    const idx = tgts.map(($t) => $spans.index($t));
-    const perChar = (r.hits.at(-1) - r.hits[0]) / Math.max(1, idx.at(-1) - idx[0]);
-    const tailStep = Math.min(perChar, (TAIL_MS - 200) / Math.max(1, $spans.length - 1 - idx.at(-1)));
-    $spans.each(function (k) {
-      let a = idx.findLastIndex((x) => x <= k);
-      if (a < 0) a = 0; // 첫 터치 글자 앞 글자(현재 가사엔 없음)
-      const t =
-        a + 1 < idx.length
-          ? r.hits[a] + ((k - idx[a]) / (idx[a + 1] - idx[a])) * (r.hits[a + 1] - r.hits[a])
-          : r.hits[a] + Math.max(0, k - idx[a]) * tailStep;
-      later(t, () => $(this).addClass("sung"));
-    });
-
-    later(r.hits.at(-1) + TAIL_MS, () => {
-      $spans.addClass("sung");
-      timeDone = true;
-      maybeEnd();
-    });
+    audio.addEventListener("error", fail);
+    audio.play()?.catch(fail);
     later(SONG_MAX_MS, endAudio);
+
+    // 시각(ms) 순 일정표 — 매 프레임 시계를 보고 지난 것을 실행한다
+    const queue = [];
+    const at = (t, fn) => queue.push({ t, fn });
+    function run() {
+      if (song !== me) return;
+      const now = me.now();
+      while (queue.length && queue[0].t <= now) queue.shift().fn();
+      if (queue.length) requestAnimationFrame(run);
+    }
+
+    function timeline() {
+      const first = r.hits[0] - LEAD_MS;
+      at(first, () => $callText.removeClass("on")); // 메기는 소리 끝 → 받는 소리
+
+      r.hits.forEach(function (t, i) {
+        let $ring;
+        at(t - CUE_MS, () => tgts[i].addClass("cue"));
+        at(t - LEAD_MS, () => {
+          $ring = $('<div class="ring">').css("--lead", LEAD_MS + "ms").appendTo($rings);
+        });
+        at(t + HIT_MS, () => {
+          me.judged[i] = true;
+          $ring.addClass("out");
+          setTimeout(() => $ring.remove(), 300);
+        });
+      });
+
+      // 노래방처럼 한 글자씩 — 글자마다 그 글자를 부르기 시작하는 시각(sy)에 채운다
+      $spans.each(function () {
+        at($(this).data("t"), () => $(this).addClass("sung"));
+      });
+
+      at(r.end, () => {
+        $spans.addClass("sung");
+        timeDone = true;
+        maybeEnd();
+      });
+      queue.sort((a, b) => a.t - b.t);
+    }
   }
 
   // 달 누르기 — 달무리가 떠 있는(목표 LEAD_MS 전부터) 아직 판정 안 된 첫 터치 글자를 판정한다.
   // ±HIT_MS 안이면 성공, 그보다 이르면 그 글자는 놓침(연타로 전부 맞히는 것 방지). 달무리가 없을 때 누르면 무시.
   $moon.on("pointerdown", function (e) {
     e.preventDefault();
-    if (!song) return;
-    const t = performance.now() - song.t0;
+    if (song?.t0 == null) return;
+    const t = song.now();
     if (TAP_LOG) console.log(`[tap] ${song.r.id} ${Math.round(t)}ms`);
     const i = song.r.hits.findIndex((h, j) => !song.judged[j] && t >= h - LEAD_MS && t <= h + HIT_MS);
     if (i < 0) return;
@@ -302,8 +344,17 @@ $(function () {
   }
 
   /* ----- 안내 → 선택 -------------------------------------------------------- */
+  // 정보2 에서 [뒤로] 로 돌아오면(?done) 세 고장 완료 + 종료 화면 그대로 — [다시하기] 로 다시 할 수 있게
+  const DONE = new URLSearchParams(location.search).has("done");
+  if (DONE) {
+    history.replaceState(null, "", location.pathname); // 새로고침하면 처음부터
+    AR.closePopup("#guideDim");
+    REGIONS.forEach((r) => r.$el.addClass("done"));
+    AR.openPopup("#finishDim");
+  }
+
   // 안내 화면은 진입 즉시 떠 있다(HTML 에 .flex). 자동재생이 막히면 첫 터치에서 다시 시도.
-  const vo = AR.Sound.narrate(S.daon01);
+  const vo = DONE ? null : AR.Sound.narrate(S.daon01);
   if (vo) {
     $(document).one("pointerdown", function () {
       if (vo.paused && vo.currentTime === 0 && $("#guideDim").hasClass("flex")) AR.Sound.narrate(S.daon01);
@@ -330,16 +381,7 @@ $(function () {
 
   /* ----- 프리로드 ----------------------------------------------------------- */
   AR.preload(
-    [
-      "title_exp2.png",
-      "exp2_tutorial.png",
-      "btn_moon.png",
-      "moon_effect.png",
-      "bord.png",
-      "end_success.png",
-      "end_text.png",
-      "end_main.png",
-    ]
+    ["title_exp2.png", "exp2_tutorial.png", "btn_moon.png", "moon_effect.png", "bord.png", "end_success.png", "end_text.png", "end_main.png"]
       .concat(
         REGIONS.flatMap((r) => [
           `bg_${r.place}_off.png`,
@@ -349,10 +391,10 @@ $(function () {
           `${r.id}_btn.png`,
           `${r.id}_sing.png`,
           `${r.id}_text.png`,
-        ])
+        ]),
       )
       .map((f) => IMG + f)
-      .concat("img/03_exp1/end_bg.png")
+      .concat("img/03_exp1/end_bg.png"),
   );
   AR.Sound.prime([S.daon01, S.daon02, S.daon03, S.ceremony]);
 });

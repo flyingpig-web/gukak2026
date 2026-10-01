@@ -26,6 +26,6 @@
                                             https://www.gugak.go.kr/ency/topic/view/874
   bgm/exp2_miryang.mp3                      활동2 밀양아리랑 (민요(동부) 배우기: 04. 밀양아리랑)
                                             https://youtu.be/tt2UW_NUC3g
-                                            ※ 넣은 뒤 exp2.js 의 hits(터치 글자별 ms)를 실측값으로 바꿔야 한다
+                                            ※ 들어옴(2026-10-01). exp2.js 의 hits 는 실측값 — 음원을 바꾸면 다시 재야 한다
                                               — exp2.html?tap 으로 열고 노래에 맞춰 달을 누르면 콘솔에 시각이 찍힌다
   effects/click.mp3, effects/hover.mp3      버튼 클릭 / 호버 (현재 AR2 것 복사본)
