@@ -1,0 +1,198 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   gukak 시리즈 공통 UI  (다음 편은 이 프로젝트 폴더를 통째로 복사해 쓴다)
+   - 국악 편에서 화면마다 되풀이되는 요소(상단바 / 안내 / 종료 팝업)의 배치·동작을 한 곳에 모았다.
+     좌표는 정간보(AR1) 목업 실측값 — 편마다 버튼 원본 해상도가 달라 다시 잰다.
+   - 좌표는 디자인 1920×1080 기준 % (레터박스 .container 기준). px 고정 금지.
+   - 이미지 경로는 여기에 두지 않는다 — 프로젝트 HTML 의 <img src> 로만 지정.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   화면 배경 (컨테이너 전체를 채우는 1920×1080 배경)
+   ------------------------------------------------------------------------- */
+.scene-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 여러 장을 겹쳐 두고 opacity 로 디졸브 하는 배경(활동2 단계 전환) */
+.scene-bg.layer {
+  opacity: 0;
+  transition: opacity 1.5s ease; /* 단계 전환 디졸브를 1.5배로(수정요청) */
+}
+.scene-bg.layer.on {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   버튼 공통 — 기획 p4 "모든 상호작용 버튼은 마우스 호버 시 스케일 10%"
+   ★ 위치 지정용 transform 과 충돌하지 않도록 스케일은 "안쪽 img" 에 건다.
+   ------------------------------------------------------------------------- */
+button > img,
+[role="button"] > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover > img,
+  [role="button"]:hover > img {
+    transform: scale(1.1);
+  }
+}
+
+button:not(:disabled):active > img,
+[role="button"]:active > img {
+  filter: var(--btn-active-effect);
+}
+
+button:disabled {
+  cursor: default;
+}
+button:disabled > img {
+  opacity: 0.45;
+}
+
+/* -------------------------------------------------------------------------
+   상단바 — [뒤로가기] · 구름 타이틀 · [홈]  (전 화면 공통 위치)
+   ------------------------------------------------------------------------- */
+.btn-top {
+  position: absolute;
+  z-index: 30;
+}
+
+.btn-back {
+  left: 4.84%;
+  top: 4.17%;
+  width: 8.13%;
+  height: 14.44%;
+}
+
+.btn-home {
+  left: 87.03%;
+  top: 4.17%;
+  width: 8.13%;
+  height: 14.44%;
+}
+
+.top-title {
+  position: absolute;
+  left: 25.31%;
+  top: 4.35%;
+  width: 49.43%;
+  height: 14.17%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   플레이 스테이지 — 준비/안내 화면에서는 감춘다.
+   준비·안내 화면은 "체험 방법 예시" 이미지를 띄우는데, 그 이미지 안에 대금·송곳·
+   게이지 같은 요소가 이미 그려져 있어서 실제 플레이 요소와 겹쳐 보이기 때문.
+   (배경은 그대로 두어 "플레이 화면 배경으로 딤드" 규격을 지킨다)
+   ------------------------------------------------------------------------- */
+.exp-stage {
+  display: none;
+}
+.exp-stage.on {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------
+   안내(체험 방법) — 딤드 위에 전체화면 튜토리얼 이미지 1장 + [▶]
+   ------------------------------------------------------------------------- */
+.guide-dim {
+  z-index: 210; /* 튜토리얼 이미지에 70% 딤드가 구워져 있고 상단바까지 덮는다(목업 p6/p13) */
+  background-color: transparent;
+}
+
+.guide-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.btn-guide-play {
+  position: absolute;
+  left: 81.61%;
+  top: 80.09%;
+  width: 8.13%;
+  height: 14.44%;
+  z-index: 220;
+}
+
+/* -------------------------------------------------------------------------
+   종료 팝업 — 딤드 + 타이틀 + 중앙 이미지 + [다시하기][더 알아보기][나가기]
+   ------------------------------------------------------------------------- */
+.finish-dim {
+  z-index: 300; /* "이전 화면 딤드"(정간보 p11/p18) — .dimmed 기본 60% */
+}
+
+/* 종료 팝업 중에는 타이틀만 숨긴다(common.js openPopup/closePopup 이 토글).
+   [뒤로가기]/[홈] 은 딤드 위로 올려 계속 쓴다(AR5 와 같은 판단). */
+body.finish-on .top-title {
+  display: none;
+}
+body.finish-on .btn-top {
+  z-index: 320;
+}
+
+.finish-bg,
+.finish-title,
+.finish-main {
+  position: absolute;
+  pointer-events: none;
+}
+
+.finish-bg {
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.finish-btns button {
+  position: absolute;
+  z-index: 310;
+}
+
+.btn-retry {
+  left: 13.7%;
+  top: 79.26%;
+  width: 24.01%;
+  height: 12.87%;
+}
+
+.btn-more {
+  left: 38.02%;
+  top: 79.26%;
+  width: 24.01%;
+  height: 12.87%;
+}
+
+.btn-exit {
+  left: 62.29%;
+  top: 79.26%;
+  width: 24.06%;
+  height: 12.87%;
+}
+
+/* -------------------------------------------------------------------------
+   개발자 좌표 확인용 오버레이 (Ctrl + ; 로 켠 뒤 클릭 영역 확인)
+   ------------------------------------------------------------------------- */
+.dev-on .hit-dev {
+  outline: 0.2rem dashed rgba(255, 60, 60, 0.9);
+  background: rgba(255, 60, 60, 0.14);
+}

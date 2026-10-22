@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>정간보 — 더 알아보기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body class="info">
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경에 두리와 말풍선이 구워져 있다 -->
+          <div class="scene-bg" style="background-image: url(img/05_info/bg_info_with_guide.png)"></div>
+
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/05_info/text_info.png" alt="더 알아보기" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 책 3권 + 이름표 — info.js 가 생성 -->
+          <div id="books"></div>
+
+          <!-- 책 정보 팝업 — [X] 또는 책 바깥을 누르면 닫힌다 -->
+          <div class="dimmed book-dim" id="bookDim">
+            <div class="book-card">
+              <img class="book-pop" id="bookPop" src="" alt="" />
+              <div class="page-left" id="pageImg"></div>
+              <div class="page-right">
+                <strong id="pageTitle"></strong>
+                <p id="pageDesc"></p>
+              </div>
+              <button class="page-nav page-prev" id="btnPagePrev"><img src="img/05_info/btn_prev.png" alt="이전 쪽" /></button>
+              <span class="page-dots" id="pageDots"></span>
+              <button class="page-nav page-next" id="btnPageNext"><img src="img/05_info/btn_next.png" alt="다음 쪽" /></button>
+              <button class="book-close" id="bookClose"><img src="img/05_info/btn_close.png" alt="닫기" /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/info.js"></script>
+  </body>
+</html>

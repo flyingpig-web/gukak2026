@@ -1,0 +1,188 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동2 — 나만의 정간보를 만들어 보자 (exp2.html)  기획서 p13~18
+   좌표는 목업(1920×1080) 실측값. 악사·기호·칸 위치는 exp2.js 의 표(디자인 px).
+   ※ exp1.css 도 같이 로드된다 — 겹치는 이름(.btn-listen 등)은 그대로 공유한다.
+   ========================================================================= */
+
+.exp2 .container {
+  touch-action: none; /* 드래그 중 스크롤·확대 방지 */
+}
+
+/* ----- 장구 악사 3명 ----------------------------------------------------
+   .musician 은 left/top/width/height 를 JS 가 넣는다. 포즈 4장(idle/deong/kung/deok)을
+   겹쳐 두고 data-pose 로 하나만 보인다. 움직임은 안쪽 .mu-body 에 건다. */
+.musician {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+}
+.musician.center {
+  z-index: 2; /* 가운데 악사는 양옆보다 뒤(목업 p14) */
+}
+.mu-body {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 90%;
+}
+.mu-body > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: none;
+}
+.musician[data-pose="idle"] .p-idle,
+.musician[data-pose="deong"] .p-deong,
+.musician[data-pose="kung"] .p-kung,
+.musician[data-pose="deok"] .p-deok {
+  display: block;
+}
+
+/* 기호에 맞춰 스케일 Up-Down(기획 p15-7, p17) */
+.mu-body.fx-bounce {
+  animation: muBounce 0.32s ease-out;
+}
+/* 기덕 — 빠르게 2번 */
+.mu-body.fx-double {
+  animation: muBounce 0.2s ease-out 2;
+}
+/* 더러러러 — 재생되는 동안 빠르고 짧은 좌우 jiggle */
+.mu-body.fx-jiggle {
+  animation: muJiggle 0.09s linear infinite;
+}
+@keyframes muBounce {
+  50% {
+    transform: scale(1.08);
+  }
+}
+@keyframes muJiggle {
+  25% {
+    transform: translateX(-1.2%) rotate(-0.6deg);
+  }
+  75% {
+    transform: translateX(1.2%) rotate(0.6deg);
+  }
+}
+
+.play-listen {
+  position: absolute;
+  left: 26.25%;
+  top: 61.3%;
+  width: 21.61%;
+  height: 12.78%;
+  z-index: 6;
+}
+
+/* ----- 나무판 + 장단 기호 ----------------------------------------------- */
+.rhythm-panel {
+  position: absolute;
+  left: 2.08%;
+  top: 70.46%;
+  width: 70.31%;
+  height: 26.3%;
+  z-index: 4;
+  pointer-events: none;
+}
+.tile {
+  position: absolute;
+  z-index: 5;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.tile > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+  transition: transform 0.15s ease;
+}
+@media (hover: hover) {
+  .tile:hover > img {
+    transform: scale(1.1);
+  }
+}
+
+/* ----- 정간보 ----------------------------------------------------------- */
+.score-empty {
+  position: absolute;
+  left: 70.89%;
+  top: 12.69%;
+  width: 25.68%;
+  height: 88.7%;
+  z-index: 4;
+  pointer-events: none;
+}
+.cell {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  transition: background-color 0.15s ease, box-shadow 0.15s ease;
+}
+/* 지금 연주되는 칸 — 밝게(기획 p15-6) */
+.cell.now {
+  background-color: rgba(255, 236, 140, 0.75);
+  box-shadow: 0 0 1.6rem 0.4rem rgba(255, 205, 70, 0.9);
+}
+/* 드래그 중 놓일 칸 */
+.cell.target {
+  background-color: rgba(255, 214, 120, 0.45);
+}
+.placed {
+  position: absolute;
+  z-index: 6;
+  cursor: grab;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+.placed > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  -webkit-user-drag: none;
+}
+.placed.drop {
+  animation: notePop 0.35s ease-out both; /* exp1.css */
+}
+.placed.lift {
+  opacity: 0.3;
+}
+
+/* 드래그 중인 기호(복사본) */
+.ghost {
+  position: absolute;
+  z-index: 60;
+  pointer-events: none;
+  filter: drop-shadow(0 0.8rem 1.2rem rgba(0, 0, 0, 0.35));
+}
+.ghost > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 연주 중엔 편집 불가(기획 p14-5 "[듣기] 누르기 전까지 자유롭게") */
+#stage.playing .tile,
+#stage.playing .placed {
+  pointer-events: none;
+}
+
+/* ----- 종료 ------------------------------------------------------------- */
+.exp2-finish .finish-title {
+  left: 18.59%;
+  top: 4.35%;
+  width: 62.81%;
+  height: 35.83%;
+}
+.exp2-finish .finish-main {
+  left: 24.43%;
+  top: 34.44%;
+  width: 49.95%;
+  height: 41.76%;
+}

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동2 — 나만의 정간보를 만들어 보자</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body class="exp2">
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 마을 잔치 마당(bg_exp2.png) -->
+          <div class="scene-bg" style="background-image: url(img/04_exp2/bg_exp2.png)"></div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/04_exp2/text_exp2.png" alt="나만의 정간보를 만들어 보자" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 플레이 요소 (안내·종료 화면에서는 숨긴다) — 악사·기호·칸은 exp2.js 가 생성 -->
+          <div class="exp-stage" id="stage">
+            <div id="musicians"></div>
+            <button class="btn-listen play-listen" id="btnListen" disabled><img src="img/04_exp2/btn_listen.png" alt="듣기" /></button>
+            <img class="rhythm-panel" src="img/04_exp2/panel_rhythm_choices.png" alt="" />
+            <div id="palette"></div>
+            <img class="score-empty" src="img/04_exp2/panel_score_empty.png" alt="빈 정간보" />
+            <div id="cells"></div>
+            <div id="tiles"></div>
+          </div>
+
+          <!-- 안내: 체험 방법(딤드·두리·말풍선이 한 장에 구워진 이미지) -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/04_exp2/popup_tutorial.png" alt="구음 기호를 골라 정간보를 채우고 소리를 들어보자" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 종료 — 이전 화면 딤드 -->
+          <div class="dimmed finish-dim exp2-finish" id="finishDim">
+            <img class="finish-title" src="img/04_exp2/text_complete.png" alt="나만의 정간보 완성!" />
+            <img class="finish-main" src="img/04_exp2/character_janggu_group_complete.png" alt="기뻐하는 장구 악사 세 명" />
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp2.js"></script>
+  </body>
+</html>

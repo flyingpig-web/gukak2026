@@ -1,0 +1,216 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동1 — 정간보의 빈 곳을 채워보자 (exp1.html)  기획서 p6~11
+   좌표는 목업(1920×1080) 실측값. 칸 강조·채운 음표·보기 위치는 exp1.js 의 표(디자인 px).
+   ========================================================================= */
+
+.exp1 .duri {
+  position: absolute;
+  left: 0.99%;
+  top: 31.76%;
+  width: 24.84%;
+  height: 67.87%;
+  z-index: 5;
+  pointer-events: none;
+  display: none; /* 안내 화면엔 튜토리얼 이미지 속 두리가 따로 있다(70% 딤드라 비쳐 보임) */
+}
+.exp1 .duri.on {
+  display: block;
+}
+/* 종료 화면(목업 p11)엔 말풍선 없이 두리만 — 위쪽 말풍선 부분(원본 0~200px)을 잘라낸다 */
+body.exp1.finish-on .duri {
+  clip-path: inset(27.5% 0 0 0);
+}
+
+.score-board {
+  position: absolute;
+  left: 23.44%;
+  top: 31.94%;
+  width: 52.08%;
+  height: 68.06%;
+  z-index: 6;
+  pointer-events: none;
+}
+
+/* 지금 채울 칸 — 테두리가 은은하게 깜빡인다. left/top 은 JS */
+.cell-hl {
+  position: absolute;
+  width: 11.56%;
+  height: 20.56%;
+  z-index: 7;
+  display: none;
+  pointer-events: none;
+  animation: cellBlink 1.2s ease-in-out infinite;
+}
+.cell-hl.on {
+  display: block;
+}
+@keyframes cellBlink {
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* 채운 음표(142×142) — left/top 은 JS */
+.note-fill {
+  position: absolute;
+  width: 7.4%;
+  height: 13.15%;
+  z-index: 8;
+  pointer-events: none;
+  animation: notePop 0.45s ease-out both;
+}
+@keyframes notePop {
+  0% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(0.92);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ----- 상단 정답 안내 ------------------------------------------------- */
+.hint {
+  position: absolute;
+  inset: 0;
+  z-index: 6;
+  pointer-events: none;
+}
+.hint.swap {
+  animation: fadeIn 0.35s ease both;
+}
+.hint-panel {
+  position: absolute;
+  left: 29.95%;
+  top: 18.33%;
+  width: 40.1%;
+  height: 20.09%;
+}
+.hint-icon {
+  position: absolute;
+  left: 33.85%;
+  top: 21.48%;
+  width: 7.24%;
+  height: 12.96%;
+}
+/* 박스 텍스트 #023425 — 이름 Pretendard Black 54px / 설명 Medium 30px (기획 p7) */
+.hint-text {
+  position: absolute;
+  left: 43.23%;
+  top: 20.19%;
+  width: 25%;
+  height: 15.56%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.6rem;
+  color: #023425;
+  font-family: var(--font);
+  word-break: keep-all;
+}
+.hint-text strong {
+  font-size: 5.4rem;
+  font-weight: 900;
+  line-height: 1.1;
+}
+.hint-text span {
+  font-size: 3rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+/* ----- 보기 --------------------------------------------------------- */
+.choice-panel {
+  position: absolute;
+  left: 75.47%;
+  top: 13.98%;
+  width: 20.42%;
+  height: 90.56%;
+  z-index: 6;
+  pointer-events: none;
+}
+.choice {
+  position: absolute;
+  left: 81.04%;
+  width: 9.32%;
+  height: 16.48%;
+  z-index: 9;
+}
+.choice.swap {
+  animation: fadeIn 0.35s ease both;
+}
+/* 내레이션 중·정답 처리 중엔 누를 수 없다(기획 p7-3) */
+#choices.lock .choice {
+  pointer-events: none;
+}
+/* 틀린 보기 — 좌우로 흔들림(기획 p8-5). 위치용 transform 과 겹치지 않게 안쪽 img 에 건다 */
+.choice.wrong > img {
+  animation: wrongShake 0.5s ease;
+}
+@keyframes wrongShake {
+  20%,
+  60% {
+    transform: translateX(-8%) rotate(-4deg);
+  }
+  40%,
+  80% {
+    transform: translateX(8%) rotate(4deg);
+  }
+}
+
+/* ----- 종료 --------------------------------------------------------- */
+.exp1-finish .finish-title {
+  left: 18.65%;
+  top: 4.26%;
+  width: 62.76%;
+  height: 35.83%;
+}
+.exp1-finish .finish-main {
+  left: 31.98%;
+  top: 35.19%;
+  width: 36.09%;
+  height: 42.87%;
+}
+.finish-dim.flex .finish-title,
+.finish-dim.flex .finish-main {
+  animation: finishPop 0.5s ease-out both;
+}
+.finish-dim.flex .finish-main {
+  animation-delay: 0.15s;
+}
+@keyframes finishPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/* [듣기] — 목업 p11 에 위치가 없어 완성 정간보 오른쪽에 둔다 */
+.finish-listen {
+  position: absolute;
+  left: 67.19%;
+  top: 50.09%;
+  width: 21.61%;
+  height: 12.78%;
+  z-index: 310;
+}
+.btn-listen.playing > img {
+  animation: listenPulse 0.9s ease-in-out infinite;
+}
+@keyframes listenPulse {
+  50% {
+    filter: brightness(1.25);
+  }
+}

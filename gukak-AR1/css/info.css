@@ -1,0 +1,128 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   정보(더 알아보기) — info.html 기획서 p19~21
+   좌표는 목업(1920×1080) 실측값. 책·이름표 위치는 info.js 가 넣는다.
+   ========================================================================= */
+
+.book,
+.book-label {
+  position: absolute;
+  z-index: 3;
+}
+/* "빛나는 곳을 눌러" — 책이 은은하게 빛난다 */
+.book > img {
+  animation: bookGlow 2s ease-in-out infinite;
+}
+@keyframes bookGlow {
+  50% {
+    filter: drop-shadow(0 0 1.6rem rgba(255, 232, 140, 0.95)) brightness(1.08);
+  }
+}
+
+.book-dim {
+  z-index: 300; /* 상단바까지 덮는다(목업 p20) */
+}
+.book-card {
+  position: absolute;
+  inset: 0;
+  transform-origin: 50% 50%;
+}
+.book-dim.flex .book-card {
+  animation: bookPop 0.3s ease-out both;
+}
+@keyframes bookPop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+.book-pop {
+  position: absolute;
+  left: 17.4%;
+  top: 11.39%;
+  width: 65.26%;
+  height: 77.31%;
+}
+.book-close {
+  position: absolute;
+  left: 80.78%;
+  top: 18.7%;
+  width: 6.35%;
+  height: 11.3%;
+}
+
+/* 왼쪽 쪽 — 그림(활동1 소스), 중심 (690, 477). 크기는 info.js */
+.page-left > img {
+  position: absolute;
+}
+.page-left.swap > img,
+.page-right.swap {
+  animation: fadeIn 0.3s ease both;
+}
+
+/* 오른쪽 쪽 — 박스 텍스트 #333333, 이름 Pretendard Black 54px / 설명 Medium 34px (기획 p20) */
+.page-right {
+  position: absolute;
+  left: 53.13%;
+  top: 35.46%;
+  width: 22.92%;
+  height: 28%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4.9rem;
+  color: #333;
+  font-family: var(--font);
+  text-align: center;
+  word-break: keep-all;
+}
+.page-right strong {
+  font-size: 5.4rem;
+  font-weight: 900;
+  line-height: 1.2;
+}
+.page-right p {
+  white-space: pre-line;
+  font-size: 3.4rem;
+  font-weight: 500;
+  line-height: 1.35;
+}
+
+.page-nav {
+  position: absolute;
+  top: 64.17%;
+  width: 5.52%;
+  height: 9.81%;
+}
+.page-prev {
+  left: 53.18%;
+}
+.page-next {
+  left: 70.42%;
+}
+.page-dots {
+  position: absolute;
+  left: 58.7%;
+  top: 67.22%;
+  width: 11.72%;
+  height: 3.7%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+.page-dots i {
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  background: #c9b18f;
+}
+.page-dots i.on {
+  background: #1d4a35;
+}
+/* 한 쪽뿐인 책(정간보)은 넘기기 없음(기획 p21) */
+.book-card.single .page-nav,
+.book-card.single .page-dots {
+  display: none;
+}

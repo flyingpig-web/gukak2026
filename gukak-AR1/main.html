@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>세종대왕과 정간보 — 무엇을 해볼까?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 두리의 책상 + 두리 얼굴 + 말풍선(두리N_02 문구가 구워져 있다) -->
+          <div class="scene-bg" style="background-image: url(img/02_main/bg_main.png)"></div>
+
+          <!-- 말풍선 문구 — 구워진 글자를 덮고 HTML 텍스트로 교체(빈 말풍선 소스가 없다) -->
+          <div class="main-bubble"><span id="mainBubble">우리의 소리를 담는 <em>정간보</em>를 함께 만들어 볼까?</span></div>
+
+          <!-- 선택① 미완성 정간보 → 활동1 (hover/선택 시 select 이미지) -->
+          <img class="choice-img img-exp1" src="img/02_main/btn_exp1.png" alt="" />
+          <img class="choice-img choice-on img-exp1" src="img/02_main/btn_exp1_select.png" alt="" />
+          <img class="choice-label label-exp1" src="img/02_main/text_exp1.png" alt="" />
+          <button class="choice-hit hit-exp1" id="hitExp1" aria-label="활동1 정간보의 빈 곳을 채워보자"></button>
+
+          <!-- 선택② 빈 정간보 → 활동2 -->
+          <img class="choice-img img-exp2" src="img/02_main/btn_exp2.png" alt="" />
+          <img class="choice-img choice-on img-exp2" src="img/02_main/btn_exp2_select.png" alt="" />
+          <img class="choice-label label-exp2" src="img/02_main/text_exp2.png" alt="" />
+          <button class="choice-hit hit-exp2" id="hitExp2" aria-label="활동2 나만의 정간보를 만들어보자"></button>
+
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>

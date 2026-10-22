@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>활동1 — 정간보의 빈 곳을 채워보자</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body class="exp1">
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 경복궁 강녕전 뒤뜰(bg_exp1.png) -->
+          <div class="scene-bg" style="background-image: url(img/03_exp1/bg_exp1.png)"></div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/03_exp1/text_exp1.png" alt="정간보의 빈 곳을 채워보자" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 붓을 든 두리 + 말풍선(한 장) — 종료 화면에선 말풍선만 잘라낸다(목업 p11) -->
+          <img class="duri" src="img/03_exp1/character_guide_with_speech.png" alt="같은 보기를 골라 빈칸을 채워줘!" />
+
+          <!-- 플레이 요소 (안내·종료 화면에서는 숨긴다) — 칸 강조·채운 음표는 exp1.js 가 생성 -->
+          <div class="exp-stage" id="stage">
+            <img class="score-board" src="img/03_exp1/panel_score_question.png" alt="빈칸이 있는 정간보" />
+            <img class="cell-hl" id="cellHl" src="img/03_exp1/effect_cell_highlight.png" alt="" />
+            <div id="notes"></div>
+
+            <!-- 상단 정답 안내: [정답 이미지] 이름 / 설명 -->
+            <div class="hint" id="hint">
+              <img class="hint-panel" src="img/03_exp1/panel_hint.png" alt="" />
+              <img class="hint-icon" id="hintIcon" src="" alt="" />
+              <div class="hint-text">
+                <strong id="hintName"></strong>
+                <span id="hintDesc"></span>
+              </div>
+            </div>
+
+            <!-- 보기 3개 -->
+            <img class="choice-panel" src="img/03_exp1/panel_choices.png" alt="보기" />
+            <div id="choices"></div>
+          </div>
+
+          <!-- 안내: 체험 방법(딤드·두리·말풍선이 한 장에 구워진 이미지) -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/03_exp1/popup_tutorial.png" alt="설명을 잘 보고, 오른쪽 보기에서 똑같은 걸 골라줘." />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작하기" />
+            </button>
+          </div>
+
+          <!-- 종료 — 이전 화면 딤드 -->
+          <!-- ※ .dialog 래퍼를 두지 않는다 — 내부 좌표를 .container 기준 %로 잡기 위해 -->
+          <div class="dimmed finish-dim exp1-finish" id="finishDim">
+            <img class="finish-title" src="img/03_exp1/text_complete.png" alt="칸칸이 소리를 담아, 정간보 완성!" />
+            <img class="finish-main" src="img/03_exp1/image_score_complete.png" alt="완성된 정간보" />
+            <!-- [듣기] 는 활동1 소스에 없어 활동2 것을 쓴다(사용자 확인) -->
+            <button class="btn-listen finish-listen" id="btnListen"><img src="img/04_exp2/btn_listen.png" alt="듣기" /></button>
+            <span class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp1.js"></script>
+  </body>
+</html>
