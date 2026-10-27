@@ -33,13 +33,13 @@ $(function () {
   //   p9 칸 순서(오른쪽부터)대로 ④ 황태중(3소박) → ⑤ 황태(2소박)(사용자 요청, p10 표의 4·5번과 순서가 바뀜).
   //   완성 이미지(image_score_complete)는 반대 배치라 종료 화면에선 두 칸이 바뀌어 보인다 — PD 문의 중.
   const STEPS = [
-    { note: "hwang", cell: [COL[3], ROW[0]], name: "한 정간", desc: "황을 한 박만큼 소리내요", vo: [2, 3], choices: ["hwang", "jung_im_nam_hwang", "horizontal_line"] },
-    { note: "rest", cell: BREATH, name: "숨표", desc: "연주하다가 숨을 쉬어요", vo: [4, 5], choices: ["hwang_tae", "rest", "chevron_right"] },
-    { note: "triangle_up", cell: [COL[3], ROW[3]], name: "쉼표", desc: "연주를 쉬어요", vo: [6, 7], choices: ["triangle_up", "horizontal_line", "hwang"] },
-    { note: "hwang_tae_jung", cell: [COL[2], ROW[0]], name: "3소박", desc: "한 박을 셋으로 나누어, 황·태·중을 소리내요", vo: [10, 11], choices: ["hwang_tae_jung", "hwang", "rest"] },
-    { note: "hwang_tae", cell: [COL[1], ROW[0]], name: "2소박", desc: "한 박을 둘로 나누어, 황과 태를 소리내요", vo: [8, 9], choices: ["jung_im_nam_hwang", "triangle_up", "hwang_tae"] },
-    { note: "jung_im_nam_hwang", cell: [COL[1], ROW[2]], name: "4소박", desc: "한 박을 넷으로 나누어, 중·임·남·황을 소리내요", vo: [12, 13], choices: ["triangle_down", "hwang_tae", "jung_im_nam_hwang"] },
-    { note: "horizontal_line", cell: [COL[0], ROW[3]], name: "마침표", desc: "음악이 끝났다고 알려줘요", vo: [14, 15], choices: ["rest", "horizontal_line", "hwang_tae_jung"] },
+    { note: "hwang", cell: [COL[3], ROW[0]], name: "한 정간", desc: "황을 한 박만큼 소리내요.", vo: [2, 3], choices: ["hwang", "jung_im_nam_hwang", "horizontal_line"] },
+    { note: "rest", cell: BREATH, name: "숨표", desc: "연주하다가 숨을 쉬어요.", vo: [4, 5], choices: ["hwang_tae", "rest", "chevron_right"] },
+    { note: "triangle_up", cell: [COL[3], ROW[3]], name: "쉼표", desc: "연주를 쉬어요.", vo: [6, 7], choices: ["triangle_up", "horizontal_line", "hwang"] },
+    { note: "hwang_tae_jung", cell: [COL[2], ROW[0]], name: "3소박", desc: "한 박을 셋으로 나누어, 황·태·중을 소리내요.", vo: [10, 11], choices: ["hwang_tae_jung", "hwang", "rest"] },
+    { note: "hwang_tae", cell: [COL[1], ROW[0]], name: "2소박", desc: "한 박을 둘로 나누어, 황과 태를 소리내요.", vo: [8, 9], choices: ["jung_im_nam_hwang", "triangle_up", "hwang_tae"] },
+    { note: "jung_im_nam_hwang", cell: [COL[1], ROW[2]], name: "4소박", desc: "한 박을 넷으로 나누어, 중·임·남·황을 소리내요.", vo: [12, 13], choices: ["triangle_down", "hwang_tae", "jung_im_nam_hwang"] },
+    { note: "horizontal_line", cell: [COL[0], ROW[3]], name: "마침표", desc: "음악이 끝났다고 알려줘요.", vo: [14, 15], choices: ["rest", "horizontal_line", "hwang_tae_jung"] },
   ];
   const vo = (n) => N("duri_exp1_" + String(n).padStart(2, "0"));
   const noteSrc = (id) => `${IMG}btn_note_${id}.png`;
