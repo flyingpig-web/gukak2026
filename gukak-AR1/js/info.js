@@ -28,7 +28,7 @@ $(function () {
       pages: [
         { img: NOTE + "rest.png", title: "숨표", desc: "연주하다가 잠깐\n숨을 쉬라는 표시랍니다.", vo: ["info_02"] },
         { img: NOTE + "triangle_up.png", title: "쉼표", desc: "소리를 잠깐 멈추고\n쉬는 자리예요.", vo: ["info_03"] },
-        { img: NOTE + "horizontal_line.png", title: "끝줄", desc: "음악이 여기서 끝난다고\n알려줘요.", vo: ["info_04"] },
+        { img: NOTE + "horizontal_line.png", title: "마침표", desc: "음악이 여기서 끝난다고\n알려줘요.", vo: ["info_04"] },
       ],
     },
     {
