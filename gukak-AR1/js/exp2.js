@@ -126,7 +126,7 @@ $(function () {
   }
 
   /* ----- 드래그 ------------------------------------------------------------ */
-  let drag = null; // { id, from(칸 번호 | -1), $ghost, target }
+  let drag = null; // { id, from(칸 번호 | -1), $src(끌어낸 원래 기호), $ghost, target }
 
   function startDrag(e, id, from) {
     if (drag || playing || !$stage.hasClass("on")) return;
@@ -137,9 +137,11 @@ $(function () {
       from,
       target: -1,
       pointerId: e.pointerId,
+      $src: from >= 0 ? CELLS[from].$tile : s.$el,
       $ghost: $(`<div class="ghost"><img src="${tileSrc(s)}" alt="" /></div>`).appendTo($stage),
     };
-    if (from >= 0) CELLS[from].$tile?.addClass("lift");
+    // 끌어낸 원래 자리는 비어 보이게(261026 수정요청 — 나무판 기호도). 놓으면 다시 보인다
+    drag.$src?.addClass("lift");
     moveDrag(e);
   }
 
@@ -157,11 +159,11 @@ $(function () {
 
   function endDrag(e, cancel) {
     if (!drag || e.pointerId !== drag.pointerId) return;
-    const { id, from, target, $ghost } = drag;
+    const { id, from, target, $src, $ghost } = drag;
     drag = null;
     $ghost.remove();
     if (target >= 0) CELLS[target].$el.removeClass("target");
-    if (from >= 0) CELLS[from].$tile?.removeClass("lift");
+    $src?.removeClass("lift");
     if (cancel) return;
 
     const p = toDesign(e);
@@ -169,6 +171,7 @@ $(function () {
       if (target === from) return;
       if (from >= 0) setCell(from, null); // 칸 → 칸 옮기기
       setCell(target, id); // 찬 칸이면 바꿔 넣는다
+      AR.Sound.sfx(S.correct); // 칸에 놓일 때 효과음(261026 수정요청)
     } else if (from >= 0 && !onBoard(p)) {
       setCell(from, null); // 정간보 밖에 놓으면 삭제(기획 p14-5)
     }
@@ -263,7 +266,9 @@ $(function () {
     stopPlay();
     $stage.removeClass("on");
     AR.openPopup("#finishDim");
-    AR.Sound.narrate(S.exp2End);
+    // 세레머니 → 두리N_27 (261026 수정요청, 활동1 과 같은 순서)
+    const my = token;
+    AR.Sound.sfxThen(S.ceremony, () => my === token && $("#finishDim").hasClass("flex") && AR.Sound.narrate(S.exp2End));
   }
 
   function startPlay() {
@@ -315,5 +320,5 @@ $(function () {
         MUSICIANS.flatMap((m) => ["idle", "deong", "kung", "deok"].map((p) => `${IMG}character_janggu_${m.side}_${p}.png`))
       )
   );
-  AR.Sound.prime([S.exp2Guide, S.exp2End, ...SYMBOLS.flatMap((s) => [vo(s.vo), snd(s)])]);
+  AR.Sound.prime([S.exp2Guide, S.exp2End, S.correct, S.ceremony, ...SYMBOLS.flatMap((s) => [vo(s.vo), snd(s)])]);
 });

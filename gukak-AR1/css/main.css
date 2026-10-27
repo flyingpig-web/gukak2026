@@ -89,29 +89,20 @@
   height: 59.81%;
 }
 
-/* 두리 말풍선 문구 — bg_main 에 구워진 두리N_02 문구 위를 말풍선 색으로 덮고 HTML 텍스트로 쓴다.
-   덮는 영역: 디자인 px (372, 92) ~ (1056, 160). 오른쪽 구름 장식(1060~)은 남긴다. */
-.main-bubble {
+/* 두리 말풍선 — 추가 소스 text_speech1~3(865×292)을 원본 크기로 배경 말풍선 위에 겹친다.
+   (301, -19) 에 놓으면 bg_main 에 구워진 말풍선·문구·구름 장식을 그대로 덮는다(테두리 매칭 실측).
+   세 장을 겹쳐 두고 .on 만 보인다. */
+.main-speech {
   position: absolute;
-  left: 19.38%;
-  top: 8.52%;
-  width: 35.63%;
-  height: 6.3%;
+  left: 15.68%;
+  top: -1.76%;
+  width: 45.05%;
+  height: 27.04%;
   z-index: 20;
-  display: flex;
-  align-items: center;
-  padding-left: 0.8rem;
-  background: #fbefdc;
-  box-shadow: 0 0 0.6rem 0.4rem #fbefdc;
-  border-radius: 1rem;
-  font-family: var(--font);
-  font-size: 3.6rem; /* 구워진 원래 문구와 같은 폭(디자인 px 382~1052) */
-  font-weight: 800;
-  color: #060608;
-  white-space: nowrap;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
-.main-bubble em {
-  font-style: normal;
-  color: #054436;
+.main-speech.on {
+  opacity: 1;
 }

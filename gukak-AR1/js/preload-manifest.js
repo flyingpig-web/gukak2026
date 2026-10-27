@@ -27,7 +27,10 @@ window.AR_MANIFEST = {
         "img/02_main/btn_exp2.png",
         "img/02_main/btn_exp2_select.png",
         "img/02_main/text_exp1.png",
-        "img/02_main/text_exp2.png"
+        "img/02_main/text_exp2.png",
+        "img/02_main/text_speech1.png",
+        "img/02_main/text_speech2.png",
+        "img/02_main/text_speech3.png"
       ]
     },
     {

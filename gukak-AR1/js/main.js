@@ -1,24 +1,21 @@
 /* =========================================================================
    MAIN (main.html) — 기획서 p5
-   1. 진입 시 '두리N_02' 자동 재생
+   1. 진입 시 '두리N_02' 자동 재생 + 말풍선 text_speech1
    2. 선택 버튼 hover → select 이미지
-      한 번 누르면 해당 내레이션 + 말풍선 문구 교체, (연속) 두 번 누르면 해당 활동으로 이동
+      한 번 누르면 해당 내레이션 + 말풍선 교체(text_speech2 / 3), (연속) 두 번 누르면 해당 활동으로 이동
    3. [홈] → HOME
    ========================================================================= */
 $(function () {
   const S = window.AR1_SFX;
 
   const CHOICES = {
-    exp1: { hit: "#hitExp1", on: ".choice-on.img-exp1", vo: S.main02, text: "<em>정간보</em>의 빈 곳을 채워 볼까?", href: "exp1.html" },
-    exp2: { hit: "#hitExp2", on: ".choice-on.img-exp2", vo: S.main03, text: "나만의 <em>정간보</em>를 만들어 볼까?", href: "exp2.html" },
+    exp1: { hit: "#hitExp1", on: ".choice-on.img-exp1", vo: S.main02, href: "exp1.html" },
+    exp2: { hit: "#hitExp2", on: ".choice-on.img-exp2", vo: S.main03, href: "exp2.html" },
   };
 
-  function showBubble(html) {
-    const $b = $("#mainBubble");
-    if ($b.html() === html) return;
-    $b.stop(true).animate({ opacity: 0 }, 150, function () {
-      $b.html(html).animate({ opacity: 1 }, 150);
-    });
+  // 말풍선 교체 — 진입 text_speech1 / 활동1 text_speech2 / 활동2 text_speech3 (261026 수정요청)
+  function showBubble(key) {
+    $(".main-speech").removeClass("on").filter(`[data-key="${key}"]`).addClass("on");
   }
 
   AR.Sound.prime([S.main01, S.main02, S.main03]);
@@ -30,6 +27,9 @@ $(function () {
     "img/02_main/btn_exp2_select.png",
     "img/02_main/text_exp1.png",
     "img/02_main/text_exp2.png",
+    "img/02_main/text_speech1.png",
+    "img/02_main/text_speech2.png",
+    "img/02_main/text_speech3.png",
   ]).then(function () {
     // 첫 화면이 아니라 보통은 재생된다. 새로고침 등으로 막히면 첫 터치에서 다시 시도.
     const vo = AR.Sound.narrate(S.main01);
@@ -55,7 +55,7 @@ $(function () {
         selected = key;
         $(".choice-on").removeClass("on");
         $on.addClass("on");
-        showBubble(c.text);
+        showBubble(key);
         AR.Sound.narrate(c.vo);
       });
   });

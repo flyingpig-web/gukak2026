@@ -174,8 +174,8 @@ body.exp1.finish-on .duri {
 .exp1-finish .finish-main {
   left: 31.98%;
   top: 35.19%;
-  width: 36.09%;
-  height: 42.87%;
+  width: 36.15%; /* 261026 재납품 694×462 */
+  height: 42.78%;
 }
 .finish-dim.flex .finish-title,
 .finish-dim.flex .finish-main {

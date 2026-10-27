@@ -150,8 +150,10 @@
 .placed.drop {
   animation: notePop 0.35s ease-out both; /* exp1.css */
 }
+/* 끌어낸 원래 자리(나무판 기호·칸 기호)는 드래그하는 동안 비어 보인다(261026 수정요청) */
+.tile.lift,
 .placed.lift {
-  opacity: 0.3;
+  visibility: hidden;
 }
 
 /* 드래그 중인 기호(복사본) */
