@@ -1,0 +1,12 @@
+@charset "UTF-8";
+/* Pretendard (가변·동적 서브셋) — 사용 글자만 woff2 조각으로 로드 */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.css");
+/* gukak 시리즈 공통 (다음 편은 이 프로젝트 폴더를 통째로 복사해 쓴다) */
+@import url(reset.css);
+@import url(common.css);
+@import url(ui.css);
+/* 화면별 */
+@import url(main.css);
+@import url(exp1.css);
+@import url(exp2.css);
+@import url(info.css);

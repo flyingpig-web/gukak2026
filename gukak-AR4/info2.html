@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>관노가면극 — 더 알아보기(다섯 마당)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body data-info="2">
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <div class="scene-bg" style="background-image: url(img/05_info/bg_info.png)"></div>
+
+          <!-- 마당 고르기(로테이션) -->
+          <div class="carousel" id="carousel"></div>
+
+          <button class="btn-rot btn-rot-left" id="btnLeft"><img src="img/05_info/btn_left.png" alt="이전" /></button>
+          <button class="btn-rot btn-rot-right" id="btnRight"><img src="img/05_info/btn_right.png" alt="다음" /></button>
+
+          <img class="info-siyun siyun-2" src="img/05_info/siyun_exp2.png" alt="" />
+          <img class="info-bubble" src="img/05_info/bubble_exp2.png" alt="몸짓을 보고 어떤 이야기인지 알맞는 내용을 골라보자!" />
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/05_info/title_info.png" alt="더 알아보기" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 세부 정보 팝업 -->
+          <div class="dimmed info-dim" id="infoDim">
+            <img class="info-pop" id="infoPop" src="" alt="" />
+            <div class="info-photo" id="infoPhoto"></div>
+            <button class="btn-pop-close" id="btnPopClose">
+              <img src="img/00_common/btn_close.png" alt="닫기" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/info.js"></script>
+  </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>관노가면극 — 탈을 만들어 공연을 시작해요!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/puzzle-data.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <div class="scene-bg" style="background-image: url(img/03_exp1/bg_exp1.png)"></div>
+
+          <!-- 무대 — 장자마리 2명은 처음부터, 완성한 탈의 주인은 차례로 늘어난다 -->
+          <img class="stage-char stage-jangja" src="img/03_exp1/jangja_wait.png" alt="" />
+          <img class="stage-char stage-yangban" src="img/03_exp1/char_yangban.png" alt="" />
+          <img class="stage-char stage-somae" src="img/03_exp1/char_somae.png" alt="" />
+          <img class="stage-char stage-sisi" src="img/03_exp1/char_sisi.png" alt="" />
+
+          <!-- 플레이 -->
+          <div class="exp-stage" id="stage">
+            <!-- 탈 틀 + 맞춘 조각이 얹히는 판 -->
+            <div class="mask-box" id="maskBox">
+              <img class="mask-ghost" id="maskGhost" src="" alt="" />
+              <img class="mask-full" id="maskFull" src="" alt="" />
+              <!-- 맞춘 조각이 여기 쌓인다(piece1 → piece5 순서로 뒤에서 앞으로) -->
+            </div>
+
+            <!-- 조각 판 -->
+            <img class="puzzle-tray" id="tray" src="img/03_exp1/puzzle_tray.png" alt="" />
+            <div class="piece-layer" id="pieces"></div>
+
+            <!-- 완성 연출 -->
+            <img class="finish-halo" id="halo" src="img/03_exp1/effect_halo.png" alt="" />
+            <img class="pop-effect" id="pop" src="" alt="" />
+            <img class="complete-text" id="completeText" src="" alt="" />
+
+            <!-- 완성 후 버튼 -->
+            <button class="btn-exp1-next" id="btnNext">
+              <img src="img/00_common/btn_next.png" alt="다음으로" />
+            </button>
+            <button class="btn-exp1-who" id="btnWho">
+              <img id="btnWhoImg" src="img/03_exp1/btn_who_yangban.png" alt="누구일까?" />
+            </button>
+          </div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/03_exp1/title_exp1.png" alt="탈을 완성하면 공연이 시작돼요!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 체험 방법 안내 (딤드가 이미지에 구워져 있다) -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="탈의 조각을 맞춰 남은 세 개의 탈을 만들어줘" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작" />
+            </button>
+          </div>
+
+          <!-- 인물 정보 팝업 -->
+          <div class="dimmed info-dim" id="infoDim">
+            <img class="info-pop" id="infoPop" src="" alt="" />
+            <div class="info-photo" id="infoPhoto"></div>
+            <button class="btn-pop-close" id="btnPopClose">
+              <img src="img/00_common/btn_close.png" alt="닫기" />
+            </button>
+          </div>
+
+          <!-- 활동 종료 -->
+          <div class="dimmed finish-dim" id="finishDim">
+            <img class="finish-main" src="img/03_exp1/end_main.png" alt="관노가면극 무대가 열렸어요!" />
+            <div class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp1.js"></script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>관노가면극 — 말없이 몸짓으로 이야기해요!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <div class="scene-bg" style="background-image: url(img/04_exp2/bg_exp2.png)"></div>
+
+          <div class="exp-stage" id="stage">
+            <!-- 등장인물 동작 루프 -->
+            <img class="madang-frame" id="frame" src="" alt="" />
+
+            <!-- 정답 화면 — 딤드 위에 정답 그림 + 마당 이름 -->
+            <div class="answer-dim" id="answerDim"></div>
+            <img class="madang-answer" id="answer" src="" alt="" />
+            <img class="madang-title" id="title" src="" alt="" />
+
+            <!-- 마당별 효과 -->
+            <div class="fx-layer" id="fx"></div>
+
+            <!-- 보기 두 개 -->
+            <button class="madang-btn btn-correct" id="btnCorrect"><img id="imgCorrect" src="" alt="" /></button>
+            <button class="madang-btn btn-wrong" id="btnWrong"><img id="imgWrong" src="" alt="" /></button>
+          </div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/04_exp2/title_exp2.png" alt="말없이 몸짓으로 이야기해요!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 체험 방법 안내 -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/04_exp2/exp2_tutorial.png" alt="몸짓을 보고 어떤 이야기인지 알맞은 내용을 골라보자!" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작" />
+            </button>
+          </div>
+
+          <!-- 활동 종료 -->
+          <div class="dimmed finish-dim" id="finishDim">
+            <img class="finish-main" src="img/04_exp2/end_main.png" alt="관노가면극의 이야기가 완성됐어요!" />
+            <div class="finish-btns">
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp2.js"></script>
+  </body>
+</html>

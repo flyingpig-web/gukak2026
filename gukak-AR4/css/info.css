@@ -1,0 +1,98 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   더 알아보기 — 정보1(등장인물) / 정보2(다섯 마당)  기획서 p18~p20, p39~p41
+   가운데 것을 누르면 세부 정보 팝업이 뜬다. 좌우 버튼으로 돌린다(로테이션).
+   캐러셀 칸의 자리·크기는 js/info.js 의 SLOTS(목업 실측값)가 넣는다.
+   팝업 좌표는 css/ui.css(.info-dim / .info-pop / .btn-pop-close) 공용.
+   ========================================================================= */
+
+.carousel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* 자리·크기·투명도는 js/info.js 가 인라인으로 넣는다(한 줄로 굴러가는 배치).
+   transition 시간은 info.js 의 TURN_MS 와 맞춘다. */
+.carousel .item {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: left 0.35s ease, top 0.35s ease, width 0.35s ease, height 0.35s ease,
+    opacity 0.3s ease;
+}
+
+/* 가운데 것만 누를 수 있다(기획 "가운데에 위치한 탈을 클릭하면") */
+.carousel .item.center {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.carousel .item img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* 가운데 것은 "눌러 보세요" 가 보이도록 은은하게 숨 쉰다 */
+.carousel .item.center img {
+  animation: info-glow 2.2s ease-in-out infinite;
+}
+@keyframes info-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0.6rem rgba(255, 236, 170, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 1.4rem rgba(255, 236, 170, 0.95));
+  }
+}
+
+/* ===== 좌우 회전 버튼 ===== */
+.btn-rot {
+  position: absolute;
+  top: 34.26%;
+  width: 8.39%;
+  height: 24.17%;
+  z-index: 20;
+}
+.btn-rot-left {
+  left: 9.84%;
+}
+.btn-rot-right {
+  left: 81.77%;
+}
+
+/* ===== 시윤 · 말풍선 ===== */
+.info-siyun {
+  position: absolute;
+  left: 3.13%;
+  top: 58.43%;
+  z-index: 22;
+  pointer-events: none;
+}
+.siyun-1 {
+  width: 24.84%;
+  height: 41.57%;
+}
+.siyun-2 {
+  width: 21.3%;
+  height: 41.57%;
+}
+
+.info-bubble {
+  position: absolute;
+  left: 25.99%;
+  top: 77.78%;
+  width: 58.07%;
+  height: 19.07%;
+  z-index: 21;
+  pointer-events: none;
+}

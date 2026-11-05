@@ -1,0 +1,255 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동1 — 탈을 만들어 공연을 시작해요! (exp1.html, 기획서 p6~p17)
+   좌표는 목업 실측값(1920×1080 → %).
+   퍼즐 조각은 .mask-box(완성 탈 캔버스) 안의 % 로 놓인다 — js/puzzle-data.js 가
+   *_align.png 에서 뽑은 비율을 그대로 쓰므로 CSS 에 조각별 좌표를 적지 않는다.
+   ========================================================================= */
+
+/* ===== 무대에 선 인물 — 장자마리는 처음부터, 나머지는 탈을 완성할 때마다 ===== */
+.stage-char {
+  position: absolute;
+  z-index: 5;
+  pointer-events: none;
+  display: none;
+}
+.stage-char.on {
+  display: block;
+}
+
+.stage-jangja {
+  left: 7.92%;
+  top: 36.67%;
+  width: 18.39%;
+  height: 33.61%;
+  display: block;
+}
+.stage-yangban {
+  left: 34.06%;
+  top: 26.3%;
+  width: 8.94%;
+  height: 44.26%;
+}
+.stage-somae {
+  left: 55.05%;
+  top: 38.33%;
+  width: 9.33%;
+  height: 32.43%;
+}
+.stage-sisi {
+  left: 73.13%;
+  top: 36.67%;
+  width: 15.72%;
+  height: 33.94%;
+}
+
+/* 인사굿 — 배치된 등장인물이 좌우로 움찔거린다(기획 p16-8) */
+.stage-char.jiggle {
+  animation: jiggle 0.42s ease-in-out infinite;
+}
+@keyframes jiggle {
+  0%,
+  100% {
+    transform: translateX(-1.2%) rotate(-1.2deg);
+  }
+  50% {
+    transform: translateX(1.2%) rotate(1.2deg);
+  }
+}
+
+/* ===== 탈 틀 + 조각판 ===== */
+.mask-box {
+  position: absolute;
+  z-index: 10;
+  transition: left 0.6s ease, top 0.6s ease, width 0.6s ease, height 0.6s ease;
+}
+
+.mask-ghost,
+.mask-full {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.mask-full {
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.mask-full.on {
+  opacity: 1;
+}
+
+/* 제자리에 붙은 조각 — JS 가 puzzle-data 의 fit 비율로 좌표를 넣는다 */
+.mask-box .piece {
+  position: absolute;
+  pointer-events: none;
+}
+
+.piece-fix {
+  animation: piece-fix 0.3s ease-out;
+}
+@keyframes piece-fix {
+  0% {
+    transform: scale(1.14);
+  }
+  60% {
+    transform: scale(0.96);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ===== 조각판(트레이) ===== */
+.puzzle-tray {
+  position: absolute;
+  left: 68.59%;
+  top: 20.09%;
+  width: 27.08%;
+  height: 73.98%;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.piece-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 21;
+}
+
+.piece-layer .piece {
+  position: absolute;
+  cursor: grab;
+  touch-action: none;
+  transition: left 0.28s ease, top 0.28s ease, width 0.28s ease, height 0.28s ease;
+}
+
+.piece-layer .piece.drag {
+  cursor: grabbing;
+  z-index: 90;
+  transition: width 0.15s ease, height 0.15s ease;
+  filter: drop-shadow(0 0.6rem 0.8rem rgba(0, 0, 0, 0.35));
+}
+
+/* 틀린 자리에 놓으면 튕겨 나온다(기획 p7-3) */
+.piece-layer .piece.wrong {
+  animation: piece-wrong 0.4s ease;
+}
+@keyframes piece-wrong {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-3%) rotate(-4deg);
+  }
+  75% {
+    transform: translateX(3%) rotate(4deg);
+  }
+}
+
+/* 트레이·조각을 함께 감추는 상태(완성 연출) */
+.exp-stage.cleared .puzzle-tray,
+.exp-stage.cleared .piece-layer {
+  opacity: 0;
+  pointer-events: none;
+}
+.exp-stage.cleared .piece-layer {
+  transition: opacity 0.4s ease;
+}
+
+/* ===== 완성 연출 ===== */
+/* 후광 — scale 100% ↔ 90% 반복(기획 p8-7) */
+.finish-halo {
+  position: absolute;
+  left: 26.02%;
+  top: 7.36%;
+  width: 47.97%;
+  height: 85.28%;
+  z-index: 6;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+.finish-halo.on {
+  opacity: 1;
+  animation: halo-pulse 1.6s ease-in-out infinite;
+}
+@keyframes halo-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.9);
+  }
+}
+
+/* 탈이 사라질 때 터지는 연기 — 8장을 차례로 갈아 끼운다 */
+.pop-effect {
+  position: absolute;
+  z-index: 30;
+  display: none;
+  pointer-events: none;
+}
+.pop-effect.on {
+  display: block;
+}
+
+.complete-text {
+  position: absolute;
+  left: 27.81%;
+  top: 69.81%;
+  width: 44.43%;
+  height: 26.39%;
+  z-index: 15;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.complete-text.on {
+  opacity: 1;
+}
+
+/* 완성 전신 — 큰 모습으로 등장했다가 무대 자리로 작아진다 */
+.stage-char.big {
+  transition: left 0.9s ease, top 0.9s ease, width 0.9s ease, height 0.9s ease;
+  z-index: 12;
+}
+
+/* ===== 완성 후 버튼 ===== */
+.btn-exp1-next,
+.btn-exp1-who {
+  position: absolute;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.btn-exp1-next.on,
+.btn-exp1-who.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-exp1-next {
+  left: 21.41%;
+  top: 80.19%;
+  width: 27.19%;
+  height: 11.39%;
+}
+
+.btn-exp1-who {
+  left: 51.41%;
+  top: 80.19%;
+  width: 27.24%;
+  height: 11.39%;
+}

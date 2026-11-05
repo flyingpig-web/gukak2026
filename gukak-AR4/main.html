@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>관노가면극 — 무엇을 해볼까?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 단오제 마당 + 시윤 얼굴(좌상단 원형은 배경에 구워져 있다) -->
+          <div class="scene-bg" style="background-image: url(img/02_main/bg_main.png)"></div>
+
+          <!-- 말풍선 — 진입 / 활동1 선택 / 활동2 선택 세 장을 겹쳐 두고 .on 만 보인다 -->
+          <img class="main-speech on" data-key="intro" src="img/02_main/text_main.png" alt="강릉단오제에 왔으면 관노가면극을 놓칠 수 없지!" />
+          <img class="main-speech" data-key="exp1" src="img/02_main/text_exp1.png" alt="관노가면극에는 어떤 탈이 나올까?" />
+          <img class="main-speech" data-key="exp2" src="img/02_main/text_exp2.png" alt="관노가면극 공연은 어떻게 진행될까?" />
+
+          <!-- 선택① 탈 만드는 천막 → 활동1 (hover/선택 시 on 이미지) -->
+          <img class="choice-img img-exp1" src="img/02_main/btn_exp1.png" alt="" />
+          <img class="choice-img choice-on on-exp1" src="img/02_main/btn_exp1_on.png" alt="" />
+          <img class="choice-label label-exp1" src="img/02_main/label_exp1.png" alt="" />
+          <button class="choice-hit hit-exp1" id="hitExp1" aria-label="활동1 탈 만들기"></button>
+
+          <!-- 선택② 공연 무대 → 활동2 -->
+          <img class="choice-img img-exp2" src="img/02_main/btn_exp2.png" alt="" />
+          <img class="choice-img choice-on on-exp2" src="img/02_main/btn_exp2_on.png" alt="" />
+          <img class="choice-label label-exp2" src="img/02_main/label_exp2.png" alt="" />
+          <button class="choice-hit hit-exp2" id="hitExp2" aria-label="활동2 공연 관람하기"></button>
+
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>

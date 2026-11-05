@@ -1,0 +1,118 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   HOME(index.html) · MAIN(main.html)
+   좌표는 기획서 목업(1920×1080) 실측값 — 에셋이 모두 원본 크기(1:1)로 놓인다.
+   ========================================================================= */
+
+/* ===== HOME ===================================================== */
+.btn-start {
+  position: absolute;
+  left: 38.39%;
+  top: 80.93%;
+  width: 23.23%;
+  height: 13.89%;
+  z-index: 20;
+}
+
+/* ===== MAIN =====================================================
+   배경(bg_main)에는 하늘·마당·시윤 얼굴만 있다. 천막·무대·이름표·말풍선은 전부 별도 소스.
+   선택 버튼은 off(643×609 / 694×542)와 on(661×626 / 712×560)이 크기가 달라
+   "같은 중심"에 겹쳐 두고 on 만 켠다. 클릭영역은 천막·무대 + 아래 이름표를 함께 덮는다.
+   ================================================================ */
+.choice-img,
+.choice-label {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.choice-on {
+  opacity: 0;
+  z-index: 11;
+  transition: opacity 0.15s ease;
+}
+.choice-on.on {
+  opacity: 1;
+}
+
+.choice-label {
+  z-index: 12;
+}
+
+.choice-hit {
+  position: absolute;
+  z-index: 13;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* 선택① 탈 만드는 천막 */
+.img-exp1 {
+  left: 12.5%;
+  top: 28.7%;
+  width: 33.49%;
+  height: 56.39%;
+}
+.on-exp1 {
+  left: 12.03%;
+  top: 27.92%;
+  width: 34.43%;
+  height: 57.96%;
+}
+.label-exp1 {
+  left: 15.83%;
+  top: 78.8%;
+  width: 26.77%;
+  height: 12.69%;
+}
+.hit-exp1 {
+  left: 12.5%;
+  top: 28.7%;
+  width: 33.49%;
+  height: 62.78%;
+}
+
+/* 선택② 공연 무대 */
+.img-exp2 {
+  left: 52.08%;
+  top: 34.91%;
+  width: 36.15%;
+  height: 50.19%;
+}
+.on-exp2 {
+  left: 51.61%;
+  top: 34.07%;
+  width: 37.08%;
+  height: 51.85%;
+}
+.label-exp2 {
+  left: 56.77%;
+  top: 78.8%;
+  width: 26.77%;
+  height: 12.69%;
+}
+.hit-exp2 {
+  left: 52.08%;
+  top: 34.91%;
+  width: 36.15%;
+  height: 56.57%;
+}
+
+/* 시윤 말풍선 — 세 장(진입 / 활동1 / 활동2)을 같은 자리에 겹쳐 두고 .on 만 보인다 */
+.main-speech {
+  position: absolute;
+  left: 16.72%;
+  top: 5.09%;
+  width: 39.27%;
+  height: 17.78%;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.main-speech.on {
+  opacity: 1;
+}

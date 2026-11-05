@@ -1,0 +1,230 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동2 — 말없이 몸짓으로 이야기해요! (exp2.html, 기획서 p22~p38)
+   마당 다섯 개를 차례로: 동작 루프 → 보기 2개 중 고르기 → 정답 화면(딤드 + 마당 이름 + 장단)
+   좌표는 목업 실측값. 동작 프레임은 다섯 마당 모두 같은 자리(423,210 / 1019×574)다.
+   ========================================================================= */
+
+/* ===== 동작 루프 ===== */
+.madang-frame {
+  position: absolute;
+  left: 22.03%;
+  top: 19.44%;
+  width: 53.07%;
+  height: 53.15%;
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ===== 정답 화면 ===== */
+/* 목업에서 정답 화면 배경이 절반 밝기다(실측 ≈50%) */
+.answer-dim {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+.answer-dim.on {
+  opacity: 1;
+}
+
+.madang-answer,
+.madang-title {
+  position: absolute;
+  z-index: 12;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+.madang-answer.on,
+.madang-title.on {
+  opacity: 1;
+}
+
+.madang-title {
+  z-index: 16;
+}
+
+/* 첫째·셋째 마당 — 등장인물이 좌우로 움찔거린다 */
+.madang-answer.jiggle {
+  animation: m-jiggle 0.46s ease-in-out infinite;
+}
+@keyframes m-jiggle {
+  0%,
+  100% {
+    transform: translateX(-0.5%);
+  }
+  50% {
+    transform: translateX(0.5%);
+  }
+}
+
+/* ===== 보기 버튼 ===== */
+.madang-btn {
+  position: absolute;
+  top: 78.43%;
+  width: 29.22%;
+  height: 15.83%;
+  z-index: 30;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.madang-btn.on {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.btn-correct {
+  left: 19.27%;
+}
+.btn-wrong {
+  left: 52.14%;
+}
+
+/* 오답 — 좌우로 흔들린다(기획 p23-4) */
+.madang-btn.shake-x {
+  animation: shake-x 0.45s ease;
+}
+@keyframes shake-x {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-2.2%);
+  }
+  40% {
+    transform: translateX(2.2%);
+  }
+  60% {
+    transform: translateX(-1.4%);
+  }
+  80% {
+    transform: translateX(1.4%);
+  }
+}
+
+/* ===== 마당별 효과 ===== */
+.fx-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 14;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.fx {
+  position: absolute;
+}
+
+/* 둘째 마당 — 하트가 아래에서 위로 떠오른다(기획 p28-3) */
+.fx-heart {
+  animation: heart-rise 2.6s ease-out infinite;
+  opacity: 0;
+}
+@keyframes heart-rise {
+  0% {
+    transform: translateY(14%) scale(0.86);
+    opacity: 0;
+  }
+  22% {
+    opacity: 1;
+  }
+  78% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-26%) scale(1.04);
+    opacity: 0;
+  }
+}
+
+/* 셋째 마당 — 모래 먼지가 바깥쪽으로 천천히 밀리며 사라진다(기획 p31-4) */
+.fx-dust-left {
+  animation: dust-left 2.4s ease-out infinite;
+}
+.fx-dust-right {
+  animation: dust-right 2.4s ease-out infinite;
+}
+@keyframes dust-left {
+  0% {
+    transform: translateX(6%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-12%);
+    opacity: 0;
+  }
+}
+@keyframes dust-right {
+  0% {
+    transform: translateX(-6%);
+    opacity: 0;
+  }
+  25% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(12%);
+    opacity: 0;
+  }
+}
+
+/* 넷째 마당 — 기절 효과는 좌우로 기울고, 땀방울은 위아래로 움직인다(기획 p34-4) */
+.fx-dizzy {
+  animation: dizzy-tilt 1.5s ease-in-out infinite;
+  transform-origin: 50% 80%;
+}
+@keyframes dizzy-tilt {
+  0%,
+  100% {
+    transform: rotate(-7deg);
+  }
+  50% {
+    transform: rotate(7deg);
+  }
+}
+
+.fx-sweat {
+  animation: sweat-bob 0.9s ease-in-out infinite;
+}
+@keyframes sweat-bob {
+  0%,
+  100% {
+    transform: translateY(-6%);
+  }
+  50% {
+    transform: translateY(6%);
+  }
+}
+
+/* 다섯째 마당 — 색종이가 살랑이며 떨어진다(기획 p37-3) */
+.fx-confetti {
+  top: -8%;
+  border-radius: 0.2rem;
+  animation: confetti-fall linear forwards;
+}
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(125vh) rotate(680deg);
+    opacity: 0.9;
+  }
+}
