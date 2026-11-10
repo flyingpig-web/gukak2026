@@ -15,7 +15,20 @@ $(function () {
   const FRAME_MS = 550; //   동작 루프 한 장당
   const ANSWER_MS = 5000; // 정답 화면 유지(기획 "5초 유지 후 다음 페이지")
   const LEAD_MS = 400; //    보기 음성 뒤 정답 화면으로 넘어가기까지 최소 간격
-  const CONFETTI = { count: 50, colors: ["#3462C4", "#E23A30", "#FAC028", "#309C56"], minMs: 2000, maxMs: 3000 };
+  const CONFETTI = {
+    count: 50,
+    colors: ["#3462C4", "#E23A30", "#FAC028", "#309C56"],
+    minMs: 2600, //    떨어지는 데 걸리는 시간(느릴수록 더 흩날려 보인다)
+    maxMs: 4200,
+    // 좌우로 살랑이는 폭 — translateX 의 % 는 "조각 자신의 너비" 기준이다.
+    // 조각이 가로 10~22 디자인 px 이므로 250~900% 면 한쪽으로 25~200px 쯤 흔들린다.
+    swayMin: 250,
+    swayMax: 900,
+    swayMinMs: 900, // 좌우 한 번 왕복
+    swayMaxMs: 1900,
+    spinMinMs: 700, // 제자리에서 한 바퀴 뒤집히는 시간
+    spinMaxMs: 1600,
+  };
 
   /* 마당 다섯 — answer/title 은 목업 실측값(좌상단 + 크기) */
   const MADANG = [
@@ -149,6 +162,7 @@ $(function () {
   function onCorrect() {
     if (locked) return;
     locked = true;
+    AR.Sound.sfx(S.correct); // 올바른 보기를 눌렀을 때(수정요청안 261110 p3)
     $bc.removeClass("on");
     $bw.removeClass("on");
 
@@ -209,21 +223,38 @@ $(function () {
     });
   }
 
-  /* 다섯째 마당 — 색종이가 위에서 아래로 살랑이며 떨어진다(기획 p37-3) */
+  /* 다섯째 마당 — 색종이가 위에서 아래로 흩날리며 떨어진다(기획 p37-3,
+     수정요청안 261110 p4 "살짝 흩날리면서 내려오는 느낌").
+     한 장이 세 겹이다 — 바깥은 곧게 떨어지고(fall), 가운데는 좌우로 살랑이고(sway),
+     안쪽은 제자리에서 뒤집힌다(spin). 세 가지 주기를 서로 다르게 줘야
+     같은 박자로 움직이지 않고 종이처럼 제각각 날린다. */
   function confetti() {
     const C = CONFETTI;
+    const rnd = (a, b) => a + Math.random() * (b - a);
     for (let i = 0; i < C.count; i++) {
       const w = 10 + Math.random() * 12;
       const h = w * (0.5 + Math.random() * 0.9);
+      const $sway = $("<i class='cf-sway'></i>").css({
+        animationDuration: rnd(C.swayMinMs, C.swayMaxMs) + "ms",
+        animationDelay: rnd(-C.swayMaxMs, 0) + "ms", // 시작 위상을 흩어 놓는다
+      });
+      $("<i class='cf-spin'></i>")
+        .css({
+          background: C.colors[i % C.colors.length],
+          animationDuration: rnd(C.spinMinMs, C.spinMaxMs) + "ms",
+          animationDirection: Math.random() < 0.5 ? "normal" : "reverse",
+        })
+        .appendTo($sway);
       $("<i class='fx fx-confetti'></i>")
         .css({
           left: Math.random() * 100 + "%",
           width: pcX(w),
           height: pcY(h),
-          background: C.colors[i % C.colors.length],
-          animationDuration: C.minMs + Math.random() * (C.maxMs - C.minMs) + "ms",
-          animationDelay: Math.random() * 600 + "ms",
+          "--sway": rnd(C.swayMin, C.swayMax) + "%",
+          animationDuration: rnd(C.minMs, C.maxMs) + "ms",
+          animationDelay: Math.random() * 900 + "ms",
         })
+        .append($sway)
         .appendTo($fx);
     }
   }
@@ -272,7 +303,7 @@ $(function () {
   $("#btnBack, #btnHome").on("click", () => AR.go("main.html"));
 
   /* ----- 시작 ---------------------------------------------------------- */
-  AR.Sound.prime([S.exp2Guide, S.ceremony, S.exp2End, S.incorrect]);
+  AR.Sound.prime([S.exp2Guide, S.ceremony, S.exp2End, S.incorrect, S.correct]);
   AR.preload(
     ["img/04_exp2/bg_exp2.png", "img/04_exp2/exp2_tutorial.png"].concat(
       MADANG.map((x) => `img/04_exp2/madang${x.n}_1.png`),

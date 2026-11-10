@@ -23,6 +23,7 @@ $(function () {
   const SHRINK_MS = 900; //    전신이 작아져 무대에 배치되는 시간
   const INSAGUT_MS = 7000; //  인사굿 + 좌우 움찔(기획 "5~10초")
   const HIT_PAD = 40; //       정답 판정 여유(디자인 px)
+  const CAN_HOVER = !window.matchMedia || window.matchMedia("(hover: hover)").matches;
 
   const POPS = [1, 2, 3, 4, 5, 6, 7, 8].map((i) => `img/03_exp1/effect_pop_0${i}.png`);
 
@@ -103,6 +104,7 @@ $(function () {
   const $pop = $("#pop");
   const $halo = $("#halo");
   const $text = $("#completeText");
+  const $sdim = $("#stageDim");
   const $btnNext = $("#btnNext");
   const $btnWho = $("#btnWho");
 
@@ -146,6 +148,7 @@ $(function () {
     $btnWho.removeClass("on");
     $("#btnWhoImg").attr("src", round.who);
     $(".stage-char").removeClass("jiggle");
+    $sdim.removeClass("on");
 
     // 조각 만들기 — 트레이 안에는 원본 크기 × round.scale 로 놓는다
     $pieces.empty();
@@ -171,9 +174,19 @@ $(function () {
     const el = p.$el[0];
     let grab = null;
 
+    // 조각도 버튼처럼 소리가 난다(수정요청안 261110 p2).
+    // 공용 효과음은 common.js 가 button/.btn 에만 걸어 두므로 여기서 직접 울린다.
+    if (CAN_HOVER) {
+      el.addEventListener("mouseenter", function () {
+        if (locked || p.fixed) return;
+        AR.Sound.sfx(S.hover);
+      });
+    }
+
     el.addEventListener("pointerdown", function (e) {
       if (locked || p.fixed) return;
       e.preventDefault();
+      AR.Sound.sfx(S.click);
       try {
         el.setPointerCapture(e.pointerId);
       } catch (err) {}
@@ -241,6 +254,7 @@ $(function () {
           height: pcY(p.tray[3]),
         });
       setTimeout(() => p.$el.removeClass("wrong"), 420);
+      AR.Sound.sfx(S.incorrect); // 틀린 곳(수정요청안 261110 p2)
       p.at = null;
       return;
     }
@@ -259,7 +273,8 @@ $(function () {
       })
       .addClass("piece-fix")
       .appendTo($box);
-    AR.Sound.sfx(S.janggu);
+    AR.Sound.sfx(S.correct); // 올바른 곳(수정요청안 261110 p2)
+    AR.Sound.sfx(S.janggu); //  조각이 붙는 순간의 장구(기획 p7) — 아직 미납품
 
     if (--left === 0) setTimeout(complete, 400);
   }
@@ -271,6 +286,7 @@ $(function () {
 
     // 조각판을 치우고, 맞춘 조각을 완성 탈 그림으로 바꾼다(경계가 깔끔해진다)
     $stage.addClass("cleared");
+    $sdim.addClass("on"); // 완성 진입 — 배경 딤드 fade in(수정요청안 261110 p1)
     $full.addClass("on");
     $ghost.css("opacity", 0);
 
@@ -318,6 +334,7 @@ $(function () {
       AR.Sound.stopBgm();
       $halo.removeClass("on");
       $text.removeClass("on");
+      $sdim.removeClass("on"); // 캐릭터가 무대에 배치되는 동안 딤드 fade out
       // 인라인 좌표를 지우면 css 의 무대 자리로 되돌아간다(.big 의 transition 으로 축소)
       $char.css({ left: "", top: "", width: "", height: "" });
       setTimeout(function () {
@@ -356,6 +373,7 @@ $(function () {
     finished = true;
     locked = true;
     $stage.removeClass("on");
+    $sdim.removeClass("on");
     AR.Sound.stopBgm();
     AR.openPopup("#finishDim");
     AR.Sound.sfxThen(S.ceremony, function () {
@@ -368,6 +386,7 @@ $(function () {
     AR.closePopup("#finishDim");
     AR.Sound.stopNarration();
     AR.Sound.stopBgm();
+    $sdim.removeClass("on");
     $(".stage-char").removeClass("on big jiggle").css({ left: "", top: "", width: "", height: "" });
     $box.css({ transition: "", opacity: 1 });
     startRound(0);
@@ -413,7 +432,7 @@ $(function () {
   $("#btnBack, #btnHome").on("click", () => AR.go("main.html"));
 
   /* ----- 시작 --------------------------------------------------------- */
-  AR.Sound.prime([S.exp1Guide, S.ceremony, S.exp1End, S.janggu]);
+  AR.Sound.prime([S.exp1Guide, S.ceremony, S.exp1End, S.janggu, S.correct, S.incorrect, S.hover, S.click]);
   AR.preload(
     [
       "img/03_exp1/bg_exp1.png",

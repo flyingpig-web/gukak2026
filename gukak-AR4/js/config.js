@@ -43,6 +43,7 @@ window.AR4_SFX = {
 
   /* ----- 효과음 ----- */
   click: E("click"),
+  hover: E("hover"), //         마우스 호버(공용 버튼은 common.js 가 자동, 퍼즐 조각은 exp1.js 가 직접)
   correct: E("correct"), //     정답(마당 보기 선택)
   incorrect: E("incorrect"), //  오답(버튼 흔들림)
   ceremony: E("ceremony"), //    활동 종료 세레머니

@@ -212,19 +212,59 @@
   }
 }
 
-/* 다섯째 마당 — 색종이가 살랑이며 떨어진다(기획 p37-3) */
+/* 다섯째 마당 — 색종이가 흩날리며 떨어진다(기획 p37-3,
+   수정요청안 261110 p4 "살짝 흩날리면서 내려오는 느낌").
+   한 장을 세 겹으로 나눠 각각 다른 주기를 준다. 한 요소에 transform 을 겹쳐 쓰면
+   뒤에 선언한 것만 남으므로, 떨어지기·살랑이기·뒤집히기를 겹겹이 따로 돌린다.
+     바깥 .fx-confetti : 곧게 아래로        (JS 가 animation-duration/delay 지정)
+     가운데 .cf-sway   : 좌우로 살랑        (폭은 --sway, JS 가 지정)
+     안쪽 .cf-spin     : 제자리에서 뒤집힘  (색도 여기에 칠한다) */
+/* --sway 는 translateX 의 % — 화면이 아니라 조각 자신의 너비 기준이다(JS 가 지정) */
 .fx-confetti {
   top: -8%;
-  border-radius: 0.2rem;
+  --sway: 400%;
   animation: confetti-fall linear forwards;
+}
+.fx-confetti > i,
+.cf-sway > i {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.cf-sway {
+  animation: confetti-sway ease-in-out infinite alternate;
+}
+.cf-spin {
+  border-radius: 0.2rem;
+  animation: confetti-spin linear infinite;
 }
 @keyframes confetti-fall {
   0% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0);
+    opacity: 1;
+  }
+  90% {
     opacity: 1;
   }
   100% {
-    transform: translateY(125vh) rotate(680deg);
+    transform: translateY(125vh);
     opacity: 0.9;
+  }
+}
+@keyframes confetti-sway {
+  0% {
+    transform: translateX(calc(var(--sway) * -1));
+  }
+  100% {
+    transform: translateX(var(--sway));
+  }
+}
+/* rotateX/rotateY — 종이가 납작해졌다 펴지며 뒤집히는 느낌이 난다 */
+@keyframes confetti-spin {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg) rotate(0deg);
+  }
+  100% {
+    transform: rotateX(540deg) rotateY(360deg) rotate(180deg);
   }
 }
