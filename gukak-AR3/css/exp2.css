@@ -1,0 +1,169 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동2 — 꾀꼬리를 보고 춤 동작을 만들어요 (exp2.html)
+   기획서 p19~p27. 좌표는 목업(1920×1080) 실측값.
+   ========================================================================= */
+
+/* ===== 꾀꼬리 ===================================================== */
+/* 네 춤사위 × 4프레임이 모두 같은 캔버스(462×390)라 같은 자리에 겹쳐 둔다 */
+.bird,
+.bird-ghost {
+  position: absolute;
+  left: 35.677%;
+  top: 15.833%;
+  width: 24.063%;
+  height: 36.111%;
+  pointer-events: none;
+  /* 프레임별 크기 보정(js FRAME_SCALE)의 기준점 — 발 높이가 그대로 유지된다 */
+  transform-origin: center bottom;
+}
+
+/* 완료 딤(z 22)보다 위에 둔다 — 활동1 세레모니에서 완성 무용수가 밝게 남는 것과 같다 */
+.bird {
+  z-index: 24;
+}
+
+/* 직전 두 프레임의 잔상 — 새가 어느 쪽으로 도는지 보이게 한다.
+   프레임이 바뀔 때마다 한 칸씩 밀려나며 옅어진다(js/exp2.js showFrame). */
+.bird-ghost {
+  z-index: 23;
+  opacity: 0;
+}
+.bird-ghost.g1.flash {
+  animation: ghostFade1 var(--ghost-ms, 380ms) linear forwards;
+}
+.bird-ghost.g2.flash {
+  animation: ghostFade2 var(--ghost-ms, 380ms) linear forwards;
+}
+
+@keyframes ghostFade1 {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes ghostFade2 {
+  from {
+    opacity: 0.24;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* ===== 춤사위 버튼 (하단 4개) ===================================== */
+.dance-btn {
+  position: absolute;
+  top: 61.481%;
+  height: 28.333%;
+  z-index: 20;
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+.dance-btn.d-biri {
+  left: 12.5%;
+  width: 16.563%;
+}
+.dance-btn.d-hoeran {
+  left: 32.135%;
+  width: 16.615%;
+}
+.dance-btn.d-nakhwa {
+  left: 51.823%;
+  width: 16.563%;
+}
+.dance-btn.d-sasa {
+  left: 71.458%;
+  width: 16.615%;
+}
+
+/* 맞춘 춤사위는 기록이 끝났다는 뜻으로 살짝 가라앉힌다 */
+.dance-btn.done > img {
+  filter: grayscale(0.15) brightness(0.88);
+}
+
+/* ===== 정답 구체 — 버튼 위에 생겨나 화면 밖으로 날아간다(기획 p24-1) ===== */
+.orb-fly {
+  position: absolute;
+  top: 57.4%;
+  width: 9.896%;
+  height: 17.685%;
+  z-index: 40;
+  opacity: 0;
+  pointer-events: none;
+}
+.orb-fly.on {
+  animation: orbFly 1.7s cubic-bezier(0.3, 0, 0.7, 0.35) forwards;
+}
+
+@keyframes orbFly {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10%) scale(0.25);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(-50%, -20%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-20%, -560%) scale(1.3);
+  }
+}
+
+/* ===== 완료 연출 딤 ===============================================
+   활동1 세레모니(무대 배경으로 바뀌며 가라앉는다)와 결을 맞춰, 완료 문구가 뜰 때
+   배경·꾀꼬리·버튼을 어둡게 깐다. 상단바(z 25~30)보다 아래라 타이틀과
+   [뒤로가기]·[홈] 은 밝게 남는다 — 활동1 과 같은 처리다.
+   ================================================================= */
+.exp2-dim {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 22;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+  pointer-events: none;
+}
+.exp2-dim.on {
+  opacity: 1;
+}
+
+/* ===== 완료 문구 ================================================== */
+.exp2-complete {
+  position: absolute;
+  left: 24.948%;
+  top: 38.426%;
+  width: 50.156%;
+  height: 23.148%;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+}
+.exp2-complete.on {
+  animation: exp2Pop 0.5s cubic-bezier(0.18, 1.5, 0.5, 1) forwards;
+}
+
+@keyframes exp2Pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

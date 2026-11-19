@@ -1,0 +1,84 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   더 알아보기 — 정보1(활동1) / 정보2(활동2)  기획서 p15~p17, p28~p30
+   족자 세 개가 한 줄로 늘어서고, 좌우 버튼으로 돌린다. 가운데 것을 누르면 팝업.
+   칸의 자리·크기는 js/info.js 의 slots(목업 실측값)가 인라인으로 넣는다.
+   팝업 좌표는 css/ui.css(.info-dim / .info-pop / .btn-pop-close) 공용.
+   배경(bg_info)에 무희와 말풍선이 이미 그려져 있어 따로 올리지 않는다.
+   ========================================================================= */
+
+.carousel {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+}
+
+/* transition 시간은 info.js 의 TURN_MS 와 맞춘다 */
+.carousel .item {
+  position: absolute;
+  padding: 0;
+  border: 0;
+  background: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: left 0.35s ease, top 0.35s ease, width 0.35s ease, height 0.35s ease,
+    opacity 0.3s ease;
+}
+
+/* 가운데 것만 누를 수 있다(기획 "가운데에 위치한 족자를 클릭하면") */
+.carousel .item.center {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* 칸의 기준 상자는 족자 그림(381×381). 이름표는 그 아래로 삐져나온다. */
+.carousel .item .ci-scroll {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.carousel .item .ci-label {
+  position: absolute;
+  left: 6.56%;
+  top: 93.18%;
+  width: 86.88%;
+  height: 19.69%;
+  display: block;
+}
+
+/* 가운데 것은 "눌러 보세요" 가 보이도록 은은하게 숨 쉰다 */
+.carousel .item.center .ci-scroll {
+  animation: info-glow 2.2s ease-in-out infinite;
+}
+@keyframes info-glow {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0.6rem rgba(255, 236, 170, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 1.4rem rgba(255, 236, 170, 0.95));
+  }
+}
+
+/* ===== 좌우 회전 버튼 ===== */
+.btn-rot {
+  position: absolute;
+  top: 37.593%;
+  width: 10.052%;
+  height: 18.148%;
+  z-index: 20;
+}
+.btn-rot-left {
+  left: 13.49%;
+}
+.btn-rot-right {
+  left: 76.458%;
+}

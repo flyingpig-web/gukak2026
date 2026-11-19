@@ -1,0 +1,209 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   활동1 — 춘앵전 그림에 색을 채워요 (exp1.html)
+   기획서 p7~p14. 좌표는 목업(1920×1080) 실측값.
+
+   무용수 그림은 모두 1920×1080 풀캔버스 소스라 화면에 그대로 깔면 된다.
+   `dancer_step0_line`(먹선) 위에 `dancer_step1~7`(색이 하나씩 늘어난 그림)을
+   겹쳐 두고 opacity 로 띄워 "색이 번지는" 연출을 만든다.
+   ========================================================================= */
+
+/* 터치 판정 레이어 — 그림 전체를 덮는다. 실제 판정은 js/hit-mask.js 비트맵으로 한다. */
+.hit-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 15;
+  cursor: pointer;
+}
+
+/* ===== 무용수 ===================================================== */
+.dancer-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* 색이 채워진 단계 그림 — 누적이라 아래부터 차례로 켜 둔다 */
+.dancer-img.step {
+  opacity: 0;
+  transition: opacity 0.7s ease;
+}
+.dancer-img.step.on {
+  opacity: 1;
+}
+
+/* 10초 이상 터치가 없을 때 켜지는 글로우(기획 p9-4) */
+.hint-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0;
+  z-index: 12;
+}
+.hint-img.on {
+  animation: hintBlink 1.2s ease-in-out infinite;
+}
+@keyframes hintBlink {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* 세레모니에 들어가면 먹선·단계 그림을 걷는다 — 완성 무용수(3D)와 크기·자리가 달라
+   그대로 두면 두 겹으로 보인다. #stage 를 붙여 .step.on 보다 우선순위를 높인다.
+   ★ 둘을 동시에 디졸브하면 교차하는 0.5초 동안 2D 치마·한삼이 3D 위로 비친다.
+     먼저 2D 를 빠르게 걷고, 다 걷힌 뒤에 3D 가 올라오도록 시간을 어긋나게 둔다
+     (.dancer-full 의 transition delay 와 짝). */
+#stage.ceremony .dancer-img {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* 세레모니 — 무대 배경으로 바뀌면서 등장하는 완성 무용수(3D 소스) */
+.dancer-full {
+  position: absolute;
+  left: 6.406%;
+  top: 10.463%;
+  width: 87.135%;
+  height: 87.222%;
+  z-index: 13;
+  pointer-events: none;
+  opacity: 0;
+  /* 0.45초 늦게 — 먹선 그림(0.4초에 사라진다)이 다 걷힌 뒤에 올라온다 */
+  transition: opacity 0.85s ease 0.45s;
+}
+.dancer-full.on {
+  opacity: 1;
+}
+
+/* ===== 색칠 대상 패널 (우측) ====================================== */
+.panel-target {
+  position: absolute;
+  left: 76.771%;
+  top: 28.148%;
+  width: 19.531%;
+  height: 43.611%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.panel-icon {
+  position: absolute;
+  left: 78.958%;
+  top: 38.796%;
+  width: 15.156%;
+  height: 26.944%;
+  z-index: 21;
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+.panel-icon.swap {
+  opacity: 0;
+  transform: scale(0.8);
+}
+
+/* ===== 하단 안내바 ================================================ */
+.guide-bar {
+  position: absolute;
+  left: 10.469%;
+  top: 82.593%;
+  width: 79.063%;
+  height: 15.093%;
+  z-index: 20;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.guide-bar.swap {
+  opacity: 0;
+}
+
+/* ===== 명칭 텍스트 — 화면 가운데에서 튀어나온다(기획 p9-3) ======== */
+.name-pop {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.3);
+}
+.name-pop.on {
+  animation: namePop 0.45s cubic-bezier(0.18, 1.5, 0.5, 1) forwards;
+}
+.name-pop.off {
+  animation: nameOut 0.5s ease forwards;
+}
+
+@keyframes namePop {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.3);
+  }
+  70% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@keyframes nameOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+}
+
+/* ===== 세레모니 완성 문구 ========================================= */
+.complete-text {
+  position: absolute;
+  left: 26.146%;
+  top: 32.037%;
+  width: 47.708%;
+  height: 35.926%;
+  z-index: 45;
+  pointer-events: none;
+  opacity: 0;
+}
+/* ★ namePop 을 쓰면 안 된다 — 그 키프레임의 translate(-50%,-50%) 는 화면 가운데에
+   left/top 50% 로 놓인 명칭 텍스트용이다. 완성 문구는 좌표로 직접 놓이므로
+   그대로 쓰면 왼쪽 위로 50%씩 밀린다. 크기만 키우는 전용 키프레임을 쓴다. */
+.complete-text.on {
+  animation: completePop 0.5s cubic-bezier(0.18, 1.5, 0.5, 1) forwards;
+}
+
+@keyframes completePop {
+  0% {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

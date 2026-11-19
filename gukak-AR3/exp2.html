@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>춘앵전 — 꾀꼬리를 보고 춤을 만들어요!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 나뭇가지와 호수 -->
+          <div class="scene-bg" style="background-image: url(img/04_exp2/bg_exp2.png)"></div>
+
+          <!-- 플레이 -->
+          <div class="exp-stage" id="stage">
+            <!-- 꾀꼬리 — 네 프레임을 돌려 춤사위를 흉내 낸다.
+                 뒤의 두 장은 직전 프레임의 잔상(어느 쪽으로 도는지 보이게 한다) -->
+            <img class="bird-ghost g2" id="birdGhost2" src="" alt="" />
+            <img class="bird-ghost g1" id="birdGhost1" src="" alt="" />
+            <img class="bird" id="bird" src="img/04_exp2/bird_hoeran/bird_hoeran_1.png" alt="나뭇가지 위의 꾀꼬리" />
+
+            <!-- 정답 구체 -->
+            <img class="orb-fly" id="orb" src="" alt="" />
+
+            <!-- 춤사위 버튼 — 목업 순서(비리 · 회란 · 낙화유수 · 사사보여의풍) -->
+            <button class="dance-btn d-biri" data-key="biri">
+              <img src="img/04_exp2/btn_biri.png" alt="비리" />
+            </button>
+            <button class="dance-btn d-hoeran" data-key="hoeran">
+              <img src="img/04_exp2/btn_hoeran.png" alt="회란" />
+            </button>
+            <button class="dance-btn d-nakhwa" data-key="nakhwa">
+              <img src="img/04_exp2/btn_nakhwa.png" alt="낙화유수" />
+            </button>
+            <button class="dance-btn d-sasa" data-key="sasa">
+              <img src="img/04_exp2/btn_sasa.png" alt="사사보여의풍" />
+            </button>
+
+            <!-- 완료 연출 딤 + 문구 -->
+            <div class="exp2-dim" id="exp2Dim"></div>
+            <img class="exp2-complete" id="completeText" src="img/04_exp2/text_complete.png" alt="춤 동작 확인 완료!" />
+          </div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/04_exp2/title_exp2.png" alt="꾀꼬리를 보고 춤을 만들어요!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 체험 방법 안내 -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/04_exp2/exp2_tutorial.png" alt="꾀꼬리의 움직임을 보고 비슷한 춤 동작을 골라줘!" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작" />
+            </button>
+          </div>
+
+          <!-- 활동 종료 -->
+          <div class="dimmed finish-dim" id="finishDim">
+            <img class="finish-bg" src="img/04_exp2/end_main.png" alt="네 가지 춤 동작을 만들었어요!" />
+            <div class="finish-btns">
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp2.js"></script>
+  </body>
+</html>

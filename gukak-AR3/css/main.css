@@ -1,0 +1,112 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   HOME(index.html) · MAIN(main.html)
+   좌표는 기획서 목업(1920×1080) 실측값 — 에셋이 모두 원본 크기(1:1)로 놓인다.
+   ========================================================================= */
+
+/* ===== HOME ===================================================== */
+.btn-start {
+  position: absolute;
+  left: 31.146%;
+  top: 69.167%;
+  width: 31.875%;
+  height: 15.37%;
+  z-index: 20;
+}
+
+/* ===== MAIN =====================================================
+   배경(bg_main)은 텅 빈 동궁전 실내다. 무희 얼굴·말풍선·족자가 전부 별도 소스.
+   족자는 off(543×635 / 569×639)와 on(561×654 / 587×656)의 크기가 달라
+   "같은 중심"에 겹쳐 두고 on 만 켠다.
+   ================================================================ */
+.choice-img {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.choice-on {
+  opacity: 0;
+  z-index: 11;
+  transition: opacity 0.15s ease;
+}
+.choice-on.on {
+  opacity: 1;
+}
+
+.choice-hit {
+  position: absolute;
+  z-index: 13;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* 선택① 색칠 족자 → 활동1 */
+.img-exp1 {
+  left: 15.156%;
+  top: 30.833%;
+  width: 28.281%;
+  height: 58.796%;
+}
+.on-exp1 {
+  left: 14.688%;
+  top: 29.954%;
+  width: 29.219%;
+  height: 60.556%;
+}
+.hit-exp1 {
+  left: 15.156%;
+  top: 30.833%;
+  width: 28.281%;
+  height: 58.796%;
+}
+
+/* 선택② 꾀꼬리 족자 → 활동2 */
+.img-exp2 {
+  left: 55.208%;
+  top: 30.926%;
+  width: 29.635%;
+  height: 59.167%;
+}
+.on-exp2 {
+  left: 54.74%;
+  top: 30.139%;
+  width: 30.573%;
+  height: 60.741%;
+}
+.hit-exp2 {
+  left: 55.208%;
+  top: 30.926%;
+  width: 29.635%;
+  height: 59.167%;
+}
+
+/* 무희(희진) 얼굴 — 좌상단 원형 */
+.main-avatar {
+  position: absolute;
+  left: 5.208%;
+  top: 1.296%;
+  width: 11.875%;
+  height: 25.556%;
+  z-index: 20;
+  pointer-events: none;
+}
+
+/* 말풍선 — 세 장(진입 / 활동1 / 활동2)을 같은 자리에 겹쳐 두고 .on 만 보인다 */
+.main-speech {
+  position: absolute;
+  left: 17.656%;
+  top: 5.093%;
+  width: 41.25%;
+  height: 22.963%;
+  z-index: 20;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+.main-speech.on {
+  opacity: 1;
+}

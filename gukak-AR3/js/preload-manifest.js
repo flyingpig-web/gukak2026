@@ -1,0 +1,176 @@
+/* 자동 생성: img/ 폴더 스캔 결과. 이미지 추가/삭제 시
+   `python3 scripts/gen-preload-manifest.py` 로 재생성.
+   화면 흐름 순서의 전체 이미지 매니페스트(전역 프리페치용). */
+window.AR_MANIFEST = {
+  "common": [
+    "img/00_common/btn_back.png",
+    "img/00_common/btn_close.png",
+    "img/00_common/btn_exit.png",
+    "img/00_common/btn_home.png",
+    "img/00_common/btn_info.png",
+    "img/00_common/btn_play.png",
+    "img/00_common/btn_retry.png"
+  ],
+  "flow": [
+    {
+      "page": "index.html",
+      "images": [
+        "img/01_title/bg_title.png",
+        "img/01_title/btn_start.png"
+      ]
+    },
+    {
+      "page": "main.html",
+      "images": [
+        "img/02_main/bg_main.png",
+        "img/02_main/btn_exp1.png",
+        "img/02_main/btn_exp1_on.png",
+        "img/02_main/btn_exp2.png",
+        "img/02_main/btn_exp2_on.png",
+        "img/02_main/heejin_avatar.png"
+      ]
+    },
+    {
+      "page": "exp1.html",
+      "images": [
+        "img/03_exp1/bg_exp1.png",
+        "img/03_exp1/bg_exp1_stage.png",
+        "img/03_exp1/bubble_exp1.png",
+        "img/03_exp1/end_main.png",
+        "img/03_exp1/exp1_tutorial.png",
+        "img/03_exp1/guide_chorok.png",
+        "img/03_exp1/guide_hongcho.png",
+        "img/03_exp1/guide_hongdan.png",
+        "img/03_exp1/guide_hwagwan.png",
+        "img/03_exp1/guide_hwamun.png",
+        "img/03_exp1/guide_hwangcho.png",
+        "img/03_exp1/guide_osaek.png",
+        "img/03_exp1/icon_chorok.png",
+        "img/03_exp1/icon_hongcho.png",
+        "img/03_exp1/icon_hongdan.png",
+        "img/03_exp1/icon_hwagwan.png",
+        "img/03_exp1/icon_hwamun.png",
+        "img/03_exp1/icon_hwangcho.png",
+        "img/03_exp1/icon_osaek.png",
+        "img/03_exp1/panel_target.png",
+        "img/03_exp1/text_complete.png",
+        "img/03_exp1/text_name_chorok.png",
+        "img/03_exp1/text_name_hongcho.png",
+        "img/03_exp1/text_name_hongdan.png",
+        "img/03_exp1/text_name_hwagwan.png",
+        "img/03_exp1/text_name_hwamun.png",
+        "img/03_exp1/text_name_hwangcho.png",
+        "img/03_exp1/text_name_osaek.png",
+        "img/03_exp1/title_exp1.png",
+        "img/03_exp1/dancer/dancer_full.png",
+        "img/03_exp1/dancer/dancer_step0_line.png",
+        "img/03_exp1/dancer/dancer_step1_hwangcho.png",
+        "img/03_exp1/dancer/dancer_step2_chorok.png",
+        "img/03_exp1/dancer/dancer_step3_hwagwan.png",
+        "img/03_exp1/dancer/dancer_step4_hongdan.png",
+        "img/03_exp1/dancer/dancer_step5_osaek.png",
+        "img/03_exp1/dancer/dancer_step6_hongcho.png",
+        "img/03_exp1/dancer/dancer_step7_hwamun.png",
+        "img/03_exp1/dancer/hint/dancer_hint_chorok.png",
+        "img/03_exp1/dancer/hint/dancer_hint_hongcho.png",
+        "img/03_exp1/dancer/hint/dancer_hint_hongdan.png",
+        "img/03_exp1/dancer/hint/dancer_hint_hwagwan.png",
+        "img/03_exp1/dancer/hint/dancer_hint_hwamun.png",
+        "img/03_exp1/dancer/hint/dancer_hint_hwangcho.png",
+        "img/03_exp1/dancer/hint/dancer_hint_osaek.png",
+        "img/03_exp1/dancer/part/dancer_part_chorok.png",
+        "img/03_exp1/dancer/part/dancer_part_hongcho.png",
+        "img/03_exp1/dancer/part/dancer_part_hongdan.png",
+        "img/03_exp1/dancer/part/dancer_part_hwagwan.png",
+        "img/03_exp1/dancer/part/dancer_part_hwamun.png",
+        "img/03_exp1/dancer/part/dancer_part_hwangcho.png",
+        "img/03_exp1/dancer/part/dancer_part_osaek.png"
+      ]
+    },
+    {
+      "page": "exp2.html",
+      "images": [
+        "img/04_exp2/bg_exp2.png",
+        "img/04_exp2/btn_biri.png",
+        "img/04_exp2/btn_hoeran.png",
+        "img/04_exp2/btn_nakhwa.png",
+        "img/04_exp2/btn_sasa.png",
+        "img/04_exp2/bubble_exp2.png",
+        "img/04_exp2/end_main.png",
+        "img/04_exp2/exp2_tutorial.png",
+        "img/04_exp2/orb_biri.png",
+        "img/04_exp2/orb_hoeran.png",
+        "img/04_exp2/orb_nakhwa.png",
+        "img/04_exp2/orb_sasa.png",
+        "img/04_exp2/text_complete.png",
+        "img/04_exp2/title_exp2.png",
+        "img/04_exp2/bird_biri/bird_biri_1.png",
+        "img/04_exp2/bird_biri/bird_biri_2.png",
+        "img/04_exp2/bird_biri/bird_biri_3.png",
+        "img/04_exp2/bird_biri/bird_biri_4.png",
+        "img/04_exp2/bird_hoeran/bird_hoeran_1.png",
+        "img/04_exp2/bird_hoeran/bird_hoeran_2.png",
+        "img/04_exp2/bird_hoeran/bird_hoeran_3.png",
+        "img/04_exp2/bird_hoeran/bird_hoeran_4.png",
+        "img/04_exp2/bird_nakhwa/bird_nakhwa_1.png",
+        "img/04_exp2/bird_nakhwa/bird_nakhwa_2.png",
+        "img/04_exp2/bird_nakhwa/bird_nakhwa_3.png",
+        "img/04_exp2/bird_nakhwa/bird_nakhwa_4.png",
+        "img/04_exp2/bird_sasa/bird_sasa_1.png",
+        "img/04_exp2/bird_sasa/bird_sasa_2.png",
+        "img/04_exp2/bird_sasa/bird_sasa_3.png",
+        "img/04_exp2/bird_sasa/bird_sasa_4.png"
+      ]
+    },
+    {
+      "page": "info1.html",
+      "images": [
+        "img/05_info/bg_info.png",
+        "img/05_info/btn_left.png",
+        "img/05_info/btn_right.png",
+        "img/05_info/bubble_info.png",
+        "img/05_info/label_exp1_1.png",
+        "img/05_info/label_exp1_2.png",
+        "img/05_info/label_exp1_3.png",
+        "img/05_info/label_exp2_1.png",
+        "img/05_info/label_exp2_2.png",
+        "img/05_info/label_exp2_3.png",
+        "img/05_info/popup_exp1_1.png",
+        "img/05_info/popup_exp1_2.png",
+        "img/05_info/popup_exp1_3.png",
+        "img/05_info/popup_exp2_1.png",
+        "img/05_info/popup_exp2_2.png",
+        "img/05_info/popup_exp2_3.png",
+        "img/05_info/scroll_blue.png",
+        "img/05_info/scroll_green.png",
+        "img/05_info/scroll_red.png",
+        "img/05_info/title_info.png"
+      ]
+    },
+    {
+      "page": "info2.html",
+      "images": [
+        "img/05_info/bg_info.png",
+        "img/05_info/btn_left.png",
+        "img/05_info/btn_right.png",
+        "img/05_info/bubble_info.png",
+        "img/05_info/label_exp1_1.png",
+        "img/05_info/label_exp1_2.png",
+        "img/05_info/label_exp1_3.png",
+        "img/05_info/label_exp2_1.png",
+        "img/05_info/label_exp2_2.png",
+        "img/05_info/label_exp2_3.png",
+        "img/05_info/popup_exp1_1.png",
+        "img/05_info/popup_exp1_2.png",
+        "img/05_info/popup_exp1_3.png",
+        "img/05_info/popup_exp2_1.png",
+        "img/05_info/popup_exp2_2.png",
+        "img/05_info/popup_exp2_3.png",
+        "img/05_info/scroll_blue.png",
+        "img/05_info/scroll_green.png",
+        "img/05_info/scroll_red.png",
+        "img/05_info/title_info.png"
+      ]
+    }
+  ]
+};

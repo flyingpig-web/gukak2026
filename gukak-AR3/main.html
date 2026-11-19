@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>춘앵전 — 무엇을 해볼까?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 동궁전 실내(텅 빈 벽) -->
+          <div class="scene-bg" style="background-image: url(img/02_main/bg_main.png)"></div>
+
+          <!-- 무희(희진) 얼굴 -->
+          <img class="main-avatar" src="img/02_main/heejin_avatar.png" alt="" />
+
+          <!-- 말풍선 — 진입 / 활동1 선택 / 활동2 선택 세 장을 겹쳐 두고 .on 만 보인다 -->
+          <img class="main-speech on" data-key="intro" src="img/05_info/bubble_info.png" alt="춘앵전의 중요한 정보가 담긴 그림들이에요. 각 그림을 눌러 살펴볼까요?" />
+          <img class="main-speech" data-key="exp1" src="img/03_exp1/bubble_exp1.png" alt="춘앵전 공연 그림의 색이 사라졌어요. 함께 채워볼까요?" />
+          <img class="main-speech" data-key="exp2" src="img/04_exp2/bubble_exp2.png" alt="꾀꼬리의 어떤 모습이 춤으로 완성됐는지 알아볼까요?" />
+
+          <!-- 선택① 색칠 족자 → 활동1 (hover/선택 시 on 이미지) -->
+          <img class="choice-img img-exp1" src="img/02_main/btn_exp1.png" alt="" />
+          <img class="choice-img choice-on on-exp1" src="img/02_main/btn_exp1_on.png" alt="" />
+          <button class="choice-hit hit-exp1" id="hitExp1" aria-label="활동1 춘앵전의 색을 채워보자"></button>
+
+          <!-- 선택② 꾀꼬리 족자 → 활동2 -->
+          <img class="choice-img img-exp2" src="img/02_main/btn_exp2.png" alt="" />
+          <img class="choice-img choice-on on-exp2" src="img/02_main/btn_exp2_on.png" alt="" />
+          <button class="choice-hit hit-exp2" id="hitExp2" aria-label="활동2 꾀꼬리를 보고 춤을 만들어요"></button>
+
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+        </div>
+      </div>
+    </main>
+    <script src="js/main.js"></script>
+  </body>
+</html>

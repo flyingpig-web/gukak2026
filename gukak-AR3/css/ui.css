@@ -1,0 +1,219 @@
+@charset "UTF-8";
+
+/* =========================================================================
+   gukak 시리즈 공통 UI  (다음 편은 이 프로젝트 폴더를 통째로 복사해 쓴다)
+   - 국악 편에서 화면마다 되풀이되는 요소(상단바 / 안내 / 종료 / 정보 팝업)를 한 곳에.
+   - 좌표는 춘앵전(AR3) 목업 실측값 — 편마다 버튼 원본 해상도가 달라 다시 잰다.
+     디자인 1920×1080 기준 % (레터박스 .container 기준). px 고정 금지.
+   - 이미지 경로는 여기에 두지 않는다 — 프로젝트 HTML 의 <img src> 로만 지정.
+   ========================================================================= */
+
+/* -------------------------------------------------------------------------
+   화면 배경 (컨테이너 전체를 채우는 1920×1080 배경)
+   ------------------------------------------------------------------------- */
+.scene-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* 여러 장을 겹쳐 두고 opacity 로 디졸브 하는 배경(활동1 무대 전환) */
+.scene-bg.layer {
+  opacity: 0;
+  transition: opacity 1.2s ease;
+}
+.scene-bg.layer.on {
+  opacity: 1;
+}
+
+/* -------------------------------------------------------------------------
+   버튼 공통 — 기획 "모든 상호작용 버튼은 마우스 호버 시 스케일 10%"
+   ★ 위치 지정용 transform 과 충돌하지 않도록 스케일은 "안쪽 img" 에 건다.
+   ------------------------------------------------------------------------- */
+button > img,
+[role="button"] > img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+@media (hover: hover) {
+  button:not(:disabled):hover > img,
+  [role="button"]:hover > img {
+    transform: scale(1.1);
+  }
+}
+
+button:not(:disabled):active > img,
+[role="button"]:active > img {
+  filter: var(--btn-active-effect);
+}
+
+button:disabled {
+  cursor: default;
+}
+button:disabled > img {
+  opacity: 0.45;
+}
+
+/* -------------------------------------------------------------------------
+   상단바 — [뒤로가기] · 타이틀 · [홈]  (전 화면 공통 위치)
+   타이틀 이미지(857×283)는 위아래 여백이 큰 소스라 목업에서 y 가 음수다(-11).
+   ------------------------------------------------------------------------- */
+.btn-top {
+  position: absolute;
+  z-index: 30;
+}
+
+.btn-back {
+  left: 2.76%;
+  top: 5.833%;
+  width: 7.708%;
+  height: 12.87%;
+}
+
+.btn-home {
+  left: 89.688%;
+  top: 5.833%;
+  width: 7.24%;
+  height: 12.037%;
+}
+
+.top-title {
+  position: absolute;
+  left: 27.708%;
+  top: -1.019%;
+  width: 44.635%;
+  height: 26.204%;
+  z-index: 25;
+  pointer-events: none;
+}
+
+/* -------------------------------------------------------------------------
+   플레이 스테이지 — 준비/안내 화면에서는 감춘다.
+   안내 화면의 "체험 방법 예시" 이미지 안에 플레이 요소가 이미 그려져 있어 겹친다.
+   ------------------------------------------------------------------------- */
+.exp-stage {
+  display: none;
+}
+.exp-stage.on {
+  display: block;
+}
+
+/* -------------------------------------------------------------------------
+   안내(체험 방법) — 전체화면 튜토리얼 이미지 1장 + [▶]
+   이번 편 튜토리얼 소스는 배경까지 그려진 불투명 1장이라 딤드를 따로 깔지 않는다
+   (목업 p7 · p19 에도 딤드가 없다).
+   ------------------------------------------------------------------------- */
+.guide-dim {
+  z-index: 210;
+  background-color: transparent;
+}
+
+.guide-img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.btn-guide-play {
+  position: absolute;
+  left: 78.958%;
+  top: 78.889%;
+  width: 10.313%;
+  height: 18.426%;
+  z-index: 220;
+}
+
+/* -------------------------------------------------------------------------
+   종료 화면 — 전체화면 그림(end_main) + [나가기][더 알아보기][다시하기]
+   목업 p14 · p27 의 버튼 순서가 왼쪽부터 나가기 · 더 알아보기 · 다시하기 다.
+   ------------------------------------------------------------------------- */
+.finish-dim {
+  z-index: 300;
+  background-color: transparent; /* end_main 이 화면 전체를 덮는다 */
+}
+
+/* 종료 화면에는 타이틀도 [뒤로가기]/[홈] 도 없다(목업 p14/p27). */
+body.finish-on .top-title,
+body.finish-on .btn-top {
+  display: none;
+}
+
+.finish-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.finish-btns button {
+  position: absolute;
+  z-index: 310;
+}
+
+.btn-exit {
+  left: 1.719%;
+  top: 81.204%;
+  width: 14.271%;
+  height: 9.167%;
+}
+
+.btn-more {
+  left: 17.344%;
+  top: 81.204%;
+  width: 18.906%;
+  height: 9.167%;
+}
+
+.btn-retry {
+  left: 37.604%;
+  top: 81.204%;
+  width: 14.427%;
+  height: 9.167%;
+}
+
+/* -------------------------------------------------------------------------
+   정보 팝업 — 딤드 + 족자 팝업 1장 + [X]
+   ------------------------------------------------------------------------- */
+.info-dim {
+  z-index: 400;
+}
+
+.info-pop {
+  position: absolute;
+  left: 30.729%;
+  top: 5.463%;
+  width: 38.646%;
+  height: 88.981%;
+  z-index: 410;
+  pointer-events: none;
+}
+
+.btn-pop-close {
+  position: absolute;
+  left: 69.01%;
+  top: 12.407%;
+  width: 4.375%;
+  height: 7.778%;
+  z-index: 420;
+}
+
+/* -------------------------------------------------------------------------
+   개발자 좌표 확인용 오버레이 (Ctrl + ; 로 켠 뒤 클릭 영역 확인)
+   ------------------------------------------------------------------------- */
+.dev-on .hit-dev {
+  outline: 0.2rem dashed rgba(255, 60, 60, 0.9);
+  background: rgba(255, 60, 60, 0.14);
+}

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>춘앵전 — 춘앵전의 색을 채워보자!</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/import.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/preload-manifest.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/hit-mask.js"></script>
+  </head>
+  <body>
+    <main>
+      <div class="wrap">
+        <div class="container">
+          <!-- 배경: 동궁전 → (모두 채우면) 공연 무대로 디졸브 -->
+          <div class="scene-bg" style="background-image: url(img/03_exp1/bg_exp1.png)"></div>
+          <div class="scene-bg layer" id="bgStage" style="background-image: url(img/03_exp1/bg_exp1_stage.png)"></div>
+
+          <!-- 플레이 -->
+          <div class="exp-stage" id="stage">
+            <!-- 먹선 그림 + 색이 하나씩 늘어나는 단계 그림(누적) -->
+            <img class="dancer-img" src="img/03_exp1/dancer/dancer_step0_line.png" alt="먹선으로 그려진 춘앵전 무용수" />
+            <img class="dancer-img step" id="step1" src="img/03_exp1/dancer/dancer_step1_hwangcho.png" alt="" />
+            <img class="dancer-img step" id="step2" src="img/03_exp1/dancer/dancer_step2_chorok.png" alt="" />
+            <img class="dancer-img step" id="step3" src="img/03_exp1/dancer/dancer_step3_hwagwan.png" alt="" />
+            <img class="dancer-img step" id="step4" src="img/03_exp1/dancer/dancer_step4_hongdan.png" alt="" />
+            <img class="dancer-img step" id="step5" src="img/03_exp1/dancer/dancer_step5_osaek.png" alt="" />
+            <img class="dancer-img step" id="step6" src="img/03_exp1/dancer/dancer_step6_hongcho.png" alt="" />
+            <img class="dancer-img step" id="step7" src="img/03_exp1/dancer/dancer_step7_hwamun.png" alt="" />
+
+            <!-- 10초 무터치 글로우 -->
+            <img class="hint-img" id="hint" src="" alt="" />
+
+            <!-- 세레모니 완성 무용수 -->
+            <img class="dancer-full" id="dancerFull" src="img/03_exp1/dancer/dancer_full.png" alt="색이 모두 채워진 춘앵전 무용수" />
+
+            <!-- 터치 판정 -->
+            <div class="hit-layer" id="hitLayer"></div>
+
+            <!-- 색칠 대상 패널 -->
+            <img class="panel-target" src="img/03_exp1/panel_target.png" alt="색칠 대상" />
+            <img class="panel-icon" id="panelIcon" src="img/03_exp1/icon_hwangcho.png" alt="" />
+
+            <!-- 하단 안내바 -->
+            <img class="guide-bar" id="guideBar" src="img/03_exp1/guide_hwangcho.png" alt="" />
+
+            <!-- 명칭 텍스트 / 완성 문구 -->
+            <img class="name-pop" id="namePop" src="" alt="" />
+            <img class="complete-text" id="completeText" src="img/03_exp1/text_complete.png" alt="춘앵전 무용수를 완성했어요!" />
+          </div>
+
+          <!-- 상단바 -->
+          <button class="btn-top btn-back" id="btnBack">
+            <img src="img/00_common/btn_back.png" alt="뒤로가기" />
+          </button>
+          <img class="top-title" src="img/03_exp1/title_exp1.png" alt="춘앵전의 색을 채워보자!" />
+          <button class="btn-top btn-home" id="btnHome">
+            <img src="img/00_common/btn_home.png" alt="홈" />
+          </button>
+
+          <!-- 체험 방법 안내 -->
+          <div class="dimmed guide-dim flex" id="guideDim">
+            <img class="guide-img" src="img/03_exp1/exp1_tutorial.png" alt="아이콘을 보며 내가 말하는 옷이나 장식이 어울리는 곳을 터치하여 색을 채워줘!" />
+            <button class="btn-guide-play" id="btnGuidePlay">
+              <img src="img/00_common/btn_play.png" alt="시작" />
+            </button>
+          </div>
+
+          <!-- 활동 종료 -->
+          <div class="dimmed finish-dim" id="finishDim">
+            <img class="finish-bg" src="img/03_exp1/end_main.png" alt="춘앵전 색이 모두 채워졌어요!" />
+            <div class="finish-btns">
+              <button class="btn-exit" id="btnExit"><img src="img/00_common/btn_exit.png" alt="나가기" /></button>
+              <button class="btn-more" id="btnMore"><img src="img/00_common/btn_info.png" alt="더 알아보기" /></button>
+              <button class="btn-retry" id="btnRetry"><img src="img/00_common/btn_retry.png" alt="다시하기" /></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/exp1.js"></script>
+  </body>
+</html>
